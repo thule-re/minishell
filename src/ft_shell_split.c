@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
-/*   Updated: 2023/03/31 17:50:38 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/03/31 18:58:06 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static int	shell_split_helper(char *s, char **result, int i)
 	result[i] = malloc(len);
 	if (result[i])
 		ft_strlcpy(result[i], s, len);
-	ft_printf("String = %s, i = %i\n", result[i], i);
 	return (len);
 }
 
@@ -75,7 +74,6 @@ char	**ft_shell_split(char *s, char c)
 
 	i = 0;
 	count = word_count(s, c, 0, 0);
-	ft_printf("Original string: %s", s);
 	result = malloc((count + 1) * sizeof(char *));
 	if (result == NULL)
 		return (0);
@@ -96,4 +94,3 @@ char	**ft_shell_split(char *s, char c)
 	result[i] = 0;
 	return (result);
 }
-

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/03/31 13:52:17 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/03/31 18:59:54 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,6 @@ int	apo_count(char *str, char apo)
 		str++;
 	}
 	return (count);
-}
-
-int	check_for_apos(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		if (apo_count(arr[i], 34))
-			return (i + 1);
-		i++;
-	}
-	return (0);
 }
 
 int	is_apo(char c)

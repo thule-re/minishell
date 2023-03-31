@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/03/31 17:58:16 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/03/31 18:58:24 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,20 @@ int	main(void)
 {
 	char	**parsed_input;
 	char	*input;
-	
-	input = get_input(1);
-	
-	ft_printf("final input string: %s", input);
-	parsed_input = ft_shell_split(input, 32);
-	print_array(parsed_input);
-	free_arr(parsed_input);
+
+	input = NULL;
+	while (1)
+	{
+		ft_printf("minishell %% ");
+		input = get_input(1);
+		if (!ft_strncmp(input, "exit\n", 6))
+			break ;
+		parsed_input = ft_shell_split(input, 32);
+		// print_array(parsed_input);
+		// do actions based on input
+		free_arr(parsed_input);
+		free(input);
+	}
 	free(input);
 	return (0);
 }

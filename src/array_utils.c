@@ -1,25 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   array_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 16:39:52 by treeps            #+#    #+#             */
-/*   Updated: 2023/03/31 17:34:35 by awilliam         ###   ########.fr       */
+/*   Created: 2023/03/31 17:02:25 by awilliam          #+#    #+#             */
+/*   Updated: 2023/03/31 17:03:18 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../minishell.h"
 
-size_t	ft_strlen(const char *str)
-{	
-	size_t	i;
+void	free_arr(char **arr)
+{
+	int	i;
 
-	if (!str)
-		return (0);
 	i = 0;
-	while (str[i])
+	while (arr[i])
+	{
+		if (arr[i])
+			free (arr[i]);
 		i++;
-	return (i);
+	}
+	if (arr)
+		free(arr);
+	return ;
+}
+
+void	print_array(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		ft_printf("%s\n", arr[i]);
+		i++;
+	}
 }

@@ -6,74 +6,59 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/03/31 18:58:24 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:36:38 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	is_unclosed(char *input)
-{
-	while (*input)
-	{
-		if (is_apo(*input))
-		{
-			if (apo_count(input + 1, *input))
-				input += mod_ft_strlen(input + 1, *input) + 2;
-			else
-				return (1);
-		}
-		input++;
-	}
-	return (0);
+void	basic_command(t_pipehelper *p, char **parsed_input)
+{	
+	int		pid;
+
+	p->input1 = parsed_input;
+	p->fd_in = open("infile.txt", O_RDONLY);
+	p->paths = ft_split(getenv("PATH"), ':');
+	p->cmd = get_command(p->paths, parsed_input[0]);
+	pid = fork();
+	if (pid == 0)
+		run_child_1(p);
+	waitpid(-1, NULL, 0);
 }
 
-static char	*get_input(int unclosed)
+//NEXT STEPS:
+// - Make it run with a new process and just basic commands
+
+int	main(int argc, char **argv, char **envp)
 {
-	char	*tmp;
-	char	*tmp2;
-	char	*ret;
-	int		size;
+	char			**parsed_input;
+	char			*input;
+	t_pipehelper	p;
 
-	ret = NULL;
-	tmp2 = NULL;
-	unclosed = 1;
-	while (unclosed)
-	{
-		tmp = ft_get_next_line(0);
-		if (ret)
-			tmp2 = ft_strdup(ret);
-		free(ret);
-		size = ft_strlen(tmp) + ft_strlen(tmp2) + 1;
-		ret = ft_calloc(size, 1);
-		ft_strlcat(ret, tmp2, size);
-		ft_strlcat(ret, tmp, size);
-		free(tmp);
-		if (tmp2)
-			free(tmp2);
-		unclosed = is_unclosed(ret);
-	}
-	return (ret);
-}
-
-int	main(void)
-{
-	char	**parsed_input;
-	char	*input;
-
+	p.envp = envp;
 	input = NULL;
 	while (1)
 	{
-		ft_printf("minishell %% ");
 		input = get_input(1);
-		if (!ft_strncmp(input, "exit\n", 6))
-			break ;
-		parsed_input = ft_shell_split(input, 32);
-		// print_array(parsed_input);
-		// do actions based on input
-		free_arr(parsed_input);
-		free(input);
+		if (*input)
+		{	
+			add_history(input);
+			if (!ft_strncmp(input, "exit", 6))
+				break ;
+			parsed_input = ft_shell_split(input, 32);
+			basic_command(&p, parsed_input);
+			// print_array(parsed_input);
+			// do actions based on input
+			free_arrs(&p);
+			// free_arr(parsed_input);
+			free(input);
+			input = NULL;
+		}
 	}
 	free(input);
 	return (0);
+	argc++;
+	argv++;
+	argc--;
+	argv--;
 }

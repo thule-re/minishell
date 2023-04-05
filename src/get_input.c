@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/04 17:23:41 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:30:00 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ char	*get_input(int unclosed)
 		tmp = readline("minishell % ");
 		if (ret)
 			tmp2 = ft_strdup(ret);
-		free(ret);
+		if (ret)
+			free(ret);
 		size = ft_strlen(tmp) + ft_strlen(tmp2) + 1;
 		ret = malloc(size);
 		ft_strlcat(ret, tmp2, size);
@@ -54,6 +55,5 @@ char	*get_input(int unclosed)
 			free(tmp2);
 		unclosed = is_unclosed(ret);
 	}
-	// ret[ft_strlen(ret)] = 0;
 	return (ret);
 }

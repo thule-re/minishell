@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/06 09:56:52 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:38:28 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ typedef struct s_pipehelper {
 	char	**envp;
 	char	**paths;
 	char	**input1;
-	int		fd_in;
-	int		fd_out;
+	int		num_in;
+	int		fd_index;
+	int		*fd_in;
+	int		num_out;
+	int		*fd_out;
 	int		num_pipes;
 	int		i;
 	int		pipe_status;
@@ -50,6 +53,8 @@ void	print_array(char **arr);
 int		mod_ft_strlen(char *str, char c);
 char	*get_input(int unclosed);
 int		is_unclosed(char *input);
+char	**reformat_inputs(char **arr);
+void	shift_array(char **arr, int i);
 
 //Functions for pipes
 int		check_input(int argc, char **argv);

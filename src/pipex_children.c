@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:46:31 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/06 09:26:50 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/06 12:30:37 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	close_pipes(int *pipe, int size)
 // dup2(p->fd_in, STDIN_FILENO);
 void	run_child_1(t_pipehelper *p)
 {
+	if (p->i == 0 && p->fd_in)
+		dup2(p->fd_in[p->fd_index], STDIN_FILENO);
 	if (p->pipe_status == 1)
 	{
 		dup2(p->pipefd[1], STDOUT_FILENO);

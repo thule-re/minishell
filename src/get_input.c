@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/06 10:01:56 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/06 12:29:03 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ int	init_params(t_pipehelper *params)
 	params->input1 = NULL;
 	params->cmd = NULL;
 	params->paths = NULL;
+	params->fd_in = NULL;
+	params->fd_out = NULL;
+	params->i = 0;
+	params->num_in = 1;
+	params->num_out = 0;
+	params->fd_index = 0;
 	return (1);
 }
 

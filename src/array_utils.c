@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:02:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/04 12:17:36 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:55:33 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,18 @@ void	print_array(char **arr)
 		ft_printf("%s\n", arr[i]);
 		i++;
 	}
+}
+
+void	shift_array(char **arr, int i)
+{
+	char	*to_free;
+
+	to_free = arr[i];
+	while (arr[i])
+	{
+		arr[i] = arr[i + 1];
+		i++;
+	}
+	free(arr[i]);
+	free(to_free);
 }

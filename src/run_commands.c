@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/06 10:00:05 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:54:44 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,25 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 	{
 		make_input(p, parsed_input, index);
 		p->cmd = get_command(p->paths, p->input1[0]);
-		pid = fork();
-		if (pid == 0)
-			run_child_1(p);
-		waitpid(-1, NULL, WNOHANG);
+		if (p->fd_in)
+		{
+			while (p->fd_index < p->num_in)
+			{
+				pid = fork();
+				if (pid == 0)
+					run_child_1(p);
+				waitpid(-1, NULL, WNOHANG);
+				p->fd_index++;
+			}
+			p->fd_index = 0;
+		}
+		else
+		{
+			pid = fork();
+			if (pid == 0)
+				run_child_1(p);
+			waitpid(-1, NULL, WNOHANG);
+		}
 		free_arr(p->input1);
 		free(p->cmd);
 		p->input1 = NULL;
@@ -50,6 +65,12 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 			index++;
 		p->i++;
 		counter--;
+	}
+	sleep(1);
+	if (p->fd_in)
+	{
+		while (p->num_in--)
+			close(p->fd_in[p->num_in]);
 	}
 	close_pipes(p->pipefd, p->num_pipes * 2);
 	free (p->pipefd);

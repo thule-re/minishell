@@ -86,7 +86,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCL)
 	@printf "$(UP)$(CUT)"
 
 clean:
-	@echo "$(BLUE)Deleting all objects $(RESET)"
+	@echo "$(BLUE)[$(NAME)] Deleting all objects $(RESET)"
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean

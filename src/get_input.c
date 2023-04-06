@@ -6,11 +6,19 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/05 17:30:00 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/06 10:01:56 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	init_params(t_pipehelper *params)
+{
+	params->input1 = NULL;
+	params->cmd = NULL;
+	params->paths = NULL;
+	return (1);
+}
 
 int	is_unclosed(char *input)
 {
@@ -37,7 +45,6 @@ char	*get_input(int unclosed)
 
 	ret = NULL;
 	tmp2 = NULL;
-	unclosed = 1;
 	while (unclosed)
 	{
 		tmp = readline("minishell % ");

@@ -12,8 +12,8 @@ SRC_DIR 	=	./src
 OBJ_DIR 	=	./obj
 
 FILES 		= 	main ft_shell_split shell_split_utils \
-				array_utils string_utils pipex_utils free_and_error get_input \
-				pipex_children
+				array_utils string_utils free_and_error get_input \
+				pipex_children make_input run_commands
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))

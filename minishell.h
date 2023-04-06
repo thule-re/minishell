@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/05 17:37:59 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/06 09:56:52 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,16 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
+// Global environment variable
+extern char **environ;
+
 typedef struct s_pipehelper {
 	char	**envp;
 	char	**paths;
 	char	**input1;
 	int		fd_in;
 	int		fd_out;
-	int		pid1;
+	int		num_pipes;
 	int		i;
 	int		pipe_status;
 	char	*cmd;
@@ -50,7 +53,7 @@ int		is_unclosed(char *input);
 
 //Functions for pipes
 int		check_input(int argc, char **argv);
-int		init_params(t_pipehelper *params, char **envp, char **argv);
+int		init_params(t_pipehelper *params);
 void	run_child_1(t_pipehelper *p);
 void	run_child_2(t_pipehelper *p);
 char	*append_slash(char *path, char *str, char *c);
@@ -65,5 +68,11 @@ void	file_error(char *s, int fd, int error_type, t_pipehelper *params);
 void	free_arr(char **arr);
 void	free_arrs(t_pipehelper *params);
 void	cmd_error(char *str, t_pipehelper *params);
+
+//make input
+void	make_input(t_pipehelper *p, char **parsed_input, int index);
+int		are_there_pipes(char **parsed_input);
+
+void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 
 #endif

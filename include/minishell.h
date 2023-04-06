@@ -13,10 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft/include/libft.h"
+# include "../libft/include/libft.h"
 # include <string.h>
 # include <stdio.h>
-# include <editline/readline.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>

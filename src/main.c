@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../include/minishell.h"
 
 static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 {

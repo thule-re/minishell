@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 12:51:26 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:45:52 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,27 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 
 #endif
 
+// Commands to test against shell:
 
-//GOALS FOR FRIDAY:
+// Working:
 
-// 1. Get run_commands function looking better and norminette compliant
-// 2. Get basic output parsing working
-// 3. Get basic output functionality working
-// 4. Get inputs working for follow up pipes - One process for the pipe 
-// 		and separate process for the infiles. 
+// Not working:
 
-// Problems to solve:
+// cat -e infile.txt | grep str >out
+// cat -e infile.txt >out1 | grep str >out
+// cat -e infile.txt >out1 >out2 | grep str >out3 >out4
+// cat -e <infile.txt <infile.txt | grep str <infile.txt >out1
+// cat -e < infile.txt < infile.txt <infile.txt | grep str <infile.txt >outfile
+	// (Why is the output getting flipped around???)
 
-// 1. Get some free/allocation errors when using shell multiple times with garbage
-// 2. This command: cat -e <infile.txt >outfile4 | grep str
-		// Should have double output, to terminal and to outfile.
-// 3. Get working for this command: cat -e infile.txt >out4 >out5 >out6 (multiple outs)
+
+
+// HOW DOES HEREDOC WORK?
+
+// - takes input like in and out with a "<<"
+// - Input comes in at the end of the command no matter what
+// - Works differently with cat command...
+// - When delimiter is in quotes, variables don't expand, otherwise they do.
+
+
+// METHOD IDEA - write heredoc input to file, then use it as a file input?

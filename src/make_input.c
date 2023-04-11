@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 08:49:23 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:45:35 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,5 @@ void	make_input(t_pipehelper *p, char **parsed_input, int index)
 		}
 		i++;
 	}
-	p->input1[i] = 0;
+	p->input1[j] = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/06 16:38:59 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:47:39 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	**reformat_inputs(char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		if (!ft_strncmp("<", arr[i], 2))
+		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2))
 		{
 			tmp = ft_strjoin(arr[i], arr[i + 1]);
 			free(arr[i + 1]);

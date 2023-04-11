@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 12:53:05 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:01:45 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 static void	reset_inputs(t_pipehelper *p)
 {
-	free_arr(p->input1);
-	free(p->cmd);
+	if (p->input1)
+		free_arr(p->input1);
+	if (p->cmd)
+		free(p->cmd);
 	p->input1 = NULL;
 	p->cmd = NULL;
 	if (p->fd_in)
 		free(p->fd_in);
 	p->fd_in = NULL;
+	if (p->fd_out)
+		free(p->fd_out);
+	p->fd_out = NULL;
 }
 
 static int	init_variables(t_pipehelper *p, char **s)
@@ -58,7 +63,7 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 	{
 		make_input(p, parsed_input, index);
 		p->cmd = get_command(p->paths, p->input1[0]);
-		if (index || !p->fd_in || check_access(p->input1))
+		if (p->i || !p->fd_in || check_access(p->input1))
 		{
 			pid = fork();
 			if (pid == 0)

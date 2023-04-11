@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/06 16:58:37 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:49:23 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,23 +69,30 @@ int	count_string(char **parsed_input, int index, int count, char *s)
 
 void	add_fds(t_pipehelper *p, char **parsed_input, int index, int count)
 {
-	int	fd_count;
 	int	i;
 	int	j;
+	int	k;
 
-	fd_count = count_string(parsed_input, index, count, "<");
-	if (!fd_count)
-		return ;
+	p->num_in = count_string(parsed_input, index, count, "<");
+	p->num_out = count_string(parsed_input, index, count, ">");
 	i = 0;
 	j = 0;
-	p->fd_in = malloc(sizeof(int) * fd_count);
-	p->num_in = fd_count;
+	k = 0;
+	if (p->num_in)
+		p->fd_in = malloc(sizeof(int) * p->num_in);
+	if (p->num_out)
+		p->fd_out = malloc(sizeof(int) * p->num_out);
 	while (i < count)
 	{
 		if (!ft_strncmp("<", parsed_input[index + i], 1))
 		{
 			p->fd_in[j] = open(&parsed_input[index + i][1], O_RDONLY);
 			j++;
+		}
+		if (!ft_strncmp(">", parsed_input[index + i], 1))
+		{
+			p->fd_out[k] = open(&parsed_input[index + i][1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			k++;
 		}
 		i++;
 	}
@@ -105,8 +112,8 @@ void	make_input(t_pipehelper *p, char **parsed_input, int index)
 	add_fds(p, parsed_input, index, count);
 	while (i < count)
 	{
-		if (ft_strncmp("<", parsed_input[index + i], 1))
-		{	
+		if (ft_strncmp("<", parsed_input[index + i], 1) && ft_strncmp(">", parsed_input[index + i], 1))
+		{
 			p->input1[j] = ft_strdup(parsed_input[index + i]);
 			j++;
 		}

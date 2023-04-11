@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/06 16:38:28 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/11 12:51:26 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_pipehelper {
 	char	**input1;
 	int		num_in;
 	int		fd_index;
+	int		fd_outdex;
 	int		*fd_in;
 	int		num_out;
 	int		*fd_out;
@@ -59,8 +60,7 @@ void	shift_array(char **arr, int i);
 //Functions for pipes
 int		check_input(int argc, char **argv);
 int		init_params(t_pipehelper *params);
-void	run_child_1(t_pipehelper *p);
-void	run_child_2(t_pipehelper *p);
+void	run_child_1(t_pipehelper *p, int in, int out);
 char	*append_slash(char *path, char *str, char *c);
 char	*ft_wordsearch(char *str, char *to_find);
 char	**get_path(char **envp);
@@ -81,3 +81,19 @@ int		are_there_pipes(char **parsed_input);
 void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 
 #endif
+
+
+//GOALS FOR FRIDAY:
+
+// 1. Get run_commands function looking better and norminette compliant
+// 2. Get basic output parsing working
+// 3. Get basic output functionality working
+// 4. Get inputs working for follow up pipes - One process for the pipe 
+// 		and separate process for the infiles. 
+
+// Problems to solve:
+
+// 1. Get some free/allocation errors when using shell multiple times with garbage
+// 2. This command: cat -e <infile.txt >outfile4 | grep str
+		// Should have double output, to terminal and to outfile.
+// 3. Get working for this command: cat -e infile.txt >out4 >out5 >out6 (multiple outs)

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 08:49:58 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/12 12:39:55 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,22 @@ char	*get_input(int unclosed)
 	char	*tmp2;
 	char	*ret;
 	int		size;
+	int		line_count;
 
+	line_count = 0;
 	ret = NULL;
 	tmp2 = NULL;
 	while (unclosed)
 	{
-		tmp = readline("minishell % ");
+		if (!line_count)
+			tmp = readline("minishell % ");
+		else
+			tmp = readline("dquote> ");
 		if (ret)
 			tmp2 = ft_strdup(ret);
 		if (ret)
 			free(ret);
-		size = ft_strlen(tmp) + ft_strlen(tmp2) + 1;
+		size = ft_strlen(tmp) + ft_strlen(tmp2) + 2;
 		ret = malloc(size);
 		ft_strlcat(ret, tmp2, size);
 		ft_strlcat(ret, tmp, size);
@@ -68,6 +73,9 @@ char	*get_input(int unclosed)
 		if (tmp2)
 			free(tmp2);
 		unclosed = is_unclosed(ret);
+		line_count++;
 	}
+	ft_printf("%s\n", ret);
+	ret[size - 1] = 0;
 	return (ret);
 }

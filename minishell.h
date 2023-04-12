@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 17:45:52 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/12 12:30:08 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 // cat -e < infile.txt < infile.txt <infile.txt | grep str <infile.txt >outfile
 	// (Why is the output getting flipped around???)
 
-
-
 // HOW DOES HEREDOC WORK?
 
 // - takes input like in and out with a "<<"
@@ -105,4 +103,13 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 // - When delimiter is in quotes, variables don't expand, otherwise they do.
 
 
-// METHOD IDEA - write heredoc input to file, then use it as a file input?
+// METHOD IDEA - Store all heredoc info in a string, pass this as
+	// last argument into the commands
+	// How does heredoc handle quotes? Probably should place it after quote logic
+
+// TO DO: 
+
+// - Quote handling input: Make newlines work as shell, i.e. 
+// 	echo "hello
+// 	world"
+// - 

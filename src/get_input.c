@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/12 12:39:55 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/12 13:35:47 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_input(int unclosed)
 			tmp2 = ft_strdup(ret);
 		if (ret)
 			free(ret);
-		size = ft_strlen(tmp) + ft_strlen(tmp2) + 2;
+		size = ft_strlen(tmp) + ft_strlen(tmp2) + 1;
 		ret = malloc(size);
 		ft_strlcat(ret, tmp2, size);
 		ft_strlcat(ret, tmp, size);
@@ -75,7 +75,6 @@ char	*get_input(int unclosed)
 		unclosed = is_unclosed(ret);
 		line_count++;
 	}
-	ft_printf("%s\n", ret);
-	ret[size - 1] = 0;
+	ret[size] = 0;
 	return (ret);
 }

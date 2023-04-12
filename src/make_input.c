@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 16:45:35 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:21:40 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,11 @@ void	add_fds(t_pipehelper *p, char **parsed_input, int index, int count)
 	int	i;
 	int	j;
 	int	k;
+	int	fd;
 
 	p->num_in = count_string(parsed_input, index, count, "<");
+	if (p->heredoc)
+		p->num_in++;
 	p->num_out = count_string(parsed_input, index, count, ">");
 	i = 0;
 	j = 0;
@@ -95,6 +98,12 @@ void	add_fds(t_pipehelper *p, char **parsed_input, int index, int count)
 			k++;
 		}
 		i++;
+	}
+	if (p->heredoc)
+	{	
+		fd = open("heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		write(fd, p->heredoc, ft_strlen(p->heredoc));
+		p->fd_in[j] = open("heredoc", O_RDONLY);
 	}
 }
 

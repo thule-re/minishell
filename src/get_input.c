@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/12 13:35:47 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:21:03 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	init_params(t_pipehelper *params)
 	params->paths = NULL;
 	params->fd_in = NULL;
 	params->fd_out = NULL;
+	params->heredoc = NULL;
 	params->i = 0;
 	params->num_in = 1;
 	params->num_out = 0;
@@ -34,7 +35,7 @@ int	is_unclosed(char *input)
 		if (is_apo(*input))
 		{
 			if (apo_count(input + 1, *input))
-				input += mod_ft_strlen(input + 1, *input) + 2;
+				input += mod_ft_strlen(input + 1, *input) + 1;
 			else
 				return (1);
 		}
@@ -43,7 +44,69 @@ int	is_unclosed(char *input)
 	return (0);
 }
 
-char	*get_input(int unclosed)
+char	*remove_delim(char *s, char *loc, int delim_len)
+{
+	char	*new;
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	new = malloc(ft_strlen(s) - delim_len);
+	tmp = s;
+	while (*s)
+	{
+		if (s == loc)
+			s += delim_len;
+		new[i] = *s;
+		i++;
+		s++;
+	}
+	free(tmp);
+	new[i] = 0;
+	return (new);
+}
+
+char	*delimit_this(char *s, t_pipehelper *p)
+{
+	char	*loc;
+	char	*delim;
+	int		len;
+	char	*tmp;
+	char	*to_free;
+
+	tmp = NULL;
+	loc = ft_strnstr(s, "<<", ft_strlen(s));
+	if (loc)
+	{
+		len = mod_ft_strlen(loc + 2, ' ');
+		delim = malloc(len + 2);
+		ft_strlcpy(delim, loc + 2, len + 1);
+		delim[len + 1] = 0;
+		delim[len] = '\n';
+		// s = remove_delim(s, loc, ft_strlen(delim) + 1);
+		tmp = readline("heredoc> ");
+		to_free = tmp;
+		tmp = ft_strjoin(tmp, "\n");
+		free(to_free);
+		while (ft_strncmp(tmp, delim, ft_strlen(delim)))
+		{
+			to_free = p->heredoc;
+			p->heredoc = ft_strjoin(p->heredoc, tmp);
+			free(to_free);
+			free(tmp);
+			tmp = readline("heredoc> ");
+			to_free = tmp;
+			tmp = ft_strjoin(tmp, "\n");
+			free(to_free);
+		}
+		if (tmp)
+			free(tmp);
+		free(delim);
+	}
+	return (s);
+}
+
+char	*get_input(int unclosed, t_pipehelper *p)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -65,9 +128,7 @@ char	*get_input(int unclosed)
 		if (ret)
 			free(ret);
 		size = ft_strlen(tmp) + ft_strlen(tmp2) + 1;
-		ret = malloc(size);
-		ft_strlcat(ret, tmp2, size);
-		ft_strlcat(ret, tmp, size);
+		ret = ft_strjoin(tmp2, tmp);
 		if (tmp)
 			free(tmp);
 		if (tmp2)
@@ -76,5 +137,5 @@ char	*get_input(int unclosed)
 		line_count++;
 	}
 	ret[size] = 0;
-	return (ret);
+	return (delimit_this(ret, p));
 }

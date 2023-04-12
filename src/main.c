@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/12 12:26:27 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:26:57 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 {
 	free_arrs(p);
+	if (p->heredoc)
+		free(p->heredoc);
 	if (parsed_input)
 		free_arr(parsed_input);
 	if (input)
@@ -25,6 +27,7 @@ static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 		free(p->fd_out);
 	p->fd_out = NULL;
 	p->fd_in = NULL;
+	p->heredoc = NULL;
 	parsed_input = NULL;
 	input = NULL;
 }
@@ -41,13 +44,13 @@ int	main(void)
 	while (1)
 	{
 		waitpid(-1, NULL, 0);
-		input = get_input(1);
+		input = get_input(1, &p);
 		if (*input)
 		{
-			add_history(input);
 			if (!ft_strncmp(input, "exit", 6))
 				break ;
 			parsed_input = ft_shell_split(input, 32);
+			add_history(ft_strjoin(input, p.heredoc));	
 			run_commands(&p, parsed_input, 0);
 			free_everything(&p, parsed_input, input);
 		}

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/12 12:30:08 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:08:25 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_pipehelper {
 	char	*cmd;
 	char	*cmd2;
 	int		*pipefd;
+	char	*heredoc;
+	char	*delim;
 }	t_pipehelper;
 
 //functions for splitting and input parsing
@@ -51,7 +53,7 @@ void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
 int		mod_ft_strlen(char *str, char c);
-char	*get_input(int unclosed);
+char	*get_input(int unclosed, t_pipehelper *p);
 int		is_unclosed(char *input);
 char	**reformat_inputs(char **arr);
 void	shift_array(char **arr, int i);

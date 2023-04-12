@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 17:01:45 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:06:02 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 	while (counter >= 0)
 	{
 		make_input(p, parsed_input, index);
+		// print_array(p->input1);
 		p->cmd = get_command(p->paths, p->input1[0]);
 		if (p->i || !p->fd_in || check_access(p->input1))
 		{

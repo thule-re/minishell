@@ -44,7 +44,7 @@ $(LIBFT):
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCL)
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(YELLOW)Compiling [$@]...$(RESET)"
-	@cc $(FLAGS) -o $@ -c $<
+	@cc $(FLAGS) -o $@ -c $< -I include
 	@printf "$(UP)$(CUT)"
 	@echo "$(GREEN)Finished [$@]$(RESET)"
 	@printf "$(UP)$(CUT)"

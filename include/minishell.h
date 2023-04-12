@@ -61,7 +61,6 @@ int		check_input(int argc, char **argv);
 int		init_params(t_pipehelper *params);
 void	run_child_1(t_pipehelper *p, int in, int out);
 char	*append_slash(char *path, char *str, char *c);
-char	*ft_wordsearch(char *str, char *to_find);
 char	**get_path(char **envp);
 char	*get_command(char **paths, char *cmd_str);
 void	close_pipes(int *pipe, int size);

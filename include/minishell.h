@@ -22,7 +22,7 @@
 # include <fcntl.h>
 
 // Global environment variable
-extern char **environ;
+extern char	**environ;
 
 typedef struct s_pipehelper {
 	char	**envp;

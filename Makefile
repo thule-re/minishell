@@ -11,71 +11,35 @@ CUT			=	\033[K
 SRC_DIR 	=	./src
 OBJ_DIR 	=	./obj
 
-FILES 		= 	ft_atoi \
-				ft_atof \
-				ft_atoll \
-				ft_bzero \
-				ft_calloc \
-				ft_isalnum \
-				ft_isalpha \
-				ft_isascii \
-				ft_isdigit \
-				ft_isprint \
-				ft_itoa \
-				ft_memchr \
-				ft_memcmp \
-				ft_memcpy \
-				ft_memmove \
-				ft_memset \
-				ft_putchar_fd\
-				ft_putendl_fd \
-				ft_putint_fd \
-				ft_putuint_fd \
-				ft_putstr_fd \
-				ft_split \
-				ft_strchr \
-				ft_strdup \
-				ft_striteri \
-				ft_strjoin \
-				ft_strlcat \
-				ft_strlcpy \
-				ft_strlen \
-				ft_strmapi \
-				ft_strncmp \
-				ft_strnstr \
-				ft_strrchr \
-				ft_strtrim \
-				ft_substr \
-				ft_tolower \
-				ft_toupper \
-				ft_putnbrbase_fd \
-				ft_putptraddr_fd \
-				ft_printf \
-				ft_get_next_line \
-				ft_realloc\
-				ft_lstadd_back \
-				ft_lstadd_front \
-				ft_lstclear \
-				ft_lstdelone \
-				ft_lstiter \
-				ft_lstlast \
-				ft_lstmap \
-				ft_lstnew \
-				ft_lstsize \
- 
+FILES 		= 	main \
+				ft_shell_split \
+				shell_split_utils \
+				array_utils \
+				string_utils \
+				free_and_error \
+				get_input \
+				pipex_children \
+				make_input \
+				run_commands
+
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))
-INCL		=	./include/libft.h
+INCL		=	./include/minishell.h
 
-NAME = libft.a
+NAME = minishell
+LIBFT_DIR = ./libft
+LIBFT = ./libft/libft.a
 FLAGS = -Wall -Werror -Wextra
  
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
 	@echo "$(YELLOW)Compiling [$(NAME)]...$(RESET)"
-	@ar -rcs $(NAME) $(OBJS)
+	@gcc $(FLAGS) -lreadline -o $(NAME) $(OBJS) $(LIBFT)
 	@echo "$(GREEN)Finished [$(NAME)]$(RESET)"
+
+$(LIBFT):
+	@+make -C $(LIBFT_DIR) --no-print-directory
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCL)
 	@mkdir -p $(OBJ_DIR)
@@ -88,10 +52,13 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCL)
 clean:
 	@echo "$(BLUE)[$(NAME)] Deleting all objects $(RESET)"
 	@rm -rf $(OBJ_DIR)
+	@+make -C $(LIBFT_DIR) clean --no-print-directory
 
 fclean: clean
 	@echo "$(BLUE)Deleting $(NAME) $(RESET)"
 	@rm -f $(NAME)
+	@echo "$(BLUE)Deleting $(LIBFT) $(RESET)"
+	@rm -f $(LIBFT)
 
 re: fclean all
 

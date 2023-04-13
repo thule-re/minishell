@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 09:40:38 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:49:22 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@ static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 	input = NULL;
 }
 
+char	*join_input(char *input, t_pipehelper *p)
+{
+	char	*tmp;
+
+	tmp = input;
+	input = ft_strjoin(input, "\n");
+	free(tmp);
+	tmp = input;
+	input = ft_strjoin(input, p->heredoc);
+	free(tmp);
+	tmp = input;
+	input = ft_strjoin(input, p->delim);
+	free(tmp);
+	return (input);
+}
+
 int	main(void)
 {
 	char			**parsed_input;
@@ -47,19 +63,15 @@ int	main(void)
 	while (1)
 	{
 		waitpid(-1, NULL, 0);
-		input = get_input(1, &p);
+		input = get_input(1, &p, NULL, NULL);
 		if (*input)
 		{
 			if (!ft_strncmp(input, "exit", 6))
 				break ;
 			parsed_input = ft_shell_split(input, 32);
 			if (p.heredoc && !(ft_strchr(input, '\n')))
-			{
-				input = ft_strjoin(input, "\n");
-				input = ft_strjoin(input, p.heredoc);
-				input = ft_strjoin(input, p.delim);
-			}
-			add_history(input);	
+				input = join_input(input, &p);
+			add_history(input);
 			run_commands(&p, parsed_input, 0);
 			free_everything(&p, parsed_input, input);
 		}

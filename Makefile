@@ -20,7 +20,8 @@ FILES 		= 	main \
 				get_input \
 				pipex_children \
 				make_input \
-				run_commands
+				run_commands \
+				heredoc_parsing
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))

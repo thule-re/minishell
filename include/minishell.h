@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 09:27:15 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:48:54 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
 int		mod_ft_strlen(char *str, char c);
-char	*get_input(int unclosed, t_pipehelper *p);
+char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2);
 int		is_unclosed(char *input);
 char	**reformat_inputs(char **arr);
 void	shift_array(char **arr, int i);
+
+char	*delimit_this(char *s, t_pipehelper *p);
 
 //Functions for pipes
 int		check_input(int argc, char **argv);

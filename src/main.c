@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 10:49:22 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:54:03 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 {
 	free_arrs(p);
-	if (p->delim)
-		free(p->delim);
 	if (p->heredoc)
 		free(p->heredoc);
 	if (parsed_input)
@@ -30,25 +28,8 @@ static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 	p->fd_out = NULL;
 	p->fd_in = NULL;
 	p->heredoc = NULL;
-	p->delim = NULL;
 	parsed_input = NULL;
 	input = NULL;
-}
-
-char	*join_input(char *input, t_pipehelper *p)
-{
-	char	*tmp;
-
-	tmp = input;
-	input = ft_strjoin(input, "\n");
-	free(tmp);
-	tmp = input;
-	input = ft_strjoin(input, p->heredoc);
-	free(tmp);
-	tmp = input;
-	input = ft_strjoin(input, p->delim);
-	free(tmp);
-	return (input);
 }
 
 int	main(void)
@@ -69,8 +50,6 @@ int	main(void)
 			if (!ft_strncmp(input, "exit", 6))
 				break ;
 			parsed_input = ft_shell_split(input, 32);
-			if (p.heredoc && !(ft_strchr(input, '\n')))
-				input = join_input(input, &p);
 			add_history(input);
 			run_commands(&p, parsed_input, 0);
 			free_everything(&p, parsed_input, input);

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/12 18:06:02 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:45:42 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,17 @@ int	check_access(char **input)
 	return (0);
 }
 
+static void	end_running(t_pipehelper *p)
+{
+	if (p->fd_in)
+		close(p->fd_in[0]);
+	if (p->fd_out)
+		close(p->fd_out[0]);
+	close_pipes(p->pipefd, p->num_pipes * 2);
+	free (p->pipefd);
+	p->pipefd = NULL;
+}
+
 void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 {	
 	int		pid;
@@ -62,27 +73,13 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 	while (counter >= 0)
 	{
 		make_input(p, parsed_input, index);
-		// print_array(p->input1);
+		if (!*parsed_input)
+			break ;
 		p->cmd = get_command(p->paths, p->input1[0]);
-		if (p->i || !p->fd_in || check_access(p->input1))
-		{
-			pid = fork();
-			if (pid == 0)
-				run_child_1(p, 0, p->num_out);
-			waitpid(-1, NULL, WNOHANG);
-		}
-		if (p->fd_in && !(check_access(p->input1)))
-		{
-			while (p->fd_index < p->num_in)
-			{
-				pid = fork();
-				if (pid == 0)
-					run_child_1(p, 1, p->num_out);
-				waitpid(-1, NULL, WNOHANG);
-				p->fd_index++;
-			}
-			p->fd_index = 0;
-		}
+		pid = fork();
+		if (pid == 0)
+			run_child_1(p, p->num_in, p->num_out);
+		waitpid(-1, NULL, WNOHANG);
 		reset_inputs(p);
 		while (parsed_input[index] && ft_strncmp("|", parsed_input[index], 2))
 			index++;
@@ -92,17 +89,5 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 		counter--;
 	}
 	sleep(1);
-	if (p->fd_in)
-	{
-		while (p->num_in--)
-			close(p->fd_in[p->num_in]);
-	}
-	if (p->fd_out)
-	{
-		while (p->num_out--)
-			close(p->fd_out[p->num_out]);
-	}
-	close_pipes(p->pipefd, p->num_pipes * 2);
-	free (p->pipefd);
-	p->pipefd = NULL;
+	end_running(p);
 }

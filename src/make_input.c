@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 13:40:10 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:21:25 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,16 @@ void	add_fds(t_pipehelper *p, char **arr, int index, int count)
 {
 	int	i;
 
-	p->num_in = count_string(arr, index, count, '<');
-	p->num_out = count_string(arr, index, count, '>');
 	i = -1;
-	if (p->num_in)
-		p->fd_in = malloc(sizeof(int));
-	if (p->num_out)
-		p->fd_out = malloc(sizeof(int));
 	while (++i < count)
 	{
 		if (arr[index + i][0] == '<' && arr[index + i][1] != '<')
-			p->fd_in[0] = open(&arr[index + i][1], O_RDONLY);
+			p->fd_in = open(&arr[index + i][1], O_RDONLY);
+		if (arr[index + i][0] == '<' && arr[index + i][1] == '<')
+			p->fd_in = 0;
 		if (!ft_strncmp(">", arr[index + i], 1))
-			p->fd_out[0] = open(&arr[index + i][1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			p->fd_out = open(&arr[index + i][1], \
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
 }
 
@@ -102,13 +99,10 @@ void	make_input(t_pipehelper *p, char **arr, int index)
 	while (++i < count)
 	{
 		if (arr[index + i][0] != '<' && arr[index + i][0] != '>')
-		{
-			p->input1[j] = ft_strdup(arr[index + i]);
-			j++;
-		}
+			p->input1[j++] = ft_strdup(arr[index + i]);
 	}
 	p->input1[j] = 0;
-	if (p->heredoc && !(check_access(p->input1)) && !p->num_in)
+	if (p->heredoc && !(check_access(p->input1)) && !p->fd_in)
 	{	
 		pipe(&p->hd_pipe[0]);
 		write(p->hd_pipe[1], p->heredoc, ft_strlen(p->heredoc));

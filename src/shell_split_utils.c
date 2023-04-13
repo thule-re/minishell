@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/12 18:26:36 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:16:46 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,11 @@ char	next_one(char *s)
 	return (0);
 }
 
-void	free_strings(char **result, int index)
-{
-	int	i;
-
-	i = 0;
-	while (i < index)
-	{
-		free(result[i]);
-		i++;
-	}
-	free(result);
-}
-
 void	string_shift(char *s)
 {
 	while (*s)
 	{
-		*s = *(s+1);
+		*s = *(s + 1);
 		s++;
 	}
 	*(s - 2) = 0;
@@ -87,7 +74,8 @@ char	**reformat_inputs(char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) || !ft_strncmp("<<", arr[i], 3))
+		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) \
+				|| !ft_strncmp("<<", arr[i], 3) || !ft_strncmp(">>", arr[i], 3))
 		{
 			tmp = ft_strjoin(arr[i], arr[i + 1]);
 			free(arr[i + 1]);
@@ -97,11 +85,7 @@ char	**reformat_inputs(char **arr)
 		}
 		if (is_apo(arr[i][0]))
 			string_shift(arr[i]);
-		if (!ft_strncmp(arr[i], "<<", 2))
-			shift_array(arr, i);
 		i++;
 	}
 	return (arr);
 }
-
-//NOT WORKING with heredoc like "<< abc"

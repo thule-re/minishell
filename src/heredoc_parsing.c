@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:39:58 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 13:37:41 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:48:53 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,11 @@ void	delim_helper(t_pipehelper *p, char *delim)
 char	*delimit_this(char *s, t_pipehelper *p)
 {
 	char	*loc;
-	// char	*tmp;
 	char	*delim;
 	int		len;
 
 	loc = ft_strnstr(s, "<<", ft_strlen(s));
-	while(loc)
+	while (loc)
 	{
 		if (p->heredoc)
 		{
@@ -66,6 +65,8 @@ char	*delimit_this(char *s, t_pipehelper *p)
 		delim[len] = '\n';
 		delim_helper(p, delim);
 		loc = ft_strnstr(loc + 2, "<<", ft_strlen(loc + 2));
+		free(delim);
+		delim = NULL;
 	}
 	return (s);
 }

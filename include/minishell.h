@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 13:39:07 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:04:04 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ typedef struct s_pipehelper {
 	char	**envp;
 	char	**paths;
 	char	**input1;
-	int		num_in;
 	int		fd_index;
 	int		fd_outdex;
-	int		*fd_in;
-	int		num_out;
-	int		*fd_out;
+	int		fd_in;
+	int		fd_out;
 	int		num_pipes;
 	int		i;
 	int		pipe_status;
@@ -85,20 +83,6 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 
 #endif
 
-// Commands to test against shell:
-
-// Working:
-
-// Not working:
-
-// cat -e infile.txt | grep str >out
-// cat -e infile.txt >out1 | grep str >out
-// cat -e infile.txt >out1 >out2 | grep str >out3 >out4
-// cat -e <infile.txt <infile.txt | grep str <infile.txt >out1
-// cat -e < infile.txt < infile.txt <infile.txt | grep str <infile.txt >outfile
-	// (Why is the output getting flipped around???)
-
 // TO DO: 
 
-// - make fd_in and fd_out ints instead of arrays
-// - remove num_in and num_out
+// - give correct priority to either heredoc or infile input!

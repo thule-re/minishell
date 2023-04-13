@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 13:45:42 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:59:53 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@ static void	reset_inputs(t_pipehelper *p)
 		free(p->cmd);
 	p->input1 = NULL;
 	p->cmd = NULL;
-	if (p->fd_in)
-		free(p->fd_in);
-	p->fd_in = NULL;
-	if (p->fd_out)
-		free(p->fd_out);
-	p->fd_out = NULL;
+	p->fd_in = 0;
+	p->fd_out = 0;
 }
 
 static int	init_variables(t_pipehelper *p, char **s)
@@ -56,9 +52,9 @@ int	check_access(char **input)
 static void	end_running(t_pipehelper *p)
 {
 	if (p->fd_in)
-		close(p->fd_in[0]);
+		close(p->fd_in);
 	if (p->fd_out)
-		close(p->fd_out[0]);
+		close(p->fd_out);
 	close_pipes(p->pipefd, p->num_pipes * 2);
 	free (p->pipefd);
 	p->pipefd = NULL;
@@ -78,7 +74,7 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 		p->cmd = get_command(p->paths, p->input1[0]);
 		pid = fork();
 		if (pid == 0)
-			run_child_1(p, p->num_in, p->num_out);
+			run_child_1(p, p->fd_in, p->fd_out);
 		waitpid(-1, NULL, WNOHANG);
 		reset_inputs(p);
 		while (parsed_input[index] && ft_strncmp("|", parsed_input[index], 2))

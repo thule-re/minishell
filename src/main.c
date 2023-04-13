@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 11:54:03 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:17:28 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 		free_arr(parsed_input);
 	if (input)
 		free(input);
-	if (p->fd_in)
-		free(p->fd_in);
-	if (p->fd_out)
-		free(p->fd_out);
-	p->fd_out = NULL;
-	p->fd_in = NULL;
 	p->heredoc = NULL;
 	parsed_input = NULL;
 	input = NULL;

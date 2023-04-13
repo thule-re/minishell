@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:46:31 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 13:43:49 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:21:15 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	run_helper(t_pipehelper *p, int in, int out)
 	}
 	if (p->pipe_status == 2)
 	{
-		if (!in)
+		if (!in && !p->heredoc)
 			dup2(p->pipefd[(p->i - 1) * 2], STDIN_FILENO);
 		if (!out)
 			dup2(p->pipefd[(p->i * 2) + 1], STDOUT_FILENO);
@@ -42,7 +42,7 @@ void	run_helper(t_pipehelper *p, int in, int out)
 	}
 	if (p->pipe_status == 3)
 	{
-		if (!in)
+		if (!in && !p->heredoc)
 			dup2(p->pipefd[p->i * 2 - 2], STDIN_FILENO);
 		close_pipes(p->pipefd, p->i * 2);
 	}
@@ -54,14 +54,14 @@ void	run_helper(t_pipehelper *p, int in, int out)
 
 void	run_child_1(t_pipehelper *p, int in, int out)
 {
-	if (p->heredoc && !(check_access(p->input1)) && !p->num_in)
+	if (p->heredoc && !(check_access(p->input1)) && !p->fd_in)
 	{
 		dup2(p->hd_pipe[0], STDIN_FILENO);
 		close_pipes(&p->hd_pipe[0], 2);
 	}
 	if (in)
-		dup2(p->fd_in[0], STDIN_FILENO);
+		dup2(p->fd_in, STDIN_FILENO);
 	if (out)
-		dup2(p->fd_out[0], STDOUT_FILENO);
+		dup2(p->fd_out, STDOUT_FILENO);
 	run_helper(p, in, out);
 }

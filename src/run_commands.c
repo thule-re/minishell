@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 15:23:58 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:01:03 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	init_variables(t_pipehelper *p, char **s)
 	p->i = 0;
 	return (p->num_pipes);
 }
+
 static void	end_running(t_pipehelper *p)
 {
 	if (p->fd_in)

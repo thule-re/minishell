@@ -6,11 +6,24 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:02:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 16:41:20 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:01:00 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	free_strings(char **result, int index)
+{
+	int	i;
+
+	i = 0;
+	while (i < index)
+	{
+		free(result[i]);
+		i++;
+	}
+	free(result);
+}
 
 void	free_arr(char **arr)
 {
@@ -61,4 +74,15 @@ void	shift_array(char **arr, int i)
 	free(arr[i]);
 	arr[i] = NULL;
 	free(to_free);
+}
+
+int	check_access(char **input)
+{
+	while (*input)
+	{
+		if (access(*input, R_OK) == 0)
+			return (1);
+		input++;
+	}
+	return (0);
 }

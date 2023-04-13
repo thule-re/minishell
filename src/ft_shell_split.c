@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 16:48:30 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:16:10 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static int	shell_split_helper(char *s, char **result, int i)
 	result[i] = malloc(len);
 	if (result[i])
 		ft_strlcpy(result[i], s, len);
+	if (is_apo(*s))
+		len--;
 	return (len);
 }
 

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/12 18:26:57 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:40:38 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 {
 	free_arrs(p);
+	if (p->delim)
+		free(p->delim);
 	if (p->heredoc)
 		free(p->heredoc);
 	if (parsed_input)
@@ -28,6 +30,7 @@ static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 	p->fd_out = NULL;
 	p->fd_in = NULL;
 	p->heredoc = NULL;
+	p->delim = NULL;
 	parsed_input = NULL;
 	input = NULL;
 }
@@ -50,7 +53,13 @@ int	main(void)
 			if (!ft_strncmp(input, "exit", 6))
 				break ;
 			parsed_input = ft_shell_split(input, 32);
-			add_history(ft_strjoin(input, p.heredoc));	
+			if (p.heredoc && !(ft_strchr(input, '\n')))
+			{
+				input = ft_strjoin(input, "\n");
+				input = ft_strjoin(input, p.heredoc);
+				input = ft_strjoin(input, p.delim);
+			}
+			add_history(input);	
 			run_commands(&p, parsed_input, 0);
 			free_everything(&p, parsed_input, input);
 		}

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/12 18:21:03 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:39:40 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	init_params(t_pipehelper *params)
 	params->fd_in = NULL;
 	params->fd_out = NULL;
 	params->heredoc = NULL;
+	params->delim = NULL;
 	params->i = 0;
 	params->num_in = 1;
 	params->num_out = 0;
@@ -66,6 +67,14 @@ char	*remove_delim(char *s, char *loc, int delim_len)
 	return (new);
 }
 
+static int	ft_min(int x, int y)
+{
+	if (x <= y)
+		return (x);
+	else
+		return (y);
+}
+
 char	*delimit_this(char *s, t_pipehelper *p)
 {
 	char	*loc;
@@ -78,30 +87,34 @@ char	*delimit_this(char *s, t_pipehelper *p)
 	loc = ft_strnstr(s, "<<", ft_strlen(s));
 	if (loc)
 	{
-		len = mod_ft_strlen(loc + 2, ' ');
+		len = ft_min(mod_ft_strlen(loc + 2, ' '), mod_ft_strlen(loc + 2, '\n'));
 		delim = malloc(len + 2);
 		ft_strlcpy(delim, loc + 2, len + 1);
 		delim[len + 1] = 0;
 		delim[len] = '\n';
-		// s = remove_delim(s, loc, ft_strlen(delim) + 1);
-		tmp = readline("heredoc> ");
-		to_free = tmp;
-		tmp = ft_strjoin(tmp, "\n");
-		free(to_free);
-		while (ft_strncmp(tmp, delim, ft_strlen(delim)))
+		if (ft_strchr(s, '\n'))
+			p->heredoc = ft_strdup(ft_strchr(s, '\n') + 1);
+		else
 		{
-			to_free = p->heredoc;
-			p->heredoc = ft_strjoin(p->heredoc, tmp);
-			free(to_free);
-			free(tmp);
 			tmp = readline("heredoc> ");
 			to_free = tmp;
 			tmp = ft_strjoin(tmp, "\n");
 			free(to_free);
+			while (ft_strncmp(tmp, delim, ft_strlen(delim)))
+			{
+				to_free = p->heredoc;
+				p->heredoc = ft_strjoin(p->heredoc, tmp);
+				free(to_free);
+				free(tmp);
+				tmp = readline("heredoc> ");
+				to_free = tmp;
+				tmp = ft_strjoin(tmp, "\n");
+				free(to_free);
+			}
+			if (tmp)
+				free(tmp);
 		}
-		if (tmp)
-			free(tmp);
-		free(delim);
+		p->delim = delim;
 	}
 	return (s);
 }

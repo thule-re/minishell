@@ -6,13 +6,13 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:39:58 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 13:48:53 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:32:21 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	ft_min(int x, int y)
+int	ft_min(int x, int y)
 {
 	if (x <= y)
 		return (x);

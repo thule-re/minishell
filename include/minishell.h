@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 14:04:04 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:32:33 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	**get_path(char **envp);
 char	*get_command(char **paths, char *cmd_str);
 void	close_pipes(int *pipe, int size);
 int		check_access(char **input);
+int		ft_min(int x, int y);
 
 //error handlers from Pipex
 void	error_handler(char *s, t_pipehelper *params);

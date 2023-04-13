@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 14:04:36 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:21:15 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	init_params(t_pipehelper *params)
 
 int	is_unclosed(char *input)
 {
+	if (!input)
+		return (0);
 	while (*input)
 	{
 		if (is_apo(*input))

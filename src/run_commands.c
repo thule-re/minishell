@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 13:59:53 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:23:58 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,6 @@ static int	init_variables(t_pipehelper *p, char **s)
 	p->i = 0;
 	return (p->num_pipes);
 }
-
-int	check_access(char **input)
-{
-	while (*input)
-	{
-		if (access(*input, R_OK) == 0)
-			return (1);
-		input++;
-	}
-	return (0);
-}
-
 static void	end_running(t_pipehelper *p)
 {
 	if (p->fd_in)
@@ -58,6 +46,19 @@ static void	end_running(t_pipehelper *p)
 	close_pipes(p->pipefd, p->num_pipes * 2);
 	free (p->pipefd);
 	p->pipefd = NULL;
+}
+
+void	close_outs(int *pipe, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (i % 2)
+			close(pipe[i]);
+		i++;
+	}
 }
 
 void	run_commands(t_pipehelper *p, char **parsed_input, int index)
@@ -75,7 +76,7 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 		pid = fork();
 		if (pid == 0)
 			run_child_1(p, p->fd_in, p->fd_out);
-		waitpid(-1, NULL, WNOHANG);
+		waitpid(-1, NULL, 0);
 		reset_inputs(p);
 		while (parsed_input[index] && ft_strncmp("|", parsed_input[index], 2))
 			index++;
@@ -83,7 +84,8 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 			index++;
 		p->i++;
 		counter--;
+		if (counter >= 0 && p->num_pipes)
+			close_outs(p->pipefd, p->i * 2);
 	}
-	sleep(1);
 	end_running(p);
 }

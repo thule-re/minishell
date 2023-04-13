@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:02:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 13:49:25 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:24:08 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,15 @@ void	shift_array(char **arr, int i)
 	free(arr[i]);
 	arr[i] = NULL;
 	free(to_free);
+}
+
+int	check_access(char **input)
+{
+	while (*input)
+	{
+		if (access(*input, R_OK) == 0)
+			return (1);
+		input++;
+	}
+	return (0);
 }

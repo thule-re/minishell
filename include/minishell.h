@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/12 12:30:08 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:15:03 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,17 @@ typedef struct s_pipehelper {
 	char	**envp;
 	char	**paths;
 	char	**input1;
-	int		num_in;
 	int		fd_index;
 	int		fd_outdex;
-	int		*fd_in;
-	int		num_out;
-	int		*fd_out;
+	int		fd_in;
+	int		fd_out;
 	int		num_pipes;
 	int		i;
 	int		pipe_status;
 	char	*cmd;
-	char	*cmd2;
 	int		*pipefd;
+	char	*heredoc;
+	int		hd_pipe[2];
 }	t_pipehelper;
 
 //functions for splitting and input parsing
@@ -51,10 +50,15 @@ void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
 int		mod_ft_strlen(char *str, char c);
-char	*get_input(int unclosed);
+char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2);
 int		is_unclosed(char *input);
 char	**reformat_inputs(char **arr);
 void	shift_array(char **arr, int i);
+
+char	*delimit_this(char *s, t_pipehelper *p);
+char	*expand_variables(char *s);
+char	*append_var(char *s, int i, char *ret);
+void	string_shift(char *s);
 
 //Functions for pipes
 int		check_input(int argc, char **argv);
@@ -64,6 +68,8 @@ char	*append_slash(char *path, char *str, char *c);
 char	**get_path(char **envp);
 char	*get_command(char **paths, char *cmd_str);
 void	close_pipes(int *pipe, int size);
+int		check_access(char **input);
+int		ft_min(int x, int y);
 
 //error handlers from Pipex
 void	error_handler(char *s, t_pipehelper *params);
@@ -80,34 +86,6 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 
 #endif
 
-// Commands to test against shell:
-
-// Working:
-
-// Not working:
-
-// cat -e infile.txt | grep str >out
-// cat -e infile.txt >out1 | grep str >out
-// cat -e infile.txt >out1 >out2 | grep str >out3 >out4
-// cat -e <infile.txt <infile.txt | grep str <infile.txt >out1
-// cat -e < infile.txt < infile.txt <infile.txt | grep str <infile.txt >outfile
-	// (Why is the output getting flipped around???)
-
-// HOW DOES HEREDOC WORK?
-
-// - takes input like in and out with a "<<"
-// - Input comes in at the end of the command no matter what
-// - Works differently with cat command...
-// - When delimiter is in quotes, variables don't expand, otherwise they do.
-
-
-// METHOD IDEA - Store all heredoc info in a string, pass this as
-	// last argument into the commands
-	// How does heredoc handle quotes? Probably should place it after quote logic
-
 // TO DO: 
 
-// - Quote handling input: Make newlines work as shell, i.e. 
-// 	echo "hello
-// 	world"
-// - 
+// - give correct priority to either heredoc or infile input!

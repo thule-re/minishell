@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/11 16:45:35 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:43:55 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	make_count(t_pipehelper *p, char **parsed_input, int index)
 	return (count);
 }
 
-int	count_string(char **parsed_input, int index, int count, char *s)
+int	count_string(char **arr, int index, int count, char c)
 {
 	int	i;
 	int	ret;
@@ -60,64 +60,56 @@ int	count_string(char **parsed_input, int index, int count, char *s)
 	ret = 0;
 	while (i < count)
 	{
-		if (!ft_strncmp(s, parsed_input[index + i], ft_strlen(s)))
+		if (arr[index + i][0] == c && arr[index + i][1] != c)
 			ret++;
 		i++;
 	}
 	return (ret);
 }
 
-void	add_fds(t_pipehelper *p, char **parsed_input, int index, int count)
+void	add_fds(t_pipehelper *p, char **arr, int index, int count)
 {
 	int	i;
-	int	j;
-	int	k;
 
-	p->num_in = count_string(parsed_input, index, count, "<");
-	p->num_out = count_string(parsed_input, index, count, ">");
-	i = 0;
-	j = 0;
-	k = 0;
-	if (p->num_in)
-		p->fd_in = malloc(sizeof(int) * p->num_in);
-	if (p->num_out)
-		p->fd_out = malloc(sizeof(int) * p->num_out);
-	while (i < count)
+	i = -1;
+	while (++i < count)
 	{
-		if (!ft_strncmp("<", parsed_input[index + i], 1))
-		{
-			p->fd_in[j] = open(&parsed_input[index + i][1], O_RDONLY);
-			j++;
-		}
-		if (!ft_strncmp(">", parsed_input[index + i], 1))
-		{
-			p->fd_out[k] = open(&parsed_input[index + i][1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			k++;
-		}
-		i++;
+		if (arr[index + i][0] == '<' && arr[index + i][1] != '<')
+			p->fd_in = open(&arr[index + i][1], O_RDONLY);
+		if (arr[index + i][0] == '<' && arr[index + i][1] == '<')
+			p->fd_in = 0;
+		if (arr[index + i][0] == '>' && arr[index + i][1] != '>')
+			p->fd_out = open(&arr[index + i][1], \
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (arr[index + i][0] == '>' && arr[index + i][1] == '>')
+			p->fd_out = open(&arr[index + i][2], \
+				O_WRONLY | O_APPEND | O_CREAT, 0644);
 	}
 }
 
 //pipe status: 1 = at beginning, 2 = middle, 3 = end, 4 = no pipes
-void	make_input(t_pipehelper *p, char **parsed_input, int index)
+void	make_input(t_pipehelper *p, char **arr, int index)
 {
 	int	count;
 	int	i;
 	int	j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	count = make_count(p, parsed_input, index);
+	count = make_count(p, arr, index);
 	p->input1 = malloc(sizeof(char *) * (count + 1));
-	add_fds(p, parsed_input, index, count);
-	while (i < count)
+	add_fds(p, arr, index, count);
+	while (++i < count)
 	{
-		if (ft_strncmp("<", parsed_input[index + i], 1) && ft_strncmp(">", parsed_input[index + i], 1))
-		{
-			p->input1[j] = ft_strdup(parsed_input[index + i]);
-			j++;
-		}
-		i++;
+		if (arr[index + i][0] != '<' && arr[index + i][0] != '>')
+			p->input1[j++] = ft_strdup(arr[index + i]);
+	}
+	p->input1[j] = 0;
+	if (p->heredoc && !(check_access(p->input1)) && !p->fd_in)
+	{	
+		pipe(&p->hd_pipe[0]);
+		write(p->hd_pipe[1], p->heredoc, ft_strlen(p->heredoc));
+		close(p->hd_pipe[1]);
 	}
 	p->input1[j] = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 14:32:33 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:15:03 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ char	**reformat_inputs(char **arr);
 void	shift_array(char **arr, int i);
 
 char	*delimit_this(char *s, t_pipehelper *p);
+char	*expand_variables(char *s);
+char	*append_var(char *s, int i, char *ret);
+void	string_shift(char *s);
 
 //Functions for pipes
 int		check_input(int argc, char **argv);

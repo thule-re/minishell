@@ -12,39 +12,6 @@
 
 #include "../include/minishell.h"
 
-static char	**init_env(char **old_envp)
-{
-	int		i;
-	char	**envp;
-
-	i = 0;
-	while (old_envp[i])
-		i++;
-	envp = (char **)ft_calloc(i + 1, sizeof(char *));
-	i = 0;
-	while (old_envp[i])
-	{
-		envp[i] = ft_strdup(old_envp[i]);
-		i++;
-	}
-	return (envp);
-}
-
-int	init_params(t_pipehelper *params)
-{
-	params->input1 = NULL;
-	params->cmd = NULL;
-	params->paths = NULL;
-	params->heredoc = NULL;
-	params->i = 0;
-	params->fd_index = 0;
-	params->fd_outdex = 0;
-	params->fd_in = 0;
-	params->fd_out = 0;
-	environ = init_env(environ);
-	return (1);
-}
-
 int	is_unclosed(char *input)
 {
 	if (!input)

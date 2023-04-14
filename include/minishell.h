@@ -84,6 +84,9 @@ int		are_there_pipes(char **parsed_input);
 
 void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 
+// environment functions
+char	*ft_getenv(char *str, char **envp);
+
 #endif
 
 // TO DO: 

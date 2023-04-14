@@ -49,6 +49,8 @@ int	main(void)
 			free_everything(&p, parsed_input, input);
 		}
 	}
+	if (environ)
+		free_arr(environ);
 	free_everything(&p, NULL, input);
 	return (0);
 }

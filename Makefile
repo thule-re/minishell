@@ -21,7 +21,8 @@ FILES 		= 	main \
 				pipex_children \
 				make_input \
 				run_commands \
-				heredoc_parsing
+				heredoc_parsing \
+				shell_split_utils_2
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))

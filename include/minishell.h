@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/14 11:15:03 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:30:22 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <signal.h>
 
 // Global environment variable
 extern char	**environ;
@@ -28,6 +29,7 @@ typedef struct s_pipehelper {
 	char	**envp;
 	char	**paths;
 	char	**input1;
+	char	*usr_input;
 	int		fd_index;
 	int		fd_outdex;
 	int		fd_in;
@@ -39,10 +41,11 @@ typedef struct s_pipehelper {
 	int		*pipefd;
 	char	*heredoc;
 	int		hd_pipe[2];
+	int		exit_status;
 }	t_pipehelper;
 
 //functions for splitting and input parsing
-char	**ft_shell_split(char *s, char c);
+char	**ft_shell_split(t_pipehelper *p, char *s, char c);
 int		apo_count(char *str, char apo);
 int		is_apo(char c);
 char	next_one(char *s);
@@ -52,12 +55,11 @@ void	print_array(char **arr);
 int		mod_ft_strlen(char *str, char c);
 char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2);
 int		is_unclosed(char *input);
-char	**reformat_inputs(char **arr);
+char	**reformat_inputs(t_pipehelper *p, char **arr);
 void	shift_array(char **arr, int i);
 
 char	*delimit_this(char *s, t_pipehelper *p);
-char	*expand_variables(char *s);
-char	*append_var(char *s, int i, char *ret);
+char	*expand_variables(t_pipehelper *p, char *s);
 void	string_shift(char *s);
 
 //Functions for pipes
@@ -83,10 +85,19 @@ void	cmd_error(char *str, t_pipehelper *params);
 void	make_input(t_pipehelper *p, char **parsed_input, int index);
 int		are_there_pipes(char **parsed_input);
 
-void	run_commands(t_pipehelper *p, char **parsed_input, int index);
+void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid);
 
 #endif
 
 // TO DO: 
 
 // - give correct priority to either heredoc or infile input!
+// - Fix exit call with spaces at end
+// - add expansion of "$?"
+
+// - With leaks at exit: minishell hangs when error is thrown!
+
+
+// COMMANDS NOT WORKING:
+
+// cat -e infile.txt <out1

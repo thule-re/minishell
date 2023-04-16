@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 16:01:03 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:27:32 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ void	close_outs(int *pipe, int size)
 	}
 }
 
-void	run_commands(t_pipehelper *p, char **parsed_input, int index)
+void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
 {	
-	int		pid;
 	int		counter;
 
 	counter = init_variables(p, parsed_input);
@@ -73,11 +72,12 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 		make_input(p, parsed_input, index);
 		if (!*parsed_input)
 			break ;
-		p->cmd = get_command(p->paths, p->input1[0]);
 		pid = fork();
 		if (pid == 0)
 			run_child_1(p, p->fd_in, p->fd_out);
-		waitpid(-1, NULL, 0);
+		waitpid(pid, &p->exit_status, 0);
+		if (WIFEXITED(p->exit_status))
+			p->exit_status = WEXITSTATUS(p->exit_status);
 		reset_inputs(p);
 		while (parsed_input[index] && ft_strncmp("|", parsed_input[index], 2))
 			index++;

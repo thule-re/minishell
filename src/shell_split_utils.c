@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/14 11:17:24 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/16 10:58:47 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	next_one(char *s)
 	return (0);
 }
 
-char	**reformat_inputs(char **arr)
+char	**reformat_inputs(t_pipehelper *p, char **arr)
 {
 	char	*tmp;
 	int		i;
@@ -74,7 +74,7 @@ char	**reformat_inputs(char **arr)
 			i--;
 		}
 		if ((arr[i][0] == 34 && ft_strchr(arr[i], '$')) || arr[i][0] == '$')
-			arr[i] = expand_variables(arr[i]);
+			arr[i] = expand_variables(p, arr[i]);
 		if (is_apo(arr[i][0]))
 			string_shift(arr[i]);
 		i++;

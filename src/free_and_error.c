@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:49:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/14 14:09:29 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:56:14 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	file_error(char *s, int fd, int error_type, t_pipehelper *params)
 {
 	if (fd != -1)
 		write(fd, "       0\n", 9);
-	write(STDERR_FILENO, "minishell: ", 7);
+	write(STDERR_FILENO, "minishell: ", 11);
 	perror(s);
 	if (params)
 		free_arrs(params);

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/16 11:30:22 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:45:49 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,3 @@ int		are_there_pipes(char **parsed_input);
 void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid);
 
 #endif
-
-// TO DO: 
-
-// - give correct priority to either heredoc or infile input!
-// - Fix exit call with spaces at end
-// - add expansion of "$?"
-
-// - With leaks at exit: minishell hangs when error is thrown!
-
-
-// COMMANDS NOT WORKING:
-
-// cat -e infile.txt <out1

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/16 11:27:32 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:59:29 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,14 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
 	counter = init_variables(p, parsed_input);
 	while (counter >= 0)
 	{
-		make_input(p, parsed_input, index);
-		if (!*parsed_input)
-			break ;
 		pid = fork();
 		if (pid == 0)
+		{
+			make_input(p, parsed_input, index);
+			if (!*parsed_input)
+				break ;
 			run_child_1(p, p->fd_in, p->fd_out);
+		}
 		waitpid(pid, &p->exit_status, 0);
 		if (WIFEXITED(p->exit_status))
 			p->exit_status = WEXITSTATUS(p->exit_status);

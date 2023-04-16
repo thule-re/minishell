@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/16 11:25:06 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:55:10 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ void	add_fds(t_pipehelper *p, char **arr, int index, int count)
 		if (arr[index + i][0] == '>' && arr[index + i][1] == '>')
 			p->fd_out = open(&arr[index + i][2], \
 				O_WRONLY | O_APPEND | O_CREAT, 0644);
+		if (p->fd_in == -1)
+			file_error(&arr[index + i][1], p->fd_in, 1, NULL);
+		if (p->fd_out == -1)
+			file_error(&arr[index + i][1], p->fd_out, 1, NULL);
 	}
 }
 

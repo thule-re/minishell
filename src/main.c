@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 16:58:23 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/17 17:48:23 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_es;
 
-static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
+void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 {
 	free_arrs(p);
 	if (p->heredoc)
@@ -28,7 +28,7 @@ static void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
 	input = NULL;
 }
 
-int	builtin_exit(char **parsed_input)
+int	builtin_exit(char **parsed_input, int ret)
 {
 	int	i;
 
@@ -36,20 +36,24 @@ int	builtin_exit(char **parsed_input)
 	if (!parsed_input[1])
 	{
 		ft_putstr_fd("exit\n", 2);
-		return (0);
+		ret = 0;
 	}
-	while (parsed_input[1][i])
+	while (parsed_input[1] && parsed_input[1][i])
 	{
 		if (!ft_isdigit(parsed_input[1][i]))
 		{
 			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(parsed_input[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			return (255);
+			ret = 255;
+			break ;
 		}
 		i++;
 	}
-	return (atoi(parsed_input[1]));
+	if (ret == -1)
+		ret = atoi(parsed_input[1]);
+	free_arr(parsed_input);
+	return (ret);
 }
 
 static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
@@ -63,7 +67,7 @@ static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
 	p->exit_status = g_es;
 	parsed_input = ft_shell_split(p, input, 32);
 	if (!ft_strncmp(parsed_input[0], "exit", 5))
-		return (builtin_exit(parsed_input));
+		return (builtin_exit(parsed_input, -1));
 	add_history(input);
 	signal(SIGINT, sigint_handler_b);
 	run_commands(p, parsed_input, 0, 0);

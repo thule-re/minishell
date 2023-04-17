@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 15:51:29 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/17 17:28:49 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
 		if (pid == 0)
 		{
 			make_input(p, parsed_input, index);
-			if (!*parsed_input)
-				break ;
+			if (!*parsed_input || !*(p->input1))
+			{
+				free_everything(p, parsed_input, p->usr_input);
+				exit(0);
+			}
 			run_child_1(p, p->fd_in, p->fd_out);
 		}
 		waitpid(pid, &p->exit_status, 0);

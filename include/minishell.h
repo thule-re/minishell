@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 16:28:31 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/17 17:16:30 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	file_error(char *s, int fd, int error_type, t_pipehelper *params);
 void	free_arr(char **arr);
 void	free_arrs(t_pipehelper *params);
 void	cmd_error(char *str, t_pipehelper *params);
+void	free_everything(t_pipehelper *p, char **parsed_input, char *input);
 
 //make input
 void	make_input(t_pipehelper *p, char **parsed_input, int index);

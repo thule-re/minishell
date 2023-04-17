@@ -67,9 +67,15 @@ int	cd(t_pipehelper *p, int forked)
 	else
 		path = ft_strdup(p->input1[1]);
 	if (access(path, X_OK) != 0)
+	{
+		free(path);
 		return (ft_return(p, cd_error(p->input1[1]), forked));
+	}
 	if (chdir(path) == -1)
+	{
+		free(path);
 		return (ft_return(p, cd_error(p->input1[1]), forked));
+	}
 	free(path);
 	update_env(p, pwd_before);
 	return (0);

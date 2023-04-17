@@ -22,6 +22,8 @@ int	ft_return(t_pipehelper *p, int code, int forked)
 
 char	**ft_getenvp(char *str, char **envp)
 {
+	if (str == NULL)
+		return (NULL);
 	while (*envp)
 	{
 		if (ft_strncmp(str, *envp, ft_strlen(str)) == 0)

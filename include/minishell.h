@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 15:48:46 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:28:31 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void rl_replace_line (const char *text, int clear_undo);
 
 //signals
 void	sigint_handler_a(int signum);
-void	sigquit_handler(int signum);
 void	init_signals(void);
 void	sigint_handler_b(int signum);
 void check_signals(t_pipehelper *p);

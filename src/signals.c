@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:43:50 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 15:49:34 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:55:25 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,10 @@ void	sigint_handler_b(int signum)
 	g_es = 130;
 }
 
-void	sigquit_handler(int signum)
-{
-	int	do_nothing;
-
-	rl_replace_line("", 0);
-	rl_redisplay();
-	do_nothing = 42;
-	do_nothing += signum;
-}
-
 void	init_signals(void)
 {
-	signal(4, sigquit_handler);
 	signal(SIGINT, sigint_handler_a);
-	signal(SIGQUIT, sigquit_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	check_signals(t_pipehelper *p)

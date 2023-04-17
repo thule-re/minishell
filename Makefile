@@ -22,7 +22,12 @@ FILES 		= 	main \
 				make_input \
 				run_commands \
 				heredoc_parsing \
-				shell_split_utils_2
+				shell_split_utils_2 \
+				builtin_utils \
+				cd \
+				env \
+				pwd \
+				unset \
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))

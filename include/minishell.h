@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
+# include <sys/param.h>
 
 // Global environment variable
 extern char	**environ;
@@ -37,6 +38,7 @@ typedef struct s_pipehelper {
 	int		*pipefd;
 	char	*heredoc;
 	int		hd_pipe[2];
+	int		exit_status;
 }	t_pipehelper;
 
 //functions for splitting and input parsing
@@ -83,6 +85,17 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 
 // environment functions
 char	*ft_getenv(char *str, char **envp);
+char	**ft_getenvp(char *str, char **envp);
+
+// builtins
+int		run_builtin(t_pipehelper *p, int forked);
+int		ft_return(t_pipehelper *p, int code, int forked);
+int		echo(t_pipehelper *p, int forked);
+int		cd(t_pipehelper *p, int forked);
+int		pwd(t_pipehelper *p, int forked);
+int		export(t_pipehelper *p, int forked);
+int		unset(t_pipehelper *p, int forked);
+int		env(t_pipehelper *p, int forked);
 
 #endif
 

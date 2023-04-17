@@ -74,6 +74,9 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 		if (!*parsed_input)
 			break ;
 		p->cmd = get_command(p->paths, p->input1[0]);
+		if (p->num_pipes == 0 && !run_builtin(p, 0))
+			break ;
+		ft_printf("no builtin\n");
 		pid = fork();
 		if (pid == 0)
 			run_child_1(p, p->fd_in, p->fd_out);

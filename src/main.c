@@ -41,7 +41,8 @@ static int	init_params(t_pipehelper *params)
 	params->fd_outdex = 0;
 	params->fd_in = 0;
 	params->fd_out = 0;
-	environ = init_env(environ);
+	params->envp = init_env(environ);
+	environ = params->envp;
 	return (1);
 }
 

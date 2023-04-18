@@ -49,7 +49,6 @@ char	next_one(char *s);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
-int		mod_ft_strlen(char *str, char c);
 char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2);
 int		is_unclosed(char *input);
 char	**reformat_inputs(char **arr);
@@ -59,6 +58,7 @@ char	*delimit_this(char *s, t_pipehelper *p);
 char	*expand_variables(char *s);
 char	*append_var(char *s, int i, char *ret);
 void	string_shift(char *s);
+int		ft_strlenc(const char *str, int c);
 
 //Functions for pipes
 int		check_input(int argc, char **argv);

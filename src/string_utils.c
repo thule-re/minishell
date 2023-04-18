@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:16:03 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/04 11:57:23 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:21:46 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,14 @@ void	strshift(char *str)
 		str[i] = str[i + 1];
 		i++;
 	}
+}
+
+int	ft_strlenc(const char *str, int c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
 }

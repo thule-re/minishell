@@ -21,7 +21,7 @@ int	is_unclosed(char *input)
 		if (is_apo(*input))
 		{
 			if (apo_count(input + 1, *input))
-				input += mod_ft_strlen(input + 1, *input) + 1;
+				input += ft_strlenc(input + 1, *input) + 1;
 			else
 				return (1);
 		}

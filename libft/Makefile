@@ -35,6 +35,7 @@ FILES 		= 	ft_atoi \
 				ft_split \
 				ft_strchr \
 				ft_strdup \
+				ft_strndup \
 				ft_striteri \
 				ft_strjoin \
 				ft_strlcat \

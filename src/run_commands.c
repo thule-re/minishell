@@ -29,7 +29,7 @@ static int	init_variables(t_pipehelper *p, char **s)
 	int	counter;
 
 	p->num_pipes = are_there_pipes(s);
-	p->paths = ft_split(ft_getenv("PATH", environ), ':');
+	p->paths = ft_split(ft_getenv("PATH", *p->envp), ':');
 	p->pipefd = malloc(2 * sizeof(int) * p->num_pipes);
 	counter = p->num_pipes;
 	while (counter--)

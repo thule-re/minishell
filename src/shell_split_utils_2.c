@@ -29,7 +29,7 @@ char	*append_var(char *s, int i, char *ret)
 	char	*tmp;
 	char	*var;
 
-	len = mod_ft_strlen(&s[i + 1], ' ') + 1;
+	len = ft_strlenc(&s[i + 1], ' ') + 1;
 	var = malloc(len);
 	ft_strlcpy(var, &s[i + 1], len);
 	tmp = getenv(var);

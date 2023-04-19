@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/14 11:17:15 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:24:21 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,10 @@ void	string_shift(char *s)
 	*(s - 2) = 0;
 }
 
-char	*append_var(char *s, int i, char *ret)
+static char	*append_var_helper(char *s, char *tmp, char *ret, int i)
 {
-	int		len;
 	char	*tmp2;
-	char	*tmp;
-	char	*var;
 
-	len = mod_ft_strlen(&s[i + 1], ' ') + 1;
-	var = malloc(len);
-	ft_strlcpy(var, &s[i + 1], len);
-	tmp = getenv(var);
-	if (!tmp)
-		tmp = ft_strdup("");
-	else
-		tmp = ft_strdup(tmp);
 	tmp2 = malloc(i + 1);
 	ft_strlcpy(tmp2, s, i + 1);
 	ret = ft_strjoin(ret, tmp2);
@@ -45,11 +34,33 @@ char	*append_var(char *s, int i, char *ret)
 	ret = ft_strjoin(ret, tmp);
 	free(tmp2);
 	free(tmp);
-	free(var);
 	return (ret);
 }
 
-char	*expand_variables(char *s)
+static char	*append_var(t_pipehelper *p, char *s, int i, char *ret)
+{
+	int		len;
+	char	*tmp;
+	char	*var;
+
+	len = mod_ft_strlen(&s[i + 1], ' ') + 1;
+	var = malloc(len);
+	ft_strlcpy(var, &s[i + 1], len);
+	if (s[i + 1] == '?')
+		tmp = ft_itoa(p->exit_status);
+	else
+	{
+		tmp = getenv(var);
+		if (!tmp)
+			tmp = ft_strdup("");
+		else
+			tmp = ft_strdup(tmp);
+	}
+	free(var);
+	return (append_var_helper(s, ret, tmp, i));
+}
+
+char	*expand_variables(t_pipehelper *p, char *s)
 {
 	int		i;
 	char	*ret;
@@ -64,7 +75,7 @@ char	*expand_variables(char *s)
 	{
 		if (s[i] == '$')
 		{
-			ret = append_var(s, i, ret);
+			ret = append_var(p, s, i, ret);
 			s += i;
 			i = 0;
 		}

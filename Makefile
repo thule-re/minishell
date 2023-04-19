@@ -22,12 +22,15 @@ FILES 		= 	main \
 				make_input \
 				run_commands \
 				heredoc_parsing \
-				shell_split_utils_2
+				shell_split_utils_2 \
+				signals
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))
 INCL		=	./include/minishell.h
 
+INCLUDE = -I $(HOME)/goinfre/.brew/opt/readline/include/
+LIBS = -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
 NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
@@ -37,7 +40,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo "$(YELLOW)Compiling [$(NAME)]...$(RESET)"
-	@gcc $(FLAGS) -lreadline -o $(NAME) $(OBJS) $(LIBFT)
+	@gcc $(FLAGS) $(INCLUDE) $(LIBS) -o $(NAME) $(OBJS) $(LIBFT)
 	@echo "$(GREEN)Finished [$(NAME)]$(RESET)"
 
 $(LIBFT):

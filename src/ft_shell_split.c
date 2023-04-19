@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 16:44:52 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/16 10:59:21 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	shell_split_helper(char *s, char **result, int i)
 	return (len);
 }
 
-char	**ft_shell_split(char *s, char c)
+char	**ft_shell_split(t_pipehelper *p, char *s, char c)
 {
 	char	**result;
 	int		i;
@@ -94,5 +94,5 @@ char	**ft_shell_split(char *s, char c)
 		i++;
 	}
 	result[i] = 0;
-	return (reformat_inputs(result));
+	return (reformat_inputs(p, result));
 }

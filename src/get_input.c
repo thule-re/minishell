@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 15:21:15 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:47:12 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	init_params(t_pipehelper *params)
 	params->fd_outdex = 0;
 	params->fd_in = 0;
 	params->fd_out = 0;
+	params->exit_status = 0;
 	return (1);
 }
 
@@ -79,6 +80,11 @@ char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2)
 			tmp = readline("minishell % ");
 		else
 			tmp = readline("dquote> ");
+		if (!tmp)
+		{
+			ft_putstr_fd("\033[Fminishell % exit\n", 2);
+			return (NULL);
+		}
 		if (ret)
 			tmp2 = ft_strdup(ret);
 		if (ret)

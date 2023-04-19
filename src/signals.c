@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:43:50 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 17:20:10 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/19 12:35:47 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sigint_handler_a(int signum)
 {
-	signum += 0;
+	g_es = signum;
 	ft_printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -24,7 +24,7 @@ void	sigint_handler_a(int signum)
 
 void	sigint_handler_b(int signum)
 {
-	signum += 0;
+	g_es = signum;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	g_es = 130;

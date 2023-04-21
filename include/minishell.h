@@ -49,7 +49,7 @@ typedef struct s_pipehelper {
 }	t_pipehelper;
 
 //functions for splitting and input parsing
-char	**ft_shell_split(char *s, char c);
+char	**ft_shell_split(t_pipehelper *p, char *s, char c);
 int		apo_count(char *str, char apo);
 int		is_apo(char c);
 char	next_one(char *s);
@@ -58,12 +58,12 @@ void	free_arr(char **arr);
 void	print_array(char **arr);
 char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2);
 int		is_unclosed(char *input);
-char	**reformat_inputs(char **arr);
+char	**reformat_inputs(t_pipehelper *p, char **arr);
 void	shift_array(char **arr, int i);
 
 char	*delimit_this(char *s, t_pipehelper *p);
-char	*expand_variables(char *s);
-char	*append_var(char *s, int i, char *ret);
+char	*expand_variables(t_pipehelper *p, char *s);
+char	*append_var(t_pipehelper *p, char *s, int i, char *ret);
 void	string_shift(char *s);
 int		ft_strlenc(const char *str, int c);
 
@@ -91,6 +91,8 @@ int		are_there_pipes(char **parsed_input);
 void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 
 // environment functions
+char	*ft_getenv(char *str, t_env *envp);
+t_env	*ft_getenvp(char *str, t_env *envp);
 t_env	**init_env(char **static_env);
 void	free_env(t_env **envp);
 t_env	*new_env_node(char **key_val);

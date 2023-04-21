@@ -58,7 +58,7 @@ int	main(void)
 		{
 			if (!ft_strncmp(input, "exit", 6))
 				break ;
-			parsed_input = ft_shell_split(input, 32);
+			parsed_input = ft_shell_split(&p, input, 32);
 			add_history(input);
 			run_commands(&p, parsed_input, 0);
 			free_everything(&p, parsed_input, input);

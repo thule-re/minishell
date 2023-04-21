@@ -54,7 +54,7 @@ static int	shell_split_helper(char *s, char **result, int i)
 	return (len);
 }
 
-char	**ft_shell_split(char *s, char c)
+char	**ft_shell_split(t_pipehelper *p, char *s, char c)
 {
 	char	**result;
 	int		i;
@@ -80,5 +80,5 @@ char	**ft_shell_split(char *s, char c)
 		i++;
 	}
 	result[i] = 0;
-	return (reformat_inputs(result));
+	return (reformat_inputs(p, result));
 }

@@ -22,7 +22,7 @@ void	string_shift(char *s)
 	*(s - 2) = 0;
 }
 
-char	*append_var(char *s, int i, char *ret)
+char	*append_var(t_pipehelper *p, char *s, int i, char *ret)
 {
 	int		len;
 	char	*tmp2;
@@ -32,7 +32,7 @@ char	*append_var(char *s, int i, char *ret)
 	len = ft_strlenc(&s[i + 1], ' ') + 1;
 	var = malloc(len);
 	ft_strlcpy(var, &s[i + 1], len);
-	tmp = getenv(var);
+	tmp = ft_getenv(var, *p->envp);
 	if (!tmp)
 		tmp = ft_strdup("");
 	else
@@ -49,7 +49,7 @@ char	*append_var(char *s, int i, char *ret)
 	return (ret);
 }
 
-char	*expand_variables(char *s)
+char	*expand_variables(t_pipehelper *p, char *s)
 {
 	int		i;
 	char	*ret;
@@ -64,7 +64,7 @@ char	*expand_variables(char *s)
 	{
 		if (s[i] == '$')
 		{
-			ret = append_var(s, i, ret);
+			ret = append_var(p, s, i, ret);
 			s += i;
 			i = 0;
 		}

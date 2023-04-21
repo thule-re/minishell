@@ -28,6 +28,8 @@ FILES 		= 	main \
 				env \
 				pwd \
 				unset \
+				export \
+				env_utils \
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))

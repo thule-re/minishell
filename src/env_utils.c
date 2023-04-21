@@ -12,6 +12,42 @@
 
 #include "minishell.h"
 
+char	*ft_getenv(char *str, t_env *envp)
+{
+	if (str == NULL)
+		return (NULL);
+	while (envp)
+	{
+		if (!envp->key)
+		{
+			envp = envp->next;
+			continue ;
+		}
+		if (ft_strncmp(str, envp->key, ft_strlen(str)) == 0)
+			return (envp->value);
+		envp = envp->next;
+	}
+	return (NULL);
+}
+
+t_env	*ft_getenvp(char *str, t_env *envp)
+{
+	if (str == NULL)
+		return (NULL);
+	while (envp)
+	{
+		if (!envp->key)
+		{
+			envp = envp->next;
+			continue ;
+		}
+		if (ft_strncmp(str, envp->key, ft_strlen(str)) == 0)
+			return (envp);
+		envp = envp->next;
+	}
+	return (NULL);
+}
+
 void	free_env(t_env **envp)
 {
 	t_env	*next;

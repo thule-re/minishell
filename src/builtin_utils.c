@@ -28,8 +28,8 @@ int	run_builtin(t_pipehelper *p, int forked)
 		return (cd(p, forked));
 	if (ft_strncmp("pwd", p->input1[0], 4) == 0)
 		return (pwd(p, forked));
-	// if (ft_strncmp("export", p->input1[0], 7) == 0)
-	// 	return (export(p, forked));
+	if (ft_strncmp("export", p->input1[0], 7) == 0)
+		return (export(p, forked));
 	if (ft_strncmp("unset", p->input1[0], 6) == 0)
 		return (unset(p, forked));
 	if (ft_strncmp("env", p->input1[0], 4) == 0)

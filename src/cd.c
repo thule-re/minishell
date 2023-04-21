@@ -21,27 +21,22 @@ static int	cd_error(char *str)
 
 static int	update_env(t_pipehelper *p, char *pwd_before)
 {
-	char	**old_pwd;
-	char	**cur_pwd;
-	char	*tmp;
+	t_env	*old_pwd;
+	t_env	*cur_pwd;
 	char	new_pwd[MAXPATHLEN];
 
 	getcwd(new_pwd, MAXPATHLEN);
-	old_pwd = ft_getenvp("OLDPWD", p->envp);
-	if (*old_pwd)
+	old_pwd = ft_getenvp("OLDPWD", *p->envp);
+	if (old_pwd)
 	{
-		free(*old_pwd);
-		tmp = ft_strjoin("OLDPWD=", pwd_before);
-		*old_pwd = ft_strdup(tmp);
-		free(tmp);
+		free(old_pwd->value);
+		old_pwd->value = ft_strdup(pwd_before);
 	}
-	cur_pwd = ft_getenvp("PWD", p->envp);
-	if (*cur_pwd)
+	cur_pwd = ft_getenvp("PWD", *p->envp);
+	if (cur_pwd)
 	{
-		free(*cur_pwd);
-		tmp = ft_strjoin("PWD=", new_pwd);
-		*cur_pwd = ft_strdup(tmp);
-		free(tmp);
+		free(cur_pwd->value);
+		cur_pwd->value = ft_strdup(new_pwd);
 	}
 	return (0);
 }
@@ -57,7 +52,7 @@ int	cd(t_pipehelper *p, int forked)
 		return (ft_return(p, 0, forked));
 	if (access(p->input1[1], X_OK) != 0)
 	{
-		tmp = ft_strjoin(ft_getenv("PWD", p->envp), "/");
+		tmp = ft_strjoin(ft_getenv("PWD", *p->envp), "/");
 		if (strncmp(p->input1[1], "./", 2) == 0)
 			path = ft_strjoin(tmp, p->input1[1] + 2);
 		else

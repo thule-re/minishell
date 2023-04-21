@@ -23,8 +23,15 @@
 // Global environment variable
 extern char	**environ;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_pipehelper {
-	char	**envp;
+	t_env	**envp;
 	char	**paths;
 	char	**input1;
 	int		fd_index;
@@ -84,8 +91,9 @@ int		are_there_pipes(char **parsed_input);
 void	run_commands(t_pipehelper *p, char **parsed_input, int index);
 
 // environment functions
-char	*ft_getenv(char *str, char **envp);
-char	**ft_getenvp(char *str, char **envp);
+t_env	**init_env(char **static_env);
+void	free_env(t_env **envp);
+t_env	*new_env_node(char **key_val);
 
 // builtins
 int		run_builtin(t_pipehelper *p, int forked);

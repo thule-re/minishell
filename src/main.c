@@ -12,24 +12,6 @@
 
 #include "../include/minishell.h"
 
-static char	**init_env(char **old_envp)
-{
-	int		i;
-	char	**envp;
-
-	i = 0;
-	while (old_envp[i])
-		i++;
-	envp = (char **)ft_calloc(i + 1, sizeof(char *));
-	i = 0;
-	while (old_envp[i])
-	{
-		envp[i] = ft_strdup(old_envp[i]);
-		i++;
-	}
-	return (envp);
-}
-
 static int	init_params(t_pipehelper *params)
 {
 	params->input1 = NULL;
@@ -42,7 +24,6 @@ static int	init_params(t_pipehelper *params)
 	params->fd_in = 0;
 	params->fd_out = 0;
 	params->envp = init_env(environ);
-	environ = params->envp;
 	return (1);
 }
 
@@ -83,8 +64,8 @@ int	main(void)
 			free_everything(&p, parsed_input, input);
 		}
 	}
-	if (environ)
-		free_arr(environ);
+	if (p.envp)
+		free_env(p.envp);
 	free_everything(&p, NULL, input);
 	return (0);
 }

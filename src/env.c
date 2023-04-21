@@ -19,7 +19,7 @@ int	env(t_pipehelper *p, int forked)
 	envp = *p->envp;
 	while (envp)
 	{
-		if (envp->value)
+		if (envp->value && *envp->value)
 		{
 			ft_putstr_fd(envp->key, 1);
 			ft_putstr_fd("=", 1);

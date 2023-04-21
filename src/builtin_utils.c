@@ -20,30 +20,6 @@ int	ft_return(t_pipehelper *p, int code, int forked)
 	return (0);
 }
 
-char	**ft_getenvp(char *str, char **envp)
-{
-	if (str == NULL)
-		return (NULL);
-	while (*envp)
-	{
-		if (ft_strncmp(str, *envp, ft_strlen(str)) == 0)
-			return (envp);
-		envp++;
-	}
-	return (NULL);
-}
-
-char	*ft_getenv(char *str, char **envp)
-{
-	while (*envp)
-	{
-		if (ft_strncmp(str, *envp, ft_strlen(str)) == 0)
-			return (*envp + ft_strlen(str) + 1);
-		envp++;
-	}
-	return (NULL);
-}
-
 int	run_builtin(t_pipehelper *p, int forked)
 {
 	// if (ft_strncmp("echo", p->input1[0], 5) == 0)

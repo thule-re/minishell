@@ -22,8 +22,8 @@ int	ft_return(t_pipehelper *p, int code, int forked)
 
 int	run_builtin(t_pipehelper *p, int forked)
 {
-	// if (ft_strncmp("echo", p->input1[0], 5) == 0)
-	// 	return (echo(p, forked));
+	if (ft_strncmp("echo", p->input1[0], 5) == 0)
+		return (echo(p, forked));
 	if (ft_strncmp("cd", p->input1[0], 3) == 0)
 		return (cd(p, forked));
 	if (ft_strncmp("pwd", p->input1[0], 4) == 0)

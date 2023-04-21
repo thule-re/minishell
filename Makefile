@@ -30,6 +30,7 @@ FILES 		= 	main \
 				unset \
 				export \
 				env_utils \
+				echo \
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))

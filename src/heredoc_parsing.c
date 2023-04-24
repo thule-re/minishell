@@ -58,7 +58,7 @@ char	*delimit_this(char *s, t_pipehelper *p)
 			free(p->heredoc);
 			p->heredoc = NULL;
 		}
-		len = ft_min(mod_ft_strlen(loc + 2, ' '), mod_ft_strlen(loc + 2, '\n'));
+		len = ft_min(ft_strlenc(loc + 2, ' '), ft_strlenc(loc + 2, '\n'));
 		delim = malloc(len + 2);
 		ft_strlcpy(delim, loc + 2, len + 1);
 		delim[len + 1] = 0;

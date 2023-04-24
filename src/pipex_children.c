@@ -46,6 +46,8 @@ void	run_helper(t_pipehelper *p, int in, int out)
 			dup2(p->pipefd[p->i * 2 - 2], STDIN_FILENO);
 		close_pipes(p->pipefd, p->i * 2);
 	}
+	if (run_builtin(p, 1))
+		return ;
 	if (access(p->cmd, X_OK) == -1)
 		cmd_error(p->cmd, p);
 	if (execve(p->cmd, p->input1, environ) < 0)

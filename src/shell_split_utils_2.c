@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/16 11:24:21 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:17:15 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static char	*append_var(t_pipehelper *p, char *s, int i, char *ret)
 	char	*tmp;
 	char	*var;
 
-	len = mod_ft_strlen(&s[i + 1], ' ') + 1;
+	len = ft_strlenc(&s[i + 1], ' ') + 1;
 	var = malloc(len);
 	ft_strlcpy(var, &s[i + 1], len);
 	if (s[i + 1] == '?')
 		tmp = ft_itoa(p->exit_status);
 	else
 	{
-		tmp = getenv(var);
+		tmp = ft_getenv(var, *p->envp);
 		if (!tmp)
 			tmp = ft_strdup("");
 		else

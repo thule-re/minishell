@@ -6,38 +6,16 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:16:03 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/04 11:57:23 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:21:46 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_wordsearch(char *str, char *to_find)
-{
-	char	*tmp;
-	int		i;
-
-	if (!str || !to_find || !*to_find)
-		return (0);
-	while (*str)
-	{
-		i = 0;
-		tmp = str;
-		while (*tmp == to_find[i] && to_find[i])
-		{
-			tmp++;
-			i++;
-		}
-		if (!to_find[i])
-			return ((char *)str);
-		str++;
-	}
-	return (0);
-}
-
 char	**get_path(char **envp)
 {
 	char	**path;
+	char	*tmp;
 
 	if (*envp == NULL)
 		return (ft_split("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:", ':'));
@@ -46,8 +24,9 @@ char	**get_path(char **envp)
 		return (NULL);
 	while (*envp)
 	{
-		if (ft_wordsearch(*envp, "PATH"))
-			path = ft_split(ft_wordsearch(*envp, "PATH") + 5, ':');
+		tmp = ft_strnstr(*envp, "PATH", ft_strlen(*envp));
+		if (tmp)
+			path = ft_split(tmp + 5, ':');
 		envp++;
 	}
 	return (path);
@@ -107,4 +86,14 @@ void	strshift(char *str)
 		str[i] = str[i + 1];
 		i++;
 	}
+}
+
+int	ft_strlenc(const char *str, int c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
 }

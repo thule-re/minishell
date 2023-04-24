@@ -6,26 +6,11 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 15:47:12 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:21:15 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	init_params(t_pipehelper *params)
-{
-	params->input1 = NULL;
-	params->cmd = NULL;
-	params->paths = NULL;
-	params->heredoc = NULL;
-	params->i = 0;
-	params->fd_index = 0;
-	params->fd_outdex = 0;
-	params->fd_in = 0;
-	params->fd_out = 0;
-	params->exit_status = 0;
-	return (1);
-}
 
 int	is_unclosed(char *input)
 {
@@ -36,7 +21,7 @@ int	is_unclosed(char *input)
 		if (is_apo(*input))
 		{
 			if (apo_count(input + 1, *input))
-				input += mod_ft_strlen(input + 1, *input) + 1;
+				input += ft_strlenc(input + 1, *input) + 1;
 			else
 				return (1);
 		}

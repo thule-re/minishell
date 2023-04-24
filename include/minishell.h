@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 17:16:30 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/14 13:31:44 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,23 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <sys/wait.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/param.h>
 
 // Global environment variable
 extern char	**environ;
 extern int	g_es;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_pipehelper {
-	char	**envp;
+	t_env	**envp;
 	char	**paths;
 	char	**input1;
 	char	*usr_input;
@@ -53,7 +60,6 @@ char	next_one(char *s);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
-int		mod_ft_strlen(char *str, char c);
 char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2);
 int		is_unclosed(char *input);
 char	**reformat_inputs(t_pipehelper *p, char **arr);
@@ -62,13 +68,12 @@ void	shift_array(char **arr, int i);
 char	*delimit_this(char *s, t_pipehelper *p);
 char	*expand_variables(t_pipehelper *p, char *s);
 void	string_shift(char *s);
+int		ft_strlenc(const char *str, int c);
 
 //Functions for pipes
 int		check_input(int argc, char **argv);
-int		init_params(t_pipehelper *params);
 void	run_child_1(t_pipehelper *p, int in, int out);
 char	*append_slash(char *path, char *str, char *c);
-char	*ft_wordsearch(char *str, char *to_find);
 char	**get_path(char **envp);
 char	*get_command(char **paths, char *cmd_str);
 void	close_pipes(int *pipe, int size);
@@ -97,5 +102,22 @@ void	sigint_handler_a(int signum);
 void	init_signals(void);
 void	sigint_handler_b(int signum);
 void check_signals(t_pipehelper *p);
+
+// environment functions
+char	*ft_getenv(char *str, t_env *envp);
+t_env	*ft_getenvp(char *str, t_env *envp);
+t_env	**init_env(char **static_env);
+void	free_env(t_env **envp);
+t_env	*new_env_node(char **key_val);
+
+// builtins
+int		run_builtin(t_pipehelper *p, int forked);
+int		ft_return(t_pipehelper *p, int code, int forked);
+int		echo(t_pipehelper *p, int forked);
+int		cd(t_pipehelper *p, int forked);
+int		pwd(t_pipehelper *p, int forked);
+int		export(t_pipehelper *p, int forked);
+int		unset(t_pipehelper *p, int forked);
+int		env(t_pipehelper *p, int forked);
 
 #endif

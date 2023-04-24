@@ -38,28 +38,14 @@ static int	word_count(char *str, char c, int i, int count)
 	return (count);
 }
 
-int	mod_ft_strlen(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
 static int	shell_split_helper(char *s, char **result, int i)
 {
 	int		len;
 
 	if (!is_apo(*s))
-		len = mod_ft_strlen(s, next_one(s)) + 1;
+		len = ft_strlenc(s, next_one(s)) + 1;
 	else
-		len = mod_ft_strlen(s + 1, *s) + 3;
+		len = ft_strlenc(s + 1, *s) + 3;
 	result[i] = malloc(len);
 	if (result[i])
 		ft_strlcpy(result[i], s, len);

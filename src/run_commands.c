@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 17:28:49 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/24 13:01:03 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	init_variables(t_pipehelper *p, char **s)
 	int	counter;
 
 	p->num_pipes = are_there_pipes(s);
-	p->paths = ft_split(getenv("PATH"), ':');
+	p->paths = ft_split(ft_getenv("PATH", *p->envp), ':');
 	p->pipefd = malloc(2 * sizeof(int) * p->num_pipes);
 	counter = p->num_pipes;
 	while (counter--)
@@ -63,10 +63,12 @@ void	close_outs(int *pipe, int size)
 }
 
 void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
-{	
+{
 	int		counter;
 
 	counter = init_variables(p, parsed_input);
+	if (p->num_pipes == 0 && run_builtin(p, 0))
+		counter = -1;
 	while (counter >= 0)
 	{
 		pid = fork();

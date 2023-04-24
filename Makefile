@@ -23,6 +23,15 @@ FILES 		= 	main \
 				run_commands \
 				heredoc_parsing \
 				shell_split_utils_2 \
+				builtin_utils \
+				cd \
+				env \
+				pwd \
+				unset \
+				export \
+				env_utils \
+				echo \
+				shell_split_utils_2 \
 				signals
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))

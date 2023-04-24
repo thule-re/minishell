@@ -99,7 +99,7 @@ t_env	**init_env(char **static_env)
 	if (!*envp)
 		return (NULL);
 	curr = *envp;
-	while (*static_env++)
+	while (*++static_env)
 	{
 		key_val = ft_split(*static_env, '=');
 		curr->next = new_env_node(key_val);

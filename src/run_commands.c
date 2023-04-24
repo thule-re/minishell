@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 16:01:03 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/24 13:01:03 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index)
 		if (!*parsed_input)
 			break ;
 		p->cmd = get_command(p->paths, p->input1[0]);
-		if (p->num_pipes == 0 && !run_builtin(p, 0))
+		if (p->num_pipes == 0 && run_builtin(p, 0))
 			break ;
 		pid = fork();
 		if (pid == 0)

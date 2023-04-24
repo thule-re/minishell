@@ -67,8 +67,8 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
 	int		counter;
 
 	counter = init_variables(p, parsed_input);
-	if (p->num_pipes == 0 && run_builtin(p, 0))
-		counter = -1;
+	// if (p->num_pipes == 0 && run_builtin(p, 0))
+	// 	counter = -1;
 	while (counter >= 0)
 	{
 		pid = fork();

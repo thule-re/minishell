@@ -86,10 +86,8 @@ t_env	**init_env(char **static_env)
 	t_env	*curr;
 	char	**key_val;
 
-	if (static_env == NULL)
-		return (NULL);
 	key_val = ft_split(*static_env, '=');
-	if (!key_val)
+	if (!key_val || !key_val[0])
 		return (NULL);
 	envp = (t_env **)ft_calloc(1, sizeof(t_env *));
 	if (!envp)
@@ -98,16 +96,14 @@ t_env	**init_env(char **static_env)
 	free_arr(key_val);
 	if (!*envp)
 		return (NULL);
-	static_env++;
 	curr = *envp;
-	while (*static_env)
+	while (*static_env++)
 	{
 		key_val = ft_split(*static_env, '=');
 		curr->next = new_env_node(key_val);
 		free_arr(key_val);
 		if (!curr->next)
 			return (free_env(envp), NULL);
-		static_env++;
 		curr = curr->next;
 	}
 	return (envp);

@@ -57,6 +57,8 @@ void	free_env(t_env **envp)
 	while (cur)
 	{
 		next = cur->next;
+		free(cur->key);
+		free(cur->value);
 		free(cur);
 		cur = next;
 	}

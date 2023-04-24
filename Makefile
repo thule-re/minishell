@@ -31,7 +31,6 @@ FILES 		= 	main \
 				export \
 				env_utils \
 				echo \
-				shell_split_utils_2 \
 				signals
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))

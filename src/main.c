@@ -66,7 +66,7 @@ int	builtin_exit(char **parsed_input, int ret)
 		i++;
 	}
 	if (ret == -1)
-		ret = atoi(parsed_input[1]);
+		ret = ft_atoi(parsed_input[1]);
 	free_arr(parsed_input);
 	return (ret);
 }

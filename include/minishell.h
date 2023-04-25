@@ -95,13 +95,13 @@ int		are_there_pipes(char **parsed_input);
 void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid);
 
 //readline functions
-void rl_replace_line (const char *text, int clear_undo);
+void	rl_replace_line(const char *text, int clear_undo);
 
 //signals
 void	sigint_handler_a(int signum);
 void	init_signals(void);
 void	sigint_handler_b(int signum);
-void check_signals(t_pipehelper *p);
+void	check_signals(t_pipehelper *p);
 
 // environment functions
 char	*ft_getenv(char *str, t_env *envp);

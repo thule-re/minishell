@@ -68,17 +68,17 @@ static void	display_export(t_pipehelper *p)
 			cur = cur->next;
 			continue ;
 		}
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(cur->key, 1);
+		ft_putstr_fd("declare -x ", p->fd_out);
+		ft_putstr_fd(cur->key, p->fd_out);
 		if (!cur->value)
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd("\n", p->fd_out);
 		else if (!*cur->value)
-			ft_putstr_fd("=''\n", 1);
+			ft_putstr_fd("=''\n", p->fd_out);
 		else
 		{
-			ft_putstr_fd("=\"", 1);
-			ft_putstr_fd(cur->value, 1);
-			ft_putstr_fd("\"\n", 1);
+			ft_putstr_fd("=\"", p->fd_out);
+			ft_putstr_fd(cur->value, p->fd_out);
+			ft_putstr_fd("\"\n", p->fd_out);
 		}
 		cur = cur->next;
 	}

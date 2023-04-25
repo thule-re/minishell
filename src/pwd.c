@@ -18,7 +18,7 @@ int	pwd(t_pipehelper *p, int forked)
 
 	pwd = ft_getenv("PWD", *p->envp);
 	if (pwd)
-		ft_putstr_fd(pwd, 1);
-	ft_putstr_fd("\n", 1);
+		ft_putstr_fd(pwd, p->fd_out);
+	ft_putstr_fd("\n", p->fd_out);
 	return (ft_return(p, 0, forked));
 }

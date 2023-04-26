@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/26 13:29:56 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:11:42 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*remove_apos(t_pipehelper *p, char *s, int i)
 		s_part = malloc(len + 1);
 		ft_strlcpy(s_part, s, len + 1);
 		s += len;
+		if (*s == ' ')
+			s++;
 		if ((s_part[0] == 34 && ft_strchr(s_part, '$')) || s_part[0] == '$')
 			s_part = expand_variables(p, s_part);
 		else if (is_apo(s_part[0]))

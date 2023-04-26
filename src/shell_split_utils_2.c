@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/26 12:47:34 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:25:15 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ void	string_shift(char *s)
 static char	*append_var_helper(char *s, char *tmp, char *ret, int i)
 {
 	char	*tmp2;
+	char	*to_free;
 
 	tmp2 = malloc(i + 1);
 	ft_strlcpy(tmp2, s, i + 1);
+	to_free = ret;
 	ret = ft_strjoin(tmp2, ret);
+	free(to_free);
 	free(tmp2);
 	tmp2 = ret;
 	ret = ft_strjoin(ret, tmp);
@@ -65,6 +68,7 @@ char	*expand_variables(t_pipehelper *p, char *s)
 	int		i;
 	char	*ret;
 	char	*to_free;
+	char	*tmp;
 
 	ret = NULL;
 	if (*s == 34)
@@ -76,11 +80,14 @@ char	*expand_variables(t_pipehelper *p, char *s)
 		if (s[i] == '$')
 		{
 			ret = append_var(p, s, i, ret);
-			s += i;
+			s += i + ft_strlenc(&s[i], ' ');
 			i = 0;
 		}
 		i++;
 	}
+	tmp = ret;
+	ret = ft_strjoin(ret, s);
+	free(tmp);
 	free(to_free);
 	return (ret);
 }

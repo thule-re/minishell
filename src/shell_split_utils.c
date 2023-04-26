@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/16 10:58:47 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:29:56 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,42 @@ char	next_one(char *s)
 	return (0);
 }
 
+char	*remove_apos(t_pipehelper *p, char *s, int i)
+{
+	char	*s_part;
+	char	*ret;
+	char	*to_free;
+	char	*tmp;
+	int		len;
+
+	tmp = s;
+	i = 0;
+	ret = NULL;
+	if (!s)
+		return (NULL);
+	while (*s)
+	{
+		if (!is_apo(*s))
+			len = ft_strlenc(s, next_one(s));
+		else
+			len = ft_strlenc(s + 1, *s) + 2;
+		s_part = malloc(len + 1);
+		ft_strlcpy(s_part, s, len + 1);
+		s += len;
+		if ((s_part[0] == 34 && ft_strchr(s_part, '$')) || s_part[0] == '$')
+			s_part = expand_variables(p, s_part);
+		else if (is_apo(s_part[0]))
+			string_shift(s_part);
+		to_free = ret;
+		ret = ft_strjoin(ret, s_part);
+		free(to_free);
+		free(s_part);
+	}
+	if (tmp)
+		free(tmp);
+	return (ret);
+}
+
 char	**reformat_inputs(t_pipehelper *p, char **arr)
 {
 	char	*tmp;
@@ -64,6 +100,7 @@ char	**reformat_inputs(t_pipehelper *p, char **arr)
 	i = 0;
 	while (arr[i])
 	{
+		arr[i] = remove_apos(p, arr[i], 0);
 		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) \
 				|| !ft_strncmp("<<", arr[i], 3) || !ft_strncmp(">>", arr[i], 3))
 		{
@@ -73,10 +110,6 @@ char	**reformat_inputs(t_pipehelper *p, char **arr)
 			shift_array(arr, i);
 			i--;
 		}
-		if ((arr[i][0] == 34 && ft_strchr(arr[i], '$')) || arr[i][0] == '$')
-			arr[i] = expand_variables(p, arr[i]);
-		if (is_apo(arr[i][0]))
-			string_shift(arr[i]);
 		i++;
 	}
 	return (arr);

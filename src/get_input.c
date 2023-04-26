@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 15:21:15 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:16:57 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2)
 			return (NULL);
 		}
 		if (ret)
-			tmp2 = ft_strdup(ret);
+			tmp2 = ft_strjoin(ret, "\n");
 		if (ret)
 			free(ret);
 		ret = ft_strjoin(tmp2, tmp);

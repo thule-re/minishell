@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/14 11:17:15 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/26 12:47:34 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*append_var_helper(char *s, char *tmp, char *ret, int i)
 
 	tmp2 = malloc(i + 1);
 	ft_strlcpy(tmp2, s, i + 1);
-	ret = ft_strjoin(ret, tmp2);
+	ret = ft_strjoin(tmp2, ret);
 	free(tmp2);
 	tmp2 = ret;
 	ret = ft_strjoin(ret, tmp);

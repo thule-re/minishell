@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 16:43:41 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:35:39 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	builtin_exit(char **parsed_input, int ret)
 		i++;
 	}
 	if (ret == -1)
-		ret = atoi(parsed_input[1]);
+		ret = ft_atoi(parsed_input[1]);
 	free_arr(parsed_input);
 	return (ret);
 }

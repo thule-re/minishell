@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/14 13:31:44 by treeps           ###   ########.fr       */
+/*   Updated: 2023/04/26 11:24:17 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ int		are_there_pipes(char **parsed_input);
 void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid);
 
 //readline functions
-void rl_replace_line (const char *text, int clear_undo);
+void	rl_replace_line(const char *text, int clear_undo);
 
 //signals
 void	sigint_handler_a(int signum);
 void	init_signals(void);
 void	sigint_handler_b(int signum);
-void check_signals(t_pipehelper *p);
+void	check_signals(t_pipehelper *p);
 
 // environment functions
 char	*ft_getenv(char *str, t_env *envp);

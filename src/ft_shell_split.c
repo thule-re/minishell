@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/16 10:59:21 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:27:37 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static int	word_count(char *str, char c, int i, int count)
 		{
 			apo_type = str[i];
 			i++;
-			count++;
 			while (str[i] != apo_type)
 				i++;
+			i++;
 		}
-		if (str[i] == c && str[i + 1] != c && !is_apo(str[i + 1]))
+		if (str[i] == c && str[i + 1] != c)
 			count++;
 		if (str[i + 1])
 			i++;
@@ -42,15 +42,21 @@ static int	shell_split_helper(char *s, char **result, int i)
 {
 	int		len;
 
-	if (!is_apo(*s))
-		len = ft_strlenc(s, next_one(s)) + 1;
-	else
-		len = ft_strlenc(s + 1, *s) + 3;
-	result[i] = malloc(len);
+	len = 0;
+	while (*(s + len) && *(s + len) != ' ')
+	{
+		if (!is_apo(*s))
+			len += ft_strlenc(s, next_one(s));
+		else
+		{
+			len += ft_strlenc(s + 1, *s) + 2;
+			if (*(s + len - 1) == ' ')
+				break ;
+		}
+	}
+	result[i] = malloc(len + 1);
 	if (result[i])
-		ft_strlcpy(result[i], s, len);
-	if (is_apo(*s))
-		len--;
+		ft_strlcpy(result[i], s, len + 1);
 	return (len);
 }
 

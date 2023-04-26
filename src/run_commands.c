@@ -21,7 +21,7 @@ static void	reset_inputs(t_pipehelper *p)
 	p->input1 = NULL;
 	p->cmd = NULL;
 	p->fd_in = 0;
-	p->fd_out = 0;
+	p->fd_out = 1;
 }
 
 static int	init_variables(t_pipehelper *p, char **s)
@@ -40,9 +40,9 @@ static int	init_variables(t_pipehelper *p, char **s)
 
 static void	end_running(t_pipehelper *p)
 {
-	if (p->fd_in)
+	if (p->fd_in != 0)
 		close(p->fd_in);
-	if (p->fd_out)
+	if (p->fd_out != 1)
 		close(p->fd_out);
 	close_pipes(p->pipefd, p->num_pipes * 2);
 	free (p->pipefd);
@@ -67,14 +67,14 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
 	int		counter;
 
 	counter = init_variables(p, parsed_input);
-	// if (p->num_pipes == 0 && run_builtin(p, 0))
-	// 	counter = -1;
 	while (counter >= 0)
 	{
+		make_input(p, parsed_input, index);
+		if (p->num_pipes == 0 && run_builtin(p, 0))
+			break ;
 		pid = fork();
 		if (pid == 0)
 		{
-			make_input(p, parsed_input, index);
 			if (!*parsed_input || !*(p->input1))
 			{
 				free_everything(p, parsed_input, p->usr_input);

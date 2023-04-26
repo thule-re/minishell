@@ -21,10 +21,10 @@ int	env(t_pipehelper *p, int forked)
 	{
 		if (envp->value && *envp->value)
 		{
-			ft_putstr_fd(envp->key, 1);
-			ft_putstr_fd("=", 1);
-			ft_putstr_fd(envp->value, 1);
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd(envp->key, p->fd_out);
+			ft_putstr_fd("=", p->fd_out);
+			ft_putstr_fd(envp->value, p->fd_out);
+			ft_putstr_fd("\n", p->fd_out);
 		}
 		envp = envp->next;
 	}

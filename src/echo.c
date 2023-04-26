@@ -19,9 +19,9 @@ int	echo(t_pipehelper *p, int forked)
 	i = 1;
 	while (p->input1[i])
 	{
-		ft_putstr_fd(p->input1[i++], 1);
-		ft_putstr_fd(" ", 1);
+		ft_putstr_fd(p->input1[i++], p->fd_out);
+		ft_putstr_fd(" ", p->fd_out);
 	}
-	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("\n", p->fd_out);
 	return (ft_return(p, 0, forked));
 }

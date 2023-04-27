@@ -48,7 +48,10 @@ void	cmd_error(char *str, t_pipehelper *params)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	if (!ft_getenv("PATH", *params->envp))
+		ft_putstr_fd(": no such file or directory\n", 2);
+	else
+		ft_putstr_fd(": command not found\n", 2);
 	if (params)
 		free_arrs(params);
 	exit(127);

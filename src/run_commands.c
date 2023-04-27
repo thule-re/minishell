@@ -30,6 +30,11 @@ static int	init_variables(t_pipehelper *p, char **s)
 
 	p->num_pipes = are_there_pipes(s);
 	p->paths = ft_split(ft_getenv("PATH", *p->envp), ':');
+	if (!p->paths[0])
+	{
+		free(p->paths);
+		p->paths = ft_split("/temp_asdf_dont_look_for_errors_here", ':');
+	}
 	p->pipefd = malloc(2 * sizeof(int) * p->num_pipes);
 	counter = p->num_pipes;
 	while (counter--)

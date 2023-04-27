@@ -15,16 +15,20 @@
 int	env(t_pipehelper *p, int forked)
 {
 	t_env	*envp;
+	int		fd;
 
+	fd = STDOUT_FILENO;
+	if (!forked && p->fd_out != 0)
+		fd = p->fd_out;
 	envp = *p->envp;
 	while (envp)
 	{
 		if (envp->value && *envp->value)
 		{
-			ft_putstr_fd(envp->key, p->fd_out);
-			ft_putstr_fd("=", p->fd_out);
-			ft_putstr_fd(envp->value, p->fd_out);
-			ft_putstr_fd("\n", p->fd_out);
+			ft_putstr_fd(envp->key, fd);
+			ft_putstr_fd("=", fd);
+			ft_putstr_fd(envp->value, fd);
+			ft_putstr_fd("\n", fd);
 		}
 		envp = envp->next;
 	}

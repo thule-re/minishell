@@ -15,7 +15,11 @@
 int	echo(t_pipehelper *p, int forked)
 {
 	int	i;
+	int	fd;
 
+	fd = STDOUT_FILENO;
+	if (!forked && p->fd_out)
+		fd = p->fd_out;
 	i = 1;
 	if (p->input1[1] && !ft_strncmp(p->input1[1], "-n", 3))
 		i++;

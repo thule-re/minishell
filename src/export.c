@@ -56,10 +56,14 @@ static char	**get_key_val(char **input)
 	return (key_val);
 }
 
-static void	display_export(t_pipehelper *p)
+static void	display_export(t_pipehelper *p, int forked)
 {
 	t_env	*cur;
+	int		fd;
 
+	fd = STDOUT_FILENO;
+	if (!forked && p->fd_out)
+		fd = p->fd_out;
 	cur = *p->envp;
 	while (cur)
 	{
@@ -68,17 +72,17 @@ static void	display_export(t_pipehelper *p)
 			cur = cur->next;
 			continue ;
 		}
-		ft_putstr_fd("declare -x ", p->fd_out);
-		ft_putstr_fd(cur->key, p->fd_out);
+		ft_putstr_fd("declare -x ", fd);
+		ft_putstr_fd(cur->key, fd);
 		if (!cur->value)
-			ft_putstr_fd("\n", p->fd_out);
+			ft_putstr_fd("\n", fd);
 		else if (!*cur->value)
-			ft_putstr_fd("=''\n", p->fd_out);
+			ft_putstr_fd("=''\n", fd);
 		else
 		{
-			ft_putstr_fd("=\"", p->fd_out);
-			ft_putstr_fd(cur->value, p->fd_out);
-			ft_putstr_fd("\"\n", p->fd_out);
+			ft_putstr_fd("=\"", fd);
+			ft_putstr_fd(cur->value, fd);
+			ft_putstr_fd("\"\n", fd);
 		}
 		cur = cur->next;
 	}
@@ -91,7 +95,7 @@ int	export(t_pipehelper *p, int forked)
 
 	if (!p->input1[1])
 	{
-		display_export(p);
+		display_export(p, forked);
 		return (ft_return(p, 0, forked));
 	}
 	key_val = get_key_val(&p->input1[1]);

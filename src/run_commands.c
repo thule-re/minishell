@@ -21,7 +21,7 @@ static void	reset_inputs(t_pipehelper *p)
 	p->input1 = NULL;
 	p->cmd = NULL;
 	p->fd_in = 0;
-	p->fd_out = 1;
+	p->fd_out = 0;
 }
 
 static int	init_variables(t_pipehelper *p, char **s)
@@ -40,9 +40,9 @@ static int	init_variables(t_pipehelper *p, char **s)
 
 static void	end_running(t_pipehelper *p)
 {
-	if (p->fd_in != 0)
+	if (p->fd_in)
 		close(p->fd_in);
-	if (p->fd_out != 1)
+	if (p->fd_out)
 		close(p->fd_out);
 	close_pipes(p->pipefd, p->num_pipes * 2);
 	free (p->pipefd);

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:16:03 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/18 13:21:46 by treeps           ###   ########.fr       */
+/*   Updated: 2023/04/27 14:38:35 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ char	*get_command(char **paths, char *cmd_str)
 	int		i;
 	char	*cmd;
 
-	if (access(cmd_str, X_OK) != -1)
-		return (ft_strdup(cmd_str));
 	if (!cmd_str)
 		return (NULL);
+	if (access(cmd_str, X_OK) != -1 || !*cmd_str)
+		return (ft_strdup(cmd_str));
 	i = 0;
 	while (paths[i])
 	{

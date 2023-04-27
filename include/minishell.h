@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/26 11:24:17 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 17:43:29 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/param.h>
+# include <dirent.h>
 
 // Global environment variable
 extern char	**environ;
@@ -50,6 +51,7 @@ typedef struct s_pipehelper {
 	char	*heredoc;
 	int		hd_pipe[2];
 	int		exit_status;
+	int		dircheck;
 }	t_pipehelper;
 
 //functions for splitting and input parsing
@@ -69,6 +71,8 @@ char	*delimit_this(char *s, t_pipehelper *p);
 char	*expand_variables(t_pipehelper *p, char *s);
 void	string_shift(char *s);
 int		ft_strlenc(const char *str, int c);
+int		directory_handler(t_pipehelper *p, char *input, char c);
+int		builtin_exit(char **parsed_input, int ret);
 
 //Functions for pipes
 int		check_input(int argc, char **argv);

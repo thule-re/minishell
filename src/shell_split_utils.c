@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/26 16:11:42 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/26 17:35:02 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,15 @@ char	next_one(char *s)
 	return (0);
 }
 
-char	*remove_apos(t_pipehelper *p, char *s, int i)
+static char	*remove_apos(t_pipehelper *p, char *s, char *ret, int len)
 {
 	char	*s_part;
-	char	*ret;
 	char	*to_free;
 	char	*tmp;
-	int		len;
 
-	tmp = s;
-	i = 0;
-	ret = NULL;
 	if (!s)
 		return (NULL);
+	tmp = s;
 	while (*s)
 	{
 		if (!is_apo(*s))
@@ -102,7 +98,7 @@ char	**reformat_inputs(t_pipehelper *p, char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		arr[i] = remove_apos(p, arr[i], 0);
+		arr[i] = remove_apos(p, arr[i], NULL, 0);
 		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) \
 				|| !ft_strncmp("<<", arr[i], 3) || !ft_strncmp(">>", arr[i], 3))
 		{

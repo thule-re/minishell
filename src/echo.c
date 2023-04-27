@@ -17,11 +17,15 @@ int	echo(t_pipehelper *p, int forked)
 	int	i;
 
 	i = 1;
+	if (p->input1[1] && !ft_strncmp(p->input1[1], "-n", 3))
+		i++;
 	while (p->input1[i])
 	{
-		ft_putstr_fd(p->input1[i++], p->fd_out);
-		ft_putstr_fd(" ", p->fd_out);
+		ft_putstr_fd(p->input1[i++], fd);
+		if (p->input1[i])
+			ft_putstr_fd(" ", fd);
 	}
-	ft_putstr_fd("\n", p->fd_out);
+	if (!p->input1[1] || ft_strncmp(p->input1[1], "-n", 3) != 0)
+		ft_putstr_fd("\n", fd);
 	return (ft_return(p, 0, forked));
 }

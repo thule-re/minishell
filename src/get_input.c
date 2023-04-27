@@ -6,13 +6,13 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/26 13:16:57 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:02:47 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	is_unclosed(char *input)
+static int	is_unclosed(char *input)
 {
 	if (!input)
 		return (0);
@@ -30,26 +30,19 @@ int	is_unclosed(char *input)
 	return (0);
 }
 
-char	*remove_delim(char *s, char *loc, int delim_len)
+static char	*exit_signal(void)
 {
-	char	*new;
-	int		i;
-	char	*tmp;
+	ft_putstr_fd("\033[Fminishell % exit\n", 2);
+	return (NULL);
+}
 
-	i = 0;
-	new = malloc(ft_strlen(s) - delim_len);
-	tmp = s;
-	while (*s)
-	{
-		if (s == loc)
-			s += delim_len;
-		new[i] = *s;
-		i++;
-		s++;
-	}
-	free(tmp);
-	new[i] = 0;
-	return (new);
+static char	*unexpected_eof()
+{
+	ft_putstr_fd("unexpected EOF while looking for matching `'", 2);
+	ft_putchar_fd('"', 2);
+	ft_putstr_fd("\n", 2);
+	g_es = 258;
+	return (ft_strdup(""));
 }
 
 char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2)
@@ -65,11 +58,10 @@ char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2)
 			tmp = readline("minishell % ");
 		else
 			tmp = readline("dquote> ");
-		if (!tmp)
-		{
-			ft_putstr_fd("\033[Fminishell % exit\n", 2);
-			return (NULL);
-		}
+		if (!tmp && !line_count)
+			return (exit_signal());
+		else if (!tmp && line_count)
+			return (unexpected_eof());
 		if (ret)
 			tmp2 = ft_strjoin(ret, "\n");
 		if (ret)

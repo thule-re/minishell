@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:39:58 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/13 14:32:21 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:07:03 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_min(int x, int y)
 		return (y);
 }
 
-void	delim_helper(t_pipehelper *p, char *delim)
+static void	delim_helper(t_pipehelper *p, char *delim)
 {
 	char	*tmp;
 	char	*to_free;
@@ -36,6 +36,11 @@ void	delim_helper(t_pipehelper *p, char *delim)
 		free(to_free);
 		free(tmp);
 		tmp = readline("> ");
+		if (!tmp)
+		{
+			ft_putstr_fd("\033[A> ", 2);
+			break ;
+		}
 		to_free = tmp;
 		tmp = ft_strjoin(tmp, "\n");
 		free(to_free);

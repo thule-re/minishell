@@ -76,16 +76,19 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
 	{
 		make_input(p, parsed_input, index);
 		if (p->num_pipes == 0 && run_builtin(p, 0))
-			break ;
-		pid = fork();
-		if (pid == 0)
+			;
+		else
 		{
-			if (!*parsed_input || !*(p->input1))
+			pid = fork();
+			if (pid == 0)
 			{
-				free_everything(p, parsed_input, p->usr_input);
-				exit(0);
+				if (!*parsed_input || !*(p->input1))
+				{
+					free_everything(p, parsed_input, p->usr_input);
+					exit(0);
+				}
+				run_child_1(p, p->fd_in, p->fd_out);
 			}
-			run_child_1(p, p->fd_in, p->fd_out);
 		}
 		waitpid(pid, &p->exit_status, 0);
 		check_signals(p);

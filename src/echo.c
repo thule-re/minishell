@@ -12,16 +12,43 @@
 
 #include "minishell.h"
 
+int	has_option_n(char *str)
+{
+	int	has_option;
+
+	has_option = 0;
+	if (*str != '-')
+		return (0);
+	while (*(++str) == 'n')
+		has_option = 1;
+	if (!*str && has_option)
+		return (1);
+	return (0);
+}
+
 int	echo(t_pipehelper *p, int forked)
 {
 	int	i;
+	int	fd;
+	int	has_n;
 
+	fd = STDOUT_FILENO;
+	if (!forked && p->fd_out)
+		fd = p->fd_out;
+	has_n = 0;
 	i = 1;
+	while (p->input1[i] && has_option_n(p->input1[i]))
+	{
+		has_n = 1;
+		i++;
+	}
 	while (p->input1[i])
 	{
-		ft_putstr_fd(p->input1[i++], 1);
-		ft_putstr_fd(" ", 1);
+		ft_putstr_fd(p->input1[i++], fd);
+		if (p->input1[i])
+			ft_putstr_fd(" ", fd);
 	}
-	ft_putstr_fd("\n", 1);
+	if (!has_n)
+		ft_putstr_fd("\n", fd);
 	return (ft_return(p, 0, forked));
 }

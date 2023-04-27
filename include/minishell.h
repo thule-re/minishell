@@ -108,6 +108,7 @@ t_env	*ft_getenvp(char *str, t_env *envp);
 t_env	**init_env(char **static_env);
 void	free_env(t_env **envp);
 t_env	*new_env_node(char **key_val);
+char	**export_env(t_env *env);
 
 // builtins
 int		run_builtin(t_pipehelper *p, int forked);

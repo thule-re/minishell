@@ -42,9 +42,20 @@ int	unset(t_pipehelper *p, int forked)
 {
 	t_env	*env_var;
 
+	if (forked)
+		return (ft_return(p, 0, forked));
 	env_var = ft_getenvp(p->input1[1], *p->envp);
 	if (!env_var)
 		return (ft_return(p, 0, forked));
+	if (env_var == (*p->envp))
+	{
+		free((*p->envp)->key);
+		free((*p->envp)->value);
+		env_var = (*p->envp)->next;
+		free(*p->envp);
+		*p->envp = env_var;
+		return (ft_return(p, 0, forked));
+	}
 	free(env_var->value);
 	env_var->value = NULL;
 	free(env_var->key);

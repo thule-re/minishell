@@ -23,7 +23,6 @@
 # include <sys/param.h>
 
 // Global environment variable
-extern char	**environ;
 extern int	g_es;
 
 typedef struct s_env

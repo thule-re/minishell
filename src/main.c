@@ -14,7 +14,7 @@
 
 int	g_es;
 
-static int	init_params(t_pipehelper *params)
+static int	init_params(t_pipehelper *params, char **envp)
 {
 	params->input1 = NULL;
 	params->cmd = NULL;
@@ -25,7 +25,7 @@ static int	init_params(t_pipehelper *params)
 	params->fd_outdex = 0;
 	params->fd_in = 0;
 	params->fd_out = 0;
-	params->envp = init_env(environ);
+	params->envp = init_env(envp);
 	return (1);
 }
 
@@ -77,13 +77,15 @@ static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
 	return (-1);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_pipehelper	p;
 	int				es;
 
 	es = -1;
-	init_params(&p);
+	argc = 0;
+	argv = NULL;
+	init_params(&p, envp);
 	while (es < 0)
 	{
 		init_signals();

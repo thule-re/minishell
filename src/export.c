@@ -12,20 +12,24 @@
 
 #include "minishell.h"
 
-static void	env_add_back(t_env *envp, char **key_val)
+static void	env_add_key(t_env *envp, char **key_val)
 {
-	while (envp->next)
+	while (envp)
+	{
+		if (!ft_strncmp(envp->key, key_val[0], ft_strlen(key_val[0])))
+		{
+			free(envp->value);
+			if (!key_val[1])
+				envp->value = NULL;
+			else
+				envp->value = ft_strdup(key_val[1]);
+			return ;
+		}
+		if (!envp->next)
+			break ;
 		envp = envp->next;
+	}
 	envp->next = new_env_node(key_val);
-}
-
-static void	update_node(t_env *node, char **key_val)
-{
-	free(node->value);
-	if (!key_val[1])
-		node->value = NULL;
-	else
-		node->value = ft_strdup(key_val[1]);
 }
 
 static char	**get_key_val(char **input)
@@ -47,8 +51,6 @@ static char	**get_key_val(char **input)
 		key_val[0] = ft_strdup(tmp[0]);
 		if (tmp[1])
 			key_val[1] = ft_strdup(tmp[1]);
-		else if (input[1])
-			key_val[1] = ft_strdup(input[1]);
 		else
 			key_val[1] = ft_calloc(1, 1);
 		free_arr(tmp);
@@ -87,26 +89,21 @@ static void	display_export(t_pipehelper *p)
 int	export(t_pipehelper *p, int forked)
 {
 	char	**key_val;
-	t_env	*cur;
+	int		i;
 
 	if (!p->input1[1])
 	{
 		display_export(p);
 		return (ft_return(p, 0, forked));
 	}
-	key_val = get_key_val(&p->input1[1]);
-	if (!key_val)
-		return (ft_return(p, 1, forked));
-	cur = *p->envp;
-	while (cur)
+	i = 1;
+	while (p->input1[i])
 	{
-		if (!ft_strncmp(cur->key, key_val[0], ft_strlen(key_val[0])))
-		{
-			update_node(cur, key_val);
-			return (free_arr(key_val), ft_return(p, 0, forked));
-		}
-		cur = cur->next;
+		key_val = get_key_val(&p->input1[i]);
+		if (!key_val)
+			return (ft_return(p, 1, forked));
+		env_add_key(*p->envp, key_val);
+		i++;
 	}
-	env_add_back(*p->envp, key_val);
 	return (free_arr(key_val), ft_return(p, 0, forked));
 }

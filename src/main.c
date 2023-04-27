@@ -29,21 +29,7 @@ static int	init_params(t_pipehelper *params)
 	return (1);
 }
 
-void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
-{
-	free_arrs(p);
-	if (p->heredoc)
-		free(p->heredoc);
-	if (parsed_input)
-		free_arr(parsed_input);
-	if (input)
-		free(input);
-	p->heredoc = NULL;
-	parsed_input = NULL;
-	input = NULL;
-}
-
-int	builtin_exit(char **parsed_input, int ret)
+static int	builtin_exit(char **parsed_input, int ret)
 {
 	int	i;
 

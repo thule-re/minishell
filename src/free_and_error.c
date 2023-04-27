@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:49:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/17 15:36:51 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:36:51 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,18 @@ void	cmd_error(char *str, t_pipehelper *params)
 	if (params)
 		free_arrs(params);
 	exit(127);
+}
+
+void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
+{
+	free_arrs(p);
+	if (p->heredoc)
+		free(p->heredoc);
+	if (parsed_input)
+		free_arr(parsed_input);
+	if (input)
+		free(input);
+	p->heredoc = NULL;
+	parsed_input = NULL;
+	input = NULL;
 }

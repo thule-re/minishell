@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 18:01:27 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:15:02 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	next_one(char *s);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
-char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2);
+char	*get_input(t_pipehelper *p, char *tmp, char *tmp2, int line_count);
 char	**reformat_inputs(t_pipehelper *p, char **arr);
 void	shift_array(char **arr, int i);
 

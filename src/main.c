@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 17:46:18 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:14:51 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static int	init_params(t_pipehelper *params)
 
 static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
 {
-	input = get_input(1, p, NULL, NULL);
+	input = get_input(p, NULL, NULL, 0);
 	if (!input)
 		return (1);
 	if (!*input)
 		return (-1);
-	if  (!directory_handler(p, input, 0))
+	if (!directory_handler(p, input, 0))
 		return (-1);
 	p->usr_input = input;
 	p->exit_status = g_es;

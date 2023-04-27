@@ -6,11 +6,25 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 17:42:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 17:46:38 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:18:14 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static void	directory_print(void *dir)
+{
+	if (dir)
+	{
+		ft_putstr_fd(": is a directory\n", 2);
+		g_es = 126;
+	}
+	else
+	{
+		ft_putstr_fd(": no such file or directory\n", 2);
+		g_es = 127;
+	}
+}
 
 int	directory_handler(t_pipehelper *p, char *input, char c)
 {
@@ -28,17 +42,8 @@ int	directory_handler(t_pipehelper *p, char *input, char c)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(input, 2);
-		if (dir)
-		{
-			ft_putstr_fd(": is a directory\n", 2);
-			g_es = 126;
-		}
-		else
-		{
-			ft_putstr_fd(": no such file or directory\n", 2);
-			g_es = 127;
-		}
 		input[(ft_strlen(input))] = c;
+		directory_print(dir);
 		if (dir)
 			closedir(dir);
 		free(input);

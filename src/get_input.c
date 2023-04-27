@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 18:02:47 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:15:18 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*exit_signal(void)
 	return (NULL);
 }
 
-static char	*unexpected_eof()
+static char	*unexpected_eof(void)
 {
 	ft_putstr_fd("unexpected EOF while looking for matching `'", 2);
 	ft_putchar_fd('"', 2);
@@ -45,14 +45,12 @@ static char	*unexpected_eof()
 	return (ft_strdup(""));
 }
 
-char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2)
+char	*get_input(t_pipehelper *p, char *tmp, char *tmp2, int line_count)
 {
 	char	*ret;
-	int		line_count;
 
-	line_count = 0;
 	ret = NULL;
-	while (unclosed)
+	while (1)
 	{
 		if (!line_count)
 			tmp = readline("minishell % ");
@@ -67,11 +65,10 @@ char	*get_input(int unclosed, t_pipehelper *p, char *tmp, char *tmp2)
 		if (ret)
 			free(ret);
 		ret = ft_strjoin(tmp2, tmp);
-		if (tmp)
-			free(tmp);
-		if (tmp2)
-			free(tmp2);
-		unclosed = is_unclosed(ret);
+		free(tmp);
+		free(tmp2);
+		if (!is_unclosed(ret))
+			break ;
 		line_count++;
 	}
 	return (delimit_this(ret, p));

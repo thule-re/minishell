@@ -57,7 +57,7 @@ char	**export_env(t_env *env)
 	int		i;
 
 	i = 0;
-	res_env = ft_calloc(ft_getenvlen(env), sizeof(char *));
+	res_env = ft_calloc(ft_getenvlen(env) + 1, sizeof(char *));
 	if (!res_env)
 		return (NULL);
 	while (env)

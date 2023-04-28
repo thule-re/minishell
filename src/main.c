@@ -14,7 +14,7 @@
 
 int	g_es;
 
-static int	init_params(t_pipehelper *params)
+static int	init_params(t_pipehelper *params, char **envp)
 {
 	params->dircheck = 0;
 	params->usr_input = NULL;
@@ -26,9 +26,37 @@ static int	init_params(t_pipehelper *params)
 	params->fd_index = 0;
 	params->fd_outdex = 0;
 	params->fd_in = 0;
-	params->fd_out = 1;
-	params->envp = init_env(environ);
+	params->fd_out = 0;
+	params->envp = init_env(envp);
 	return (1);
+}
+
+static int	builtin_exit(char **parsed_input, int ret)
+{
+	int	i;
+
+	i = 0;
+	if (!parsed_input[1])
+	{
+		ft_putstr_fd("exit\n", 2);
+		ret = 0;
+	}
+	while (parsed_input[1] && parsed_input[1][i])
+	{
+		if (!ft_isdigit(parsed_input[1][i]))
+		{
+			ft_putstr_fd("minishell: exit: ", 2);
+			ft_putstr_fd(parsed_input[1], 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
+			ret = 255;
+			break ;
+		}
+		i++;
+	}
+	if (ret == -1)
+		ret = ft_atoi(parsed_input[1]);
+	free_arr(parsed_input);
+	return (ret);
 }
 
 static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
@@ -55,13 +83,15 @@ static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
 	return (-1);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_pipehelper	p;
 	int				es;
 
 	es = -1;
-	init_params(&p);
+	argc = 0;
+	argv = NULL;
+	init_params(&p, envp);
 	while (es < 0)
 	{
 		init_signals();

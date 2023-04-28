@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:46:31 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 18:33:37 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:54:58 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	run_helper(t_pipehelper *p, int in, int out)
 		return ;
 	if (access(p->cmd, X_OK) == -1 || p->dircheck)
 		cmd_error(p->cmd, p);
-	if (execve(p->cmd, p->input1, environ) < 0)
+	if (execve(p->cmd, p->input1, export_env(*p->envp)) < 0)
 		error_handler("execve", p);
 }
 

@@ -33,7 +33,8 @@ FILES 		= 	main \
 				echo \
 				signals \
 				exit \
-				pre_parsing
+				pre_parsing \
+				export_env
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))

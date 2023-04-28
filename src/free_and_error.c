@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:49:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 17:40:33 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:36:51 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void	cmd_error(char *str, t_pipehelper *params)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	if (!ft_getenv("PATH", *params->envp))
+		ft_putstr_fd(": no such file or directory\n", 2);
+	else
+		ft_putstr_fd(": command not found\n", 2);
 	if (params)
 		free_arrs(params);
 	exit(127);

@@ -21,7 +21,7 @@ static void	reset_inputs(t_pipehelper *p)
 	p->input1 = NULL;
 	p->cmd = NULL;
 	p->fd_in = 0;
-	p->fd_out = 1;
+	p->fd_out = 0;
 }
 
 static int	init_variables(t_pipehelper *p, char **s)
@@ -30,6 +30,11 @@ static int	init_variables(t_pipehelper *p, char **s)
 
 	p->num_pipes = are_there_pipes(s);
 	p->paths = ft_split(ft_getenv("PATH", *p->envp), ':');
+	if (!p->paths[0])
+	{
+		free(p->paths);
+		p->paths = ft_split("/temp_asdf_dont_look_for_errors_here", ':');
+	}
 	p->pipefd = malloc(2 * sizeof(int) * p->num_pipes);
 	counter = p->num_pipes;
 	while (counter--)
@@ -40,9 +45,9 @@ static int	init_variables(t_pipehelper *p, char **s)
 
 static void	end_running(t_pipehelper *p)
 {
-	if (p->fd_in != 0)
+	if (p->fd_in)
 		close(p->fd_in);
-	if (p->fd_out != 1)
+	if (p->fd_out)
 		close(p->fd_out);
 	close_pipes(p->pipefd, p->num_pipes * 2);
 	free (p->pipefd);
@@ -71,16 +76,19 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
 	{
 		make_input(p, parsed_input, index);
 		if (p->num_pipes == 0 && run_builtin(p, 0))
-			break ;
-		pid = fork();
-		if (pid == 0)
+			;
+		else
 		{
-			if (!*parsed_input || !*(p->input1))
+			pid = fork();
+			if (pid == 0)
 			{
-				free_everything(p, parsed_input, p->usr_input);
-				exit(0);
+				if (!*parsed_input || !*(p->input1))
+				{
+					free_everything(p, parsed_input, p->usr_input);
+					exit(0);
+				}
+				run_child_1(p, p->fd_in, p->fd_out);
 			}
-			run_child_1(p, p->fd_in, p->fd_out);
 		}
 		waitpid(pid, &p->exit_status, 0);
 		check_signals(p);

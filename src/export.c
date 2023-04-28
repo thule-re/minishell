@@ -32,7 +32,7 @@ static void	env_add_key(t_env *envp, char **key_val)
 	envp->next = new_env_node(key_val);
 }
 
-static char	**get_key_val(char **input)
+static char	**get_key_val(char *input)
 {
 	char	**key_val;
 	char	**tmp;
@@ -40,14 +40,14 @@ static char	**get_key_val(char **input)
 	key_val = (char **)ft_calloc(3, sizeof(char *));
 	if (!key_val)
 		return (NULL);
-	if (!ft_strchr(input[0], '='))
+	if (!ft_strchr(input, '='))
 	{
-		key_val[0] = ft_strdup(input[0]);
+		key_val[0] = ft_strdup(input);
 		return (key_val);
 	}
 	else
 	{
-		tmp = ft_split(input[0], '=');
+		tmp = ft_split(input, '=');
 		key_val[0] = ft_strdup(tmp[0]);
 		if (tmp[1])
 			key_val[1] = ft_strdup(tmp[1]);
@@ -69,11 +69,6 @@ static void	display_export(t_pipehelper *p, int forked)
 	cur = *p->envp;
 	while (cur)
 	{
-		if (!cur->value && !cur->key)
-		{
-			cur = cur->next;
-			continue ;
-		}
 		ft_putstr_fd("declare -x ", fd);
 		ft_putstr_fd(cur->key, fd);
 		if (!cur->value)
@@ -103,7 +98,7 @@ int	export(t_pipehelper *p, int forked)
 	i = 1;
 	while (p->input1[i])
 	{
-		key_val = get_key_val(&p->input1[i]);
+		key_val = get_key_val(p->input1[i]);
 		if (!key_val)
 			return (ft_return(p, 1, forked));
 		env_add_key(*p->envp, key_val);

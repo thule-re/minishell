@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:46:31 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/16 11:54:58 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:33:37 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	close_pipes(int *pipe, int size)
 	}
 }
 
-void	run_helper(t_pipehelper *p, int in, int out)
+void	set_pipes(t_pipehelper *p, int in, int out)
 {
 	if (p->pipe_status == 1)
 	{
@@ -46,9 +46,14 @@ void	run_helper(t_pipehelper *p, int in, int out)
 			dup2(p->pipefd[p->i * 2 - 2], STDIN_FILENO);
 		close_pipes(p->pipefd, p->i * 2);
 	}
+}
+
+void	run_helper(t_pipehelper *p, int in, int out)
+{
+	set_pipes(p, in, out);
 	if (run_builtin(p, 1))
 		return ;
-	if (access(p->cmd, X_OK) == -1)
+	if (access(p->cmd, X_OK) == -1 || p->dircheck)
 		cmd_error(p->cmd, p);
 	if (execve(p->cmd, p->input1, environ) < 0)
 		error_handler("execve", p);

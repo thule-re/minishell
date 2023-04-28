@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/26 13:35:39 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:14:51 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	g_es;
 
 static int	init_params(t_pipehelper *params)
 {
+	params->dircheck = 0;
+	params->usr_input = NULL;
 	params->input1 = NULL;
 	params->cmd = NULL;
 	params->paths = NULL;
@@ -29,58 +31,20 @@ static int	init_params(t_pipehelper *params)
 	return (1);
 }
 
-void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
-{
-	free_arrs(p);
-	if (p->heredoc)
-		free(p->heredoc);
-	if (parsed_input)
-		free_arr(parsed_input);
-	if (input)
-		free(input);
-	p->heredoc = NULL;
-	parsed_input = NULL;
-	input = NULL;
-}
-
-int	builtin_exit(char **parsed_input, int ret)
-{
-	int	i;
-
-	i = 0;
-	if (!parsed_input[1])
-	{
-		ft_putstr_fd("exit\n", 2);
-		ret = 0;
-	}
-	while (parsed_input[1] && parsed_input[1][i])
-	{
-		if (!ft_isdigit(parsed_input[1][i]))
-		{
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(parsed_input[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			ret = 255;
-			break ;
-		}
-		i++;
-	}
-	if (ret == -1)
-		ret = ft_atoi(parsed_input[1]);
-	free_arr(parsed_input);
-	return (ret);
-}
-
 static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
 {
-	input = get_input(1, p, NULL, NULL);
-	p->usr_input = input;
+	input = get_input(p, NULL, NULL, 0);
 	if (!input)
 		return (1);
 	if (!*input)
 		return (-1);
+	if (!directory_handler(p, input, 0))
+		return (-1);
+	p->usr_input = input;
 	p->exit_status = g_es;
 	parsed_input = ft_shell_split(p, input, 32);
+	if (!parsed_input || !*parsed_input)
+		return (-1);
 	if (!ft_strncmp(parsed_input[0], "exit", 5))
 		return (builtin_exit(parsed_input, -1));
 	add_history(input);

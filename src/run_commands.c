@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/24 13:01:03 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 13:03:44 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	init_variables(t_pipehelper *p, char **s)
 	return (p->num_pipes);
 }
 
-static void	end_running(t_pipehelper *p)
+void	end_running(t_pipehelper *p)
 {
 	if (p->fd_in)
 		close(p->fd_in);
@@ -84,7 +84,7 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
 			{
 				if (!*parsed_input || !*(p->input1))
 				{
-					free_everything(p, parsed_input, p->usr_input);
+					free_everything(p, p->envp, p->usr_input);
 					exit(0);
 				}
 				run_child_1(p, p->fd_in, p->fd_out);

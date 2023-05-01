@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 18:14:51 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:42:03 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	g_es;
 
 static int	init_params(t_pipehelper *params, char **envp)
 {
+	params->split_input = NULL;
 	params->dircheck = 0;
 	params->usr_input = NULL;
 	params->input1 = NULL;
@@ -31,7 +32,7 @@ static int	init_params(t_pipehelper *params, char **envp)
 	return (1);
 }
 
-static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
+static int	minishell(t_pipehelper *p, char *input)
 {
 	input = get_input(p, NULL, NULL, 0);
 	if (!input)
@@ -42,16 +43,16 @@ static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
 		return (-1);
 	p->usr_input = input;
 	p->exit_status = g_es;
-	parsed_input = ft_shell_split(p, input, 32);
-	if (!parsed_input || !*parsed_input)
+	p->split_input = ft_shell_split(p, p->usr_input, 32);
+	if (!p->split_input || !*p->split_input)
 		return (-1);
-	if (!ft_strncmp(parsed_input[0], "exit", 5))
-		return (builtin_exit(parsed_input, -1));
+	if (!ft_strncmp(p->split_input[0], "exit", 5))
+		return (builtin_exit(p->split_input, -1));
 	add_history(input);
 	signal(SIGINT, sigint_handler_b);
-	run_commands(p, parsed_input, 0, 0);
+	run_commands(p, p->split_input, 0, 0);
 	g_es = p->exit_status;
-	free_everything(p, parsed_input, input);
+	free_everything(p, NULL, NULL);
 	return (-1);
 }
 
@@ -67,10 +68,8 @@ int	main(int argc, char **argv, char **envp)
 	while (es < 0)
 	{
 		init_signals();
-		es = minishell(&p, NULL, NULL);
+		es = minishell(&p, NULL);
 	}
-	if (p.envp)
-		free_env(p.envp);
-	free_everything(&p, NULL, p.usr_input);
+	free_everything(&p, p.envp, NULL);
 	exit(es);
 }

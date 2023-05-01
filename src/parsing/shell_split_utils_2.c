@@ -22,22 +22,22 @@ void	string_shift(char *s)
 	*(s - 2) = 0;
 }
 
-static char	*append_var_helper(char *s, char *tmp, char *ret, int i)
+static char	*append_var_helper(char *s, char *ret, char *tmp, int i)
 {
 	char	*tmp2;
 	char	*to_free;
 
 	tmp2 = malloc(i + 1);
 	ft_strlcpy(tmp2, s, i + 1);
-	to_free = ret;
-	ret = ft_strjoin(tmp2, ret);
+	to_free = tmp;
+	tmp = ft_strjoin(tmp2, tmp);
 	free(to_free);
 	free(tmp2);
-	tmp2 = ret;
-	ret = ft_strjoin(ret, tmp);
+	tmp2 = tmp;
+	tmp = ft_strjoin(tmp, ret);
 	free(tmp2);
-	free(tmp);
-	return (ret);
+	free(ret);
+	return (tmp);
 }
 
 static char	*append_var(t_minishell *p, char *s, int i, char *ret)
@@ -81,7 +81,7 @@ char	*expand_variables(t_minishell *p, char *s)
 		{
 			ret = append_var(p, s, i, ret);
 			s += i + ft_min(ft_strlenc(&s[i], ' '), ft_strlenc(&s[i], 39));
-			i = 0;
+			i = -1;
 		}
 		i++;
 	}

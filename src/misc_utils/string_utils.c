@@ -46,9 +46,7 @@ char	*get_command(char **paths, char *cmd_str)
 			return (NULL);
 		if (access(cmd, F_OK) != -1)
 			break ;
-		ft_bzero(cmd, ft_strlen(cmd));
-		if (cmd)
-			free(cmd);
+		free(cmd);
 		cmd = NULL;
 		i++;
 	}

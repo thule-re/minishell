@@ -59,7 +59,6 @@ char	next_one(char *s)
 static char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 {
 	char	*s_part;
-	char	*to_free;
 	char	*tmp;
 
 	if (!s)
@@ -80,14 +79,9 @@ static char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 			s_part = expand_variables(p, s_part);
 		else if (is_apo(s_part[0]))
 			string_shift(s_part);
-		to_free = ret;
-		ret = ft_strjoin(ret, s_part);
-		free(to_free);
-		free(s_part);
+		ret = ft_strjoinf(ret, s_part);
 	}
-	if (tmp)
-		free(tmp);
-	return (ret);
+	return (free(tmp), ret);
 }
 
 char	**reformat_inputs(t_minishell *p, char **arr)

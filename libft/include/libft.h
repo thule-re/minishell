@@ -92,5 +92,6 @@ int			ft_printf(const char *str, ...);
 char		*ft_get_next_line(int fd);
 void		*ft_realloc(void *ptr, size_t oldsize, size_t newsize);
 char		*ft_strndup(const char *src, int n);
+int			ft_strlenc(const char *str, int c);
 
 #endif

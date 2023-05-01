@@ -56,13 +56,3 @@ char	*get_command(char **paths, char *cmd_str)
 		return (cmd);
 	return (ft_strdup(cmd_str));
 }
-
-int	ft_strlenc(const char *str, int c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != c)
-		i++;
-	return (i);
-}

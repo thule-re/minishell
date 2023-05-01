@@ -41,6 +41,7 @@ FILES 		= 	ft_atoi \
 				ft_strlcat \
 				ft_strlcpy \
 				ft_strlen \
+				ft_strlenc \
 				ft_strmapi \
 				ft_strncmp \
 				ft_strnstr \

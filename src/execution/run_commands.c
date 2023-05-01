@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 15:50:24 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 18:00:51 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,13 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 	{
 		make_input(p, p->split_input, i);
 		if (!*p->split_input || !*(p->input1))
-			return (free_everything(p, p->envp, p->usr_input));
+			return (free_everything(p, p->envp));
 		if (!(p->num_pipes == 0 && run_builtin(p, 0)))
 		{
 			pid = fork();
 			if (pid == 0)
 				run_child_1(p, p->fd_in, p->fd_out);
 		}
-		check_signals(p);
 		reset_inputs(p);
 		while (p->split_input[i] && ft_strncmp("|", p->split_input[i], 2))
 			i++;
@@ -93,5 +92,6 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 			close_outs(p->pipefd, p->i * 2);
 	}
 	waitpid(pid, &p->exit_status, 0);
+	check_signals(p);
 	end_running(p);
 }

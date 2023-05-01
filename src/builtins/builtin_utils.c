@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:02:56 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 17:32:48 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_return(t_minishell *p, int code, int forked)
 	p->exit_status = code;
 	if (forked)
 	{
-		free_everything(p, p->envp, NULL);
+		free_everything(p, p->envp);
 		exit(code);
 	}
 	return (0);

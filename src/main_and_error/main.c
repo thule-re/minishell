@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 15:35:57 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:56:51 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	init_params(t_minishell *params, char **envp)
 	params->cmd = NULL;
 	params->paths = NULL;
 	params->heredoc = NULL;
+	params->pipefd = NULL;
 	params->i = 0;
 	params->fd_in = 0;
 	params->fd_out = 0;
@@ -50,7 +51,7 @@ static int	minishell(t_minishell *p, char *input)
 	signal(SIGINT, sigint_handler_b);
 	run_commands(p, 0, 0, init_variables(p, p->split_input));
 	g_es = p->exit_status;
-	free_everything(p, NULL, NULL);
+	free_everything(p, NULL);
 	return (-1);
 }
 
@@ -60,14 +61,16 @@ int	main(int argc, char **argv, char **envp)
 	int			es;
 
 	es = -1;
-	argc = 0;
-	argv = NULL;
+	if (argc)
+		argc = 0;
+	if (argv)
+		argv = NULL;
 	init_params(&p, envp);
 	while (es < 0)
 	{
 		init_signals();
 		es = minishell(&p, NULL);
 	}
-	free_everything(&p, p.envp, NULL);
+	free_everything(&p, p.envp);
 	exit(es);
 }

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:49:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 13:06:51 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:34:04 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	error_handler(char *s, t_minishell *params)
 {
 	perror(s);
 	if (params)
-		free_everything(params, params->envp, NULL);
+		free_everything(params, params->envp);
 	exit(1);
 }
 
@@ -46,7 +46,7 @@ void	file_error(char *s, int fd, int error_type, t_minishell *params)
 	write(STDERR_FILENO, "minishell: ", 11);
 	perror(s);
 	if (params)
-		free_everything(params, params->envp, NULL);
+		free_everything(params, params->envp);
 	exit(error_type);
 }
 
@@ -59,11 +59,11 @@ void	cmd_error(char *str, t_minishell *params)
 	else
 		ft_putstr_fd(": command not found\n", 2);
 	if (params)
-		free_everything(params, params->envp, NULL);
+		free_everything(params, params->envp);
 	exit(127);
 }
 
-void	free_everything(t_minishell *p, t_env **env, char *input)
+void	free_everything(t_minishell *p, t_env **env)
 {
 	free_arrs(p);
 	if (p->heredoc)
@@ -72,6 +72,5 @@ void	free_everything(t_minishell *p, t_env **env, char *input)
 	if (env)
 		free_env(env);
 	env = NULL;
-	input = NULL;
 	end_running(p);
 }

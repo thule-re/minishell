@@ -51,8 +51,6 @@ int	make_count(t_minishell *p, char **parsed_input, int index)
 	return (count);
 }
 
-
-
 void	add_fds(t_minishell *p, char **arr, int index, int count)
 {
 	int	i;

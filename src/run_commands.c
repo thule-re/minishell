@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 13:23:08 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	end_running(t_minishell *p)
 		close(p->fd_in);
 	if (p->fd_out)
 		close(p->fd_out);
-	close_pipes(p->pipefd, p->num_pipes * 2);
+	if (p->pipefd)
+		close_pipes(p->pipefd, p->num_pipes * 2);
 	free (p->pipefd);
 	p->pipefd = NULL;
 }

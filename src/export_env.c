@@ -6,7 +6,7 @@
 /*   By: treeps <treeps@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:07:12 by treeps            #+#    #+#             */
-/*   Updated: 2023/04/27 16:07:14 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 11:28:40 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static char	*ft_join_key_val(t_env *env)
 
 	key_len = ft_strlen(env->key);
 	val_len = ft_strlen(env->value);
-	len = key_len + val_len;
+	len = key_len + val_len + 1;
 	if (env->value)
-		len += 4;
+		len++;
 	str = ft_calloc(len, sizeof(char));
 	if (!str)
 		return (NULL);
@@ -44,9 +44,7 @@ static char	*ft_join_key_val(t_env *env)
 	if (env->value)
 	{
 		str[key_len] = '=';
-		str[key_len + 1] = '\"';
-		ft_memmove(str + key_len + 2, env->value, val_len);
-		str[key_len + val_len + 3] = '\"';
+		ft_memmove(str + key_len + 1, env->value, val_len);
 	}
 	return (str);
 }

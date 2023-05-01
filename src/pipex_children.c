@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:46:31 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 11:50:25 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	close_pipes(int *pipe, int size)
 	}
 }
 
-void	set_pipes(t_pipehelper *p, int in, int out)
+void	set_pipes(t_minishell *p, int in, int out)
 {
 	if (p->pipe_status == 1)
 	{
@@ -48,7 +48,7 @@ void	set_pipes(t_pipehelper *p, int in, int out)
 	}
 }
 
-void	run_helper(t_pipehelper *p, int in, int out)
+void	run_helper(t_minishell *p, int in, int out)
 {
 	set_pipes(p, in, out);
 	if (run_builtin(p, 1))
@@ -59,7 +59,7 @@ void	run_helper(t_pipehelper *p, int in, int out)
 		error_handler("execve", p);
 }
 
-void	run_child_1(t_pipehelper *p, int in, int out)
+void	run_child_1(t_minishell *p, int in, int out)
 {
 	if (p->heredoc && !(check_access(p->input1)) && !p->fd_in)
 	{

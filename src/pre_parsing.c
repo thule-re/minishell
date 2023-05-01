@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 17:42:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 18:18:14 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	directory_print(void *dir)
 	}
 }
 
-int	directory_handler(t_pipehelper *p, char *input, char c)
+int	directory_handler(t_minishell *p, char *input, char c)
 {
 	void	*dir;
 

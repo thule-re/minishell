@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/28 13:46:51 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*append_var_helper(char *s, char *tmp, char *ret, int i)
 	return (ret);
 }
 
-static char	*append_var(t_pipehelper *p, char *s, int i, char *ret)
+static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 {
 	int		len;
 	char	*tmp;
@@ -63,7 +63,7 @@ static char	*append_var(t_pipehelper *p, char *s, int i, char *ret)
 	return (append_var_helper(s, ret, tmp, i));
 }
 
-char	*expand_variables(t_pipehelper *p, char *s)
+char	*expand_variables(t_minishell *p, char *s)
 {
 	int		i;
 	char	*ret;

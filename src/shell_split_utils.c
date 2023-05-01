@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/28 13:47:01 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	next_one(char *s)
 	return (0);
 }
 
-static char	*remove_apos(t_pipehelper *p, char *s, char *ret, int len)
+static char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 {
 	char	*s_part;
 	char	*to_free;
@@ -90,7 +90,7 @@ static char	*remove_apos(t_pipehelper *p, char *s, char *ret, int len)
 	return (ret);
 }
 
-char	**reformat_inputs(t_pipehelper *p, char **arr)
+char	**reformat_inputs(t_minishell *p, char **arr)
 {
 	char	*tmp;
 	int		i;

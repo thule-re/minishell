@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:43:50 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/19 12:35:47 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	check_signals(t_pipehelper *p)
+void	check_signals(t_minishell *p)
 {
 	if (WIFEXITED(p->exit_status) && !WIFSIGNALED(p->exit_status))
 		p->exit_status = WEXITSTATUS(p->exit_status);

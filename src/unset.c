@@ -6,7 +6,7 @@
 /*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:11:33 by treeps            #+#    #+#             */
-/*   Updated: 2023/04/17 17:25:37 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:28 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	clean_env(t_env **envp)
 	}
 }
 
-int	unset(t_pipehelper *p, int forked)
+int	unset(t_minishell *p, int forked)
 {
 	t_env	*env_var;
 

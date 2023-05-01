@@ -6,13 +6,13 @@
 /*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:02:56 by treeps            #+#    #+#             */
-/*   Updated: 2023/04/14 12:47:14 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_return(t_pipehelper *p, int code, int forked)
+int	ft_return(t_minishell *p, int code, int forked)
 {
 	p->exit_status = code;
 	if (forked)
@@ -20,7 +20,7 @@ int	ft_return(t_pipehelper *p, int code, int forked)
 	return (0);
 }
 
-int	run_builtin(t_pipehelper *p, int forked)
+int	run_builtin(t_minishell *p, int forked)
 {
 	if (ft_strncmp("echo", p->input1[0], 5) == 0)
 		echo(p, forked);

@@ -6,13 +6,13 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 11:34:10 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	reset_inputs(t_pipehelper *p)
+static void	reset_inputs(t_minishell *p)
 {
 	if (p->input1)
 		free_arr(p->input1);
@@ -24,7 +24,7 @@ static void	reset_inputs(t_pipehelper *p)
 	p->fd_out = 0;
 }
 
-static int	init_variables(t_pipehelper *p, char **s)
+static int	init_variables(t_minishell *p, char **s)
 {
 	int		counter;
 	char	*path;
@@ -43,7 +43,7 @@ static int	init_variables(t_pipehelper *p, char **s)
 	return (p->num_pipes);
 }
 
-static void	end_running(t_pipehelper *p)
+static void	end_running(t_minishell *p)
 {
 	if (p->fd_in)
 		close(p->fd_in);
@@ -67,7 +67,7 @@ void	close_outs(int *pipe, int size)
 	}
 }
 
-void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
+void	run_commands(t_minishell *p, char **parsed_input, int index, int pid)
 {
 	int		counter;
 

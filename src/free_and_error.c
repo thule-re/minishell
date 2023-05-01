@@ -6,13 +6,13 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:49:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 15:36:51 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	free_arrs(t_pipehelper *params)
+void	free_arrs(t_minishell *params)
 {
 	if (params->cmd)
 		free(params->cmd);
@@ -25,7 +25,7 @@ void	free_arrs(t_pipehelper *params)
 	params->paths = NULL;
 }
 
-void	error_handler(char *s, t_pipehelper *params)
+void	error_handler(char *s, t_minishell *params)
 {
 	perror(s);
 	if (params)
@@ -33,7 +33,7 @@ void	error_handler(char *s, t_pipehelper *params)
 	exit(1);
 }
 
-void	file_error(char *s, int fd, int error_type, t_pipehelper *params)
+void	file_error(char *s, int fd, int error_type, t_minishell *params)
 {
 	if (fd != -1)
 		write(fd, "       0\n", 9);
@@ -44,7 +44,7 @@ void	file_error(char *s, int fd, int error_type, t_pipehelper *params)
 	exit(error_type);
 }
 
-void	cmd_error(char *str, t_pipehelper *params)
+void	cmd_error(char *str, t_minishell *params)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(str, 2);
@@ -57,7 +57,7 @@ void	cmd_error(char *str, t_pipehelper *params)
 	exit(127);
 }
 
-void	free_everything(t_pipehelper *p, char **parsed_input, char *input)
+void	free_everything(t_minishell *p, char **parsed_input, char *input)
 {
 	free_arrs(p);
 	if (p->heredoc)

@@ -6,7 +6,7 @@
 /*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:06:34 by treeps            #+#    #+#             */
-/*   Updated: 2023/04/17 12:43:52 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	cd_error(char *str)
 	return (1);
 }
 
-static int	update_env(t_pipehelper *p, char *pwd_before)
+static int	update_env(t_minishell *p, char *pwd_before)
 {
 	t_env	*old_pwd;
 	t_env	*cur_pwd;
@@ -41,7 +41,7 @@ static int	update_env(t_pipehelper *p, char *pwd_before)
 	return (0);
 }
 
-int	cd(t_pipehelper *p, int forked)
+int	cd(t_minishell *p, int forked)
 {
 	char	*path;
 	char	*tmp;

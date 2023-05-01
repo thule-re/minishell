@@ -6,7 +6,7 @@
 /*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 18:03:34 by treeps            #+#    #+#             */
-/*   Updated: 2023/04/21 18:03:37 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	has_option_n(char *str)
 	return (0);
 }
 
-int	echo(t_pipehelper *p, int forked)
+int	echo(t_minishell *p, int forked)
 {
 	int	i;
 	int	fd;

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 18:15:18 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*unexpected_eof(void)
 	return (ft_strdup(""));
 }
 
-char	*get_input(t_pipehelper *p, char *tmp, char *tmp2, int line_count)
+char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count)
 {
 	char	*ret;
 

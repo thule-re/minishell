@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:39:58 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 18:07:03 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_min(int x, int y)
 		return (y);
 }
 
-static void	delim_helper(t_pipehelper *p, char *delim)
+static void	delim_helper(t_minishell *p, char *delim)
 {
 	char	*tmp;
 	char	*to_free;
@@ -49,7 +49,7 @@ static void	delim_helper(t_pipehelper *p, char *delim)
 		free(tmp);
 }
 
-char	*delimit_this(char *s, t_pipehelper *p)
+char	*delimit_this(char *s, t_minishell *p)
 {
 	char	*loc;
 	char	*delim;

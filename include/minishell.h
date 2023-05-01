@@ -33,7 +33,7 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_pipehelper {
+typedef struct s_minishell {
 	t_env	**envp;
 	char	**paths;
 	char	**input1;
@@ -51,30 +51,29 @@ typedef struct s_pipehelper {
 	int		hd_pipe[2];
 	int		exit_status;
 	int		dircheck;
-}	t_pipehelper;
+}	t_minishell;
 
 //functions for splitting and input parsing
-char	**ft_shell_split(t_pipehelper *p, char *s, char c);
+char	**ft_shell_split(t_minishell *p, char *s, char c);
 int		apo_count(char *str, char apo);
 int		is_apo(char c);
 char	next_one(char *s);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
-char	*get_input(t_pipehelper *p, char *tmp, char *tmp2, int line_count);
-char	**reformat_inputs(t_pipehelper *p, char **arr);
+char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count);
+char	**reformat_inputs(t_minishell *p, char **arr);
 void	shift_array(char **arr, int i);
 
-char	*delimit_this(char *s, t_pipehelper *p);
-char	*expand_variables(t_pipehelper *p, char *s);
+char	*delimit_this(char *s, t_minishell *p);
+char	*expand_variables(t_minishell *p, char *s);
 void	string_shift(char *s);
 int		ft_strlenc(const char *str, int c);
-int		directory_handler(t_pipehelper *p, char *input, char c);
+int		directory_handler(t_minishell *p, char *input, char c);
 int		builtin_exit(char **parsed_input, int ret);
 
 //Functions for pipes
-int		check_input(int argc, char **argv);
-void	run_child_1(t_pipehelper *p, int in, int out);
+void	run_child_1(t_minishell *p, int in, int out);
 char	*append_slash(char *path, char *str, char *c);
 char	**get_path(char **envp);
 char	*get_command(char **paths, char *cmd_str);
@@ -83,18 +82,18 @@ int		check_access(char **input);
 int		ft_min(int x, int y);
 
 //error handlers from Pipex
-void	error_handler(char *s, t_pipehelper *params);
-void	file_error(char *s, int fd, int error_type, t_pipehelper *params);
+void	error_handler(char *s, t_minishell *params);
+void	file_error(char *s, int fd, int error_type, t_minishell *params);
 void	free_arr(char **arr);
-void	free_arrs(t_pipehelper *params);
-void	cmd_error(char *str, t_pipehelper *params);
-void	free_everything(t_pipehelper *p, char **parsed_input, char *input);
+void	free_arrs(t_minishell *params);
+void	cmd_error(char *str, t_minishell *params);
+void	free_everything(t_minishell *p, char **parsed_input, char *input);
 
 //make input
-void	make_input(t_pipehelper *p, char **parsed_input, int index);
+void	make_input(t_minishell *p, char **parsed_input, int index);
 int		are_there_pipes(char **parsed_input);
 
-void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid);
+void	run_commands(t_minishell *p, char **parsed_input, int index, int pid);
 
 //readline functions
 void	rl_replace_line(const char *text, int clear_undo);
@@ -103,7 +102,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 void	sigint_handler_a(int signum);
 void	init_signals(void);
 void	sigint_handler_b(int signum);
-void	check_signals(t_pipehelper *p);
+void	check_signals(t_minishell *p);
 
 // environment functions
 char	*ft_getenv(char *str, t_env *envp);
@@ -114,13 +113,13 @@ t_env	*new_env_node(char **key_val);
 char	**export_env(t_env *env);
 
 // builtins
-int		run_builtin(t_pipehelper *p, int forked);
-int		ft_return(t_pipehelper *p, int code, int forked);
-int		echo(t_pipehelper *p, int forked);
-int		cd(t_pipehelper *p, int forked);
-int		pwd(t_pipehelper *p, int forked);
-int		export(t_pipehelper *p, int forked);
-int		unset(t_pipehelper *p, int forked);
-int		env(t_pipehelper *p, int forked);
+int		run_builtin(t_minishell *p, int forked);
+int		ft_return(t_minishell *p, int code, int forked);
+int		echo(t_minishell *p, int forked);
+int		cd(t_minishell *p, int forked);
+int		pwd(t_minishell *p, int forked);
+int		export(t_minishell *p, int forked);
+int		unset(t_minishell *p, int forked);
+int		env(t_minishell *p, int forked);
 
 #endif

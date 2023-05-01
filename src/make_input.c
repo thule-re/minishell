@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/16 11:55:10 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	are_there_pipes(char **parsed_input)
 	return (count);
 }
 
-int	make_count(t_pipehelper *p, char **parsed_input, int index)
+int	make_count(t_minishell *p, char **parsed_input, int index)
 {
 	int	count;
 
@@ -67,7 +67,7 @@ int	count_string(char **arr, int index, int count, char c)
 	return (ret);
 }
 
-void	add_fds(t_pipehelper *p, char **arr, int index, int count)
+void	add_fds(t_minishell *p, char **arr, int index, int count)
 {
 	int	i;
 
@@ -92,7 +92,7 @@ void	add_fds(t_pipehelper *p, char **arr, int index, int count)
 }
 
 //pipe status: 1 = at beginning, 2 = middle, 3 = end, 4 = no pipes
-void	make_input(t_pipehelper *p, char **arr, int index)
+void	make_input(t_minishell *p, char **arr, int index)
 {
 	int	count;
 	int	i;

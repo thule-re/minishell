@@ -6,7 +6,7 @@
 /*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:50:04 by treeps            #+#    #+#             */
-/*   Updated: 2023/04/17 17:53:08 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	**get_key_val(char *input)
 	return (key_val);
 }
 
-static void	display_export(t_pipehelper *p, int forked)
+static void	display_export(t_minishell *p, int forked)
 {
 	t_env	*cur;
 	int		fd;
@@ -85,7 +85,7 @@ static void	display_export(t_pipehelper *p, int forked)
 	}
 }
 
-int	export(t_pipehelper *p, int forked)
+int	export(t_minishell *p, int forked)
 {
 	char	**key_val;
 	int		i;

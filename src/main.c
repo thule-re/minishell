@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 18:14:51 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_es;
 
-static int	init_params(t_pipehelper *params, char **envp)
+static int	init_params(t_minishell *params, char **envp)
 {
 	params->dircheck = 0;
 	params->usr_input = NULL;
@@ -31,7 +31,7 @@ static int	init_params(t_pipehelper *params, char **envp)
 	return (1);
 }
 
-static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
+static int	minishell(t_minishell *p, char *input, char **parsed_input)
 {
 	input = get_input(p, NULL, NULL, 0);
 	if (!input)
@@ -57,8 +57,8 @@ static int	minishell(t_pipehelper *p, char *input, char **parsed_input)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_pipehelper	p;
-	int				es;
+	t_minishell	p;
+	int			es;
 
 	es = -1;
 	argc = 0;

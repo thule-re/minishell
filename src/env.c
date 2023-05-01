@@ -6,13 +6,13 @@
 /*   By: treeps <treeps@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:51:04 by treeps            #+#    #+#             */
-/*   Updated: 2023/04/12 14:13:40 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	env(t_pipehelper *p, int forked)
+int	env(t_minishell *p, int forked)
 {
 	t_env	*envp;
 	int		fd;

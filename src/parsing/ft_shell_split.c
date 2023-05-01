@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 15:26:10 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,11 @@ static int	shell_split_helper(char *s, char **result, int i)
 	int		len;
 
 	len = 0;
-	while (*(s + len) && *(s + len) != ' ')
+	while (s[len] && s[len] != ' ')
 	{
-		if (!is_apo(*s))
-			len += ft_strlenc(s, next_one(s));
-		else
-		{
-			len += ft_strlenc(s + 1, *s) + 2;
-			if (*(s + len - 1) == ' ')
-				break ;
-		}
+		if (is_apo(s[len]))
+			len += ft_strlenc(&s[len + 1], s[len]) + 1;
+		len++;
 	}
 	result[i] = malloc(len + 1);
 	if (result[i])

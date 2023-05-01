@@ -45,7 +45,8 @@ int	echo(t_minishell *p, int forked)
 	while (p->input1[i])
 	{
 		ft_putstr_fd(p->input1[i++], p->fd_out);
-		ft_putstr_fd(" ", p->fd_out);
+		if (p->input1[i])
+			ft_putstr_fd(" ", p->fd_out);
 	}
 	if (!has_n)
 		ft_putstr_fd("\n", fd);

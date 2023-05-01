@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/26 17:35:02 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:47:01 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char	*remove_apos(t_pipehelper *p, char *s, char *ret, int len)
 		s += len;
 		if (*s == ' ')
 			s++;
-		if ((s_part[0] == 34 && ft_strchr(s_part, '$')) || s_part[0] == '$')
+		if ((s_part[0] != 39 && ft_strchr(s_part, '$')))
 			s_part = expand_variables(p, s_part);
 		else if (is_apo(s_part[0]))
 			string_shift(s_part);

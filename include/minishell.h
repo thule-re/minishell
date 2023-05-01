@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:54:12 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:37:17 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	free_everything(t_minishell *p, t_env **env, char *input);
 void	make_input(t_minishell *p, char **parsed_input, int index);
 int		are_there_pipes(char **parsed_input);
 
-void	run_commands(t_minishell *p, char **parsed_input, int index, int pid);
+int	init_variables(t_minishell *p, char **s);
+void	run_commands(t_minishell *p, int index, int pid, int counter);
 
 //readline functions
 void	rl_replace_line(const char *text, int clear_undo);

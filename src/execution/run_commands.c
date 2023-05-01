@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 13:23:08 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:38:33 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	reset_inputs(t_minishell *p)
 	p->fd_out = 0;
 }
 
-static int	init_variables(t_minishell *p, char **s)
+int	init_variables(t_minishell *p, char **s)
 {
 	int		counter;
 	char	*path;
@@ -68,19 +68,14 @@ void	close_outs(int *pipe, int size)
 	}
 }
 
-void	run_commands(t_minishell *p, char **parsed_input, int index, int pid)
+void	run_commands(t_minishell *p, int i, int pid, int counter)
 {
-	int		counter;
-
-	counter = init_variables(p, parsed_input);
 	while (counter >= 0)
 	{
-		make_input(p, parsed_input, index);
-		if (!*parsed_input || !*(p->input1))
+		make_input(p, p->split_input, i);
+		if (!*p->split_input || !*(p->input1))
 			return (free_everything(p, p->envp, p->usr_input));
-		if (p->num_pipes == 0 && run_builtin(p, 0))
-			;
-		else
+		if (!(p->num_pipes == 0 && run_builtin(p, 0)))
 		{
 			pid = fork();
 			if (pid == 0)
@@ -89,10 +84,10 @@ void	run_commands(t_minishell *p, char **parsed_input, int index, int pid)
 		waitpid(pid, &p->exit_status, 0);
 		check_signals(p);
 		reset_inputs(p);
-		while (parsed_input[index] && ft_strncmp("|", parsed_input[index], 2))
-			index++;
-		if (parsed_input[index])
-			index++;
+		while (p->split_input[i] && ft_strncmp("|", p->split_input[i], 2))
+			i++;
+		if (p->split_input[i])
+			i++;
 		p->i++;
 		counter--;
 		if (counter >= 0 && p->num_pipes)

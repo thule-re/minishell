@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:11:33 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:28 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 15:39:53 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	clean_env(t_env **envp)
 
 	if (!envp)
 		return ;
-	while (!(*envp)->key)
+	if (!(*envp)->key)
 	{
 		tmp = (*envp)->next;
 		free((*envp));
@@ -28,7 +28,7 @@ static void	clean_env(t_env **envp)
 	cur = *envp;
 	while (cur->next)
 	{
-		if (!(*envp)->next->key)
+		if (!cur->next->key)
 		{
 			tmp = cur->next;
 			cur->next = cur->next->next;

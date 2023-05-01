@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 15:35:57 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	minishell(t_minishell *p, char *input)
 		return (builtin_exit(p->split_input, -1));
 	add_history(input);
 	signal(SIGINT, sigint_handler_b);
-	run_commands(p, p->split_input, 0, 0);
+	run_commands(p, 0, 0, init_variables(p, p->split_input));
 	g_es = p->exit_status;
 	free_everything(p, NULL, NULL);
 	return (-1);

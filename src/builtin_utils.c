@@ -16,7 +16,10 @@ int	ft_return(t_minishell *p, int code, int forked)
 {
 	p->exit_status = code;
 	if (forked)
+	{
+		free_everything(p, p->envp, NULL);
 		exit(code);
+	}
 	return (0);
 }
 

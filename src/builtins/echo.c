@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 18:03:34 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 16:45:47 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	echo(t_minishell *p, int forked)
 	}
 	while (p->input1[i])
 	{
-		ft_putstr_fd(p->input1[i++], p->fd_out);
+		ft_putstr_fd(p->input1[i++], fd);
 		if (p->input1[i])
-			ft_putstr_fd(" ", p->fd_out);
+			ft_putstr_fd(" ", fd);
 	}
 	if (!has_n)
 		ft_putstr_fd("\n", fd);

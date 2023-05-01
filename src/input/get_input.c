@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 16:09:47 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,19 @@ static int	is_unclosed(char *input)
 			if (apo_count(input + 1, *input))
 				input += ft_strlenc(input + 1, *input) + 1;
 			else
-				return (1);
+				return (2);
 		}
 		input++;
 	}
+	input--;
+	while(!ft_strchr(input, '|'))
+	{
+		if (*input != ' ')
+			break ;
+		input--;
+	}
+	if (*input == '|')
+		return (3);
 	return (0);
 }
 
@@ -48,27 +57,30 @@ static char	*unexpected_eof(void)
 char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count)
 {
 	char	*ret;
+	int		status;
 
+	status = 1;
 	ret = NULL;
-	while (1)
+	while (status)
 	{
 		if (!line_count)
 			tmp = readline("minishell % ");
 		else
-			tmp = readline("dquote> ");
+			tmp = readline("> ");
 		if (!tmp && !line_count)
 			return (exit_signal());
 		else if (!tmp && line_count)
 			return (unexpected_eof());
-		if (ret)
+		if (ret && status == 2)
 			tmp2 = ft_strjoin(ret, "\n");
+		if (ret && status == 3)
+			tmp2 = ft_strjoin(ret, " ");
 		if (ret)
 			free(ret);
 		ret = ft_strjoin(tmp2, tmp);
 		free(tmp);
 		free(tmp2);
-		if (!is_unclosed(ret))
-			break ;
+		status = is_unclosed(ret);
 		line_count++;
 	}
 	return (delimit_this(ret, p));

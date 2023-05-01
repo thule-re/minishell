@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 18:15:02 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:54:12 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_env
 typedef struct s_minishell {
 	t_env	**envp;
 	char	**paths;
+	char	**split_input;
 	char	**input1;
 	char	*usr_input;
 	int		fd_in;
@@ -77,6 +78,7 @@ char	*get_command(char **paths, char *cmd_str);
 void	close_pipes(int *pipe, int size);
 int		check_access(char **input);
 int		ft_min(int x, int y);
+void	end_running(t_minishell *p);
 
 //error handlers from Pipex
 void	error_handler(char *s, t_minishell *params);
@@ -84,7 +86,7 @@ void	file_error(char *s, int fd, int error_type, t_minishell *params);
 void	free_arr(char **arr);
 void	free_arrs(t_minishell *params);
 void	cmd_error(char *str, t_minishell *params);
-void	free_everything(t_minishell *p, char **parsed_input, char *input);
+void	free_everything(t_minishell *p, t_env **env, char *input);
 
 //make input
 void	make_input(t_minishell *p, char **parsed_input, int index);

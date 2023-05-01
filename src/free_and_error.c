@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:49:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 13:06:51 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 void	free_arrs(t_minishell *params)
 {
+	if (params->split_input)
+		free_arr(params->split_input);
 	if (params->cmd)
 		free(params->cmd);
 	if (params->paths)
 		free_arr(params->paths);
 	if (params->input1)
 		free_arr(params->input1);
+	if (params->usr_input)
+		free(params->usr_input);
+	params->split_input = NULL;
+	params->usr_input = NULL;
 	params->cmd = NULL;
 	params->input1 = NULL;
 	params->paths = NULL;
@@ -29,7 +35,7 @@ void	error_handler(char *s, t_minishell *params)
 {
 	perror(s);
 	if (params)
-		free_arrs(params);
+		free_everything(params, params->envp, NULL);
 	exit(1);
 }
 
@@ -40,7 +46,7 @@ void	file_error(char *s, int fd, int error_type, t_minishell *params)
 	write(STDERR_FILENO, "minishell: ", 11);
 	perror(s);
 	if (params)
-		free_arrs(params);
+		free_everything(params, params->envp, NULL);
 	exit(error_type);
 }
 
@@ -53,20 +59,19 @@ void	cmd_error(char *str, t_minishell *params)
 	else
 		ft_putstr_fd(": command not found\n", 2);
 	if (params)
-		free_arrs(params);
+		free_everything(params, params->envp, NULL);
 	exit(127);
 }
 
-void	free_everything(t_minishell *p, char **parsed_input, char *input)
+void	free_everything(t_minishell *p, t_env **env, char *input)
 {
 	free_arrs(p);
 	if (p->heredoc)
 		free(p->heredoc);
-	if (parsed_input)
-		free_arr(parsed_input);
-	if (input)
-		free(input);
 	p->heredoc = NULL;
-	parsed_input = NULL;
+	if (env)
+		free_env(env);
+	env = NULL;
 	input = NULL;
+	end_running(p);
 }

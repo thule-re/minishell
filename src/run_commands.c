@@ -43,7 +43,7 @@ static int	init_variables(t_minishell *p, char **s)
 	return (p->num_pipes);
 }
 
-static void	end_running(t_minishell *p)
+void	end_running(t_minishell *p)
 {
 	if (p->fd_in)
 		close(p->fd_in);
@@ -76,7 +76,7 @@ void	run_commands(t_minishell *p, char **parsed_input, int index, int pid)
 	{
 		make_input(p, parsed_input, index);
 		if (!*parsed_input || !*(p->input1))
-			return (free_everything(p, parsed_input, p->usr_input));
+			return (free_everything(p, p->envp, p->usr_input));
 		if (p->num_pipes == 0 && run_builtin(p, 0))
 			;
 		else

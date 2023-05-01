@@ -14,3 +14,19 @@
    fun:readline
    ...
 }
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:fork
+   ...
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:xpc_atfork_child
+   ...
+}

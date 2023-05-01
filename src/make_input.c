@@ -51,21 +51,7 @@ int	make_count(t_minishell *p, char **parsed_input, int index)
 	return (count);
 }
 
-int	count_string(char **arr, int index, int count, char c)
-{
-	int	i;
-	int	ret;
 
-	i = 0;
-	ret = 0;
-	while (i < count)
-	{
-		if (arr[index + i][0] == c && arr[index + i][1] != c)
-			ret++;
-		i++;
-	}
-	return (ret);
-}
 
 void	add_fds(t_minishell *p, char **arr, int index, int count)
 {

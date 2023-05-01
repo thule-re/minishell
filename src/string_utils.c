@@ -12,26 +12,6 @@
 
 #include "../include/minishell.h"
 
-char	**get_path(char **envp)
-{
-	char	**path;
-	char	*tmp;
-
-	if (*envp == NULL)
-		return (ft_split("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:", ':'));
-	path = NULL;
-	if (!envp)
-		return (NULL);
-	while (*envp)
-	{
-		tmp = ft_strnstr(*envp, "PATH", ft_strlen(*envp));
-		if (tmp)
-			path = ft_split(tmp + 5, ':');
-		envp++;
-	}
-	return (path);
-}
-
 char	*append_slash(char *path, char *str, char *c)
 {
 	char	*tmp;
@@ -75,18 +55,6 @@ char	*get_command(char **paths, char *cmd_str)
 	if (cmd)
 		return (cmd);
 	return (ft_strdup(cmd_str));
-}
-
-void	strshift(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		str[i] = str[i + 1];
-		i++;
-	}
 }
 
 int	ft_strlenc(const char *str, int c)

@@ -23,8 +23,6 @@ static int	init_params(t_minishell *params, char **envp)
 	params->paths = NULL;
 	params->heredoc = NULL;
 	params->i = 0;
-	params->fd_index = 0;
-	params->fd_outdex = 0;
 	params->fd_in = 0;
 	params->fd_out = 0;
 	params->envp = init_env(envp);

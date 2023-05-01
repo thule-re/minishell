@@ -38,8 +38,6 @@ typedef struct s_minishell {
 	char	**paths;
 	char	**input1;
 	char	*usr_input;
-	int		fd_index;
-	int		fd_outdex;
 	int		fd_in;
 	int		fd_out;
 	int		num_pipes;
@@ -75,7 +73,6 @@ int		builtin_exit(char **parsed_input, int ret);
 //Functions for pipes
 void	run_child_1(t_minishell *p, int in, int out);
 char	*append_slash(char *path, char *str, char *c);
-char	**get_path(char **envp);
 char	*get_command(char **paths, char *cmd_str);
 void	close_pipes(int *pipe, int size);
 int		check_access(char **input);

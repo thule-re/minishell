@@ -6,7 +6,7 @@
 /*   By: treeps <treeps@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 18:26:26 by treeps            #+#    #+#             */
-/*   Updated: 2023/02/01 12:04:27 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 14:15:41 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ char		*ft_get_next_line(int fd);
 void		*ft_realloc(void *ptr, size_t oldsize, size_t newsize);
 char		*ft_strndup(const char *src, int n);
 int			ft_strlenc(const char *str, int c);
+char		*ft_strjoinf(char *s1, char *s2);
 
 #endif

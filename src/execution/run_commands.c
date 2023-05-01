@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 15:38:33 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:50:24 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 			if (pid == 0)
 				run_child_1(p, p->fd_in, p->fd_out);
 		}
-		waitpid(pid, &p->exit_status, 0);
 		check_signals(p);
 		reset_inputs(p);
 		while (p->split_input[i] && ft_strncmp("|", p->split_input[i], 2))
@@ -93,5 +92,6 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 		if (counter >= 0 && p->num_pipes)
 			close_outs(p->pipefd, p->i * 2);
 	}
+	waitpid(pid, &p->exit_status, 0);
 	end_running(p);
 }

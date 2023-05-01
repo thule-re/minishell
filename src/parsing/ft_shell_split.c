@@ -30,6 +30,8 @@ static int	word_count(char *str, char c, int i, int count)
 				i++;
 			i++;
 		}
+		if (!str[i])
+			break ;
 		if (str[i] == c && str[i + 1] != c)
 			count++;
 		if (str[i + 1])

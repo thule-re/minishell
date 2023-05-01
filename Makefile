@@ -10,31 +10,40 @@ CUT			=	\033[K
 
 SRC_DIR 	=	./src
 OBJ_DIR 	=	./obj
+OBJ_DIRS 	=	./obj \
+				./obj/builtins \
+				./obj/env \
+				./obj/execution \
+				./obj/input \
+				./obj/main_and_error \
+				./obj/misc_utils \
+				./obj/parsing \
+				./obj/signals \
 
-FILES 		= 	main \
-				ft_shell_split \
-				shell_split_utils \
-				array_utils \
-				string_utils \
-				free_and_error \
-				get_input \
-				pipex_children \
-				make_input \
-				run_commands \
-				heredoc_parsing \
-				shell_split_utils_2 \
-				builtin_utils \
-				cd \
-				env \
-				pwd \
-				unset \
-				export \
-				env_utils \
-				echo \
-				signals \
-				exit \
-				pre_parsing \
-				export_env
+FILES 		=	builtins/builtin_utils \
+				builtins/cd \
+				builtins/echo \
+				builtins/env \
+				builtins/exit \
+				builtins/export \
+				builtins/pwd \
+				builtins/unset \
+				env/env_utils \
+				env/export_env \
+				execution/pipex_children \
+				execution/run_commands \
+				input/get_input \
+				input/make_input \
+				main_and_error/free_and_error \
+				main_and_error/main \
+				misc_utils/array_utils \
+				misc_utils/string_utils \
+				parsing/ft_shell_split \
+				parsing/heredoc_parsing \
+				parsing/pre_parsing \
+				parsing/shell_split_utils \
+				parsing/shell_split_utils_2 \
+				signals/signals \
 
 SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
 OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))
@@ -58,7 +67,7 @@ $(LIBFT):
 	@+make -C $(LIBFT_DIR) --no-print-directory
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCL)
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIRS)
 	@echo "$(YELLOW)Compiling [$@]...$(RESET)"
 	@cc $(FLAGS) -o $@ -c $< -I include
 	@printf "$(UP)$(CUT)"

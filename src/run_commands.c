@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/24 13:01:03 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/01 11:34:10 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static void	reset_inputs(t_pipehelper *p)
 
 static int	init_variables(t_pipehelper *p, char **s)
 {
-	int	counter;
+	int		counter;
+	char	*path;
 
 	p->num_pipes = are_there_pipes(s);
-	p->paths = ft_split(ft_getenv("PATH", *p->envp), ':');
-	if (!p->paths[0])
-	{
-		free(p->paths);
-		p->paths = ft_split("/temp_asdf_dont_look_for_errors_here", ':');
-	}
+	path = ft_getenv("PATH", *p->envp);
+	if (path)
+		p->paths = ft_split(path, ':');
+	else
+		p->paths = NULL;
 	p->pipefd = malloc(2 * sizeof(int) * p->num_pipes);
 	counter = p->num_pipes;
 	while (counter--)
@@ -75,20 +75,15 @@ void	run_commands(t_pipehelper *p, char **parsed_input, int index, int pid)
 	while (counter >= 0)
 	{
 		make_input(p, parsed_input, index);
+		if (!*parsed_input || !*(p->input1))
+			return (free_everything(p, parsed_input, p->usr_input));
 		if (p->num_pipes == 0 && run_builtin(p, 0))
 			;
 		else
 		{
 			pid = fork();
 			if (pid == 0)
-			{
-				if (!*parsed_input || !*(p->input1))
-				{
-					free_everything(p, parsed_input, p->usr_input);
-					exit(0);
-				}
 				run_child_1(p, p->fd_in, p->fd_out);
-			}
 		}
 		waitpid(pid, &p->exit_status, 0);
 		check_signals(p);

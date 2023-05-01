@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:16:03 by awilliam          #+#    #+#             */
-/*   Updated: 2023/04/27 14:38:35 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/01 11:55:18 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	*get_command(char **paths, char *cmd_str)
 		return (NULL);
 	if (access(cmd_str, X_OK) != -1 || !*cmd_str)
 		return (ft_strdup(cmd_str));
+	if (!paths)
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
@@ -72,8 +74,7 @@ char	*get_command(char **paths, char *cmd_str)
 	}
 	if (cmd)
 		return (cmd);
-	else
-		return (ft_strdup(cmd_str));
+	return (ft_strdup(cmd_str));
 }
 
 void	strshift(char *str)

@@ -10,6 +10,7 @@ CUT			=	\033[K
 
 SRC_DIR 	=	./src
 OBJ_DIR 	=	./obj
+INC_DIR		=	include
 OBJ_DIRS 	=	./obj \
 				./obj/builtins \
 				./obj/env \
@@ -45,22 +46,24 @@ FILES 		=	builtins/builtin_utils \
 				parsing/shell_split_utils_2 \
 				signals/signals \
 
-SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
-OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))
 INCL		=	./include/minishell.h
 
-INCLUDE = -I $(HOME)/goinfre/.brew/opt/readline/include/
-LIBS = -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
-NAME = minishell
-LIBFT_DIR = ./libft
-LIBFT = ./libft/libft.a
-FLAGS = -Wall -Werror -Wextra
+SRCS 		= 	$(addsuffix .c, $(addprefix $(SRC_DIR)/, $(FILES)))
+OBJS 		= 	$(addsuffix .o, $(addprefix $(OBJ_DIR)/, $(FILES)))
+
+INCLUDE		=	-I $(HOME)/goinfre/.brew/opt/readline/include/
+LIBS		=	-L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
+
+NAME		=	minishell
+LIBFT_DIR	=	./libft
+LIBFT		=	./libft/libft.a
+FLAGS		=	-Wall -Werror -Wextra
  
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo "$(YELLOW)Compiling [$(NAME)]...$(RESET)"
-	@gcc $(FLAGS) $(INCLUDE) $(LIBS) -o $(NAME) $(OBJS) $(LIBFT)
+	@cc $(FLAGS) $(INCLUDE) $(LIBS) -o $(NAME) $(OBJS) $(LIBFT)
 	@echo "$(GREEN)Finished [$(NAME)]$(RESET)"
 
 $(LIBFT):
@@ -69,21 +72,21 @@ $(LIBFT):
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCL)
 	@mkdir -p $(OBJ_DIRS)
 	@echo "$(YELLOW)Compiling [$@]...$(RESET)"
-	@cc $(FLAGS) -o $@ -c $< -I include
+	@cc $(FLAGS) -o $@ -c $< -I $(INC_DIR)
 	@printf "$(UP)$(CUT)"
 	@echo "$(GREEN)Finished [$@]$(RESET)"
 	@printf "$(UP)$(CUT)"
 
 clean:
+	@+make -C $(LIBFT_DIR) clean --no-print-directory
 	@echo "$(BLUE)[$(NAME)] Deleting all objects $(RESET)"
 	@rm -rf $(OBJ_DIR)
-	@+make -C $(LIBFT_DIR) clean --no-print-directory
 
 fclean: clean
-	@echo "$(BLUE)Deleting $(NAME) $(RESET)"
-	@rm -f $(NAME)
 	@echo "$(BLUE)Deleting $(LIBFT) $(RESET)"
 	@rm -f $(LIBFT)
+	@echo "$(BLUE)Deleting $(NAME) $(RESET)"
+	@rm -f $(NAME)
 
 re: fclean all
 

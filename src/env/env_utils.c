@@ -6,7 +6,7 @@
 /*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:03:34 by treeps            #+#    #+#             */
-/*   Updated: 2023/04/18 13:03:41 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/02 15:34:43 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,13 @@ t_env	*new_env_node(char **key_val)
 {
 	t_env	*new_node;
 
-	new_node = (t_env *)malloc(sizeof(t_env));
+	new_node = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!new_node)
 		return (NULL);
 	new_node->key = ft_strdup(key_val[0]);
 	if (!new_node->key)
 		return (free(new_node), NULL);
-	if (!key_val[1])
-		new_node->value = NULL;
-	else
+	if (key_val[1])
 	{
 		new_node->value = ft_strdup(key_val[1]);
 		if (!new_node->value)
@@ -94,24 +92,23 @@ t_env	**init_env(char **static_env)
 	char	**key_val;
 
 	key_val = ft_split(*static_env, '=');
-	if (!key_val || !key_val[0])
-		return (NULL);
 	envp = (t_env **)ft_calloc(1, sizeof(t_env *));
-	if (!envp)
+	if (!key_val || !envp)
 		return (NULL);
 	*envp = new_env_node(key_val);
-	free_arr(key_val);
 	if (!*envp)
 		return (NULL);
 	curr = *envp;
 	while (*++static_env)
 	{
-		key_val = ft_split(*static_env, '=');
-		curr->next = new_env_node(key_val);
 		free_arr(key_val);
+		key_val = ft_split(*static_env, '=');
+		if (!key_val)
+			return (free_env(envp), NULL);
+		curr->next = new_env_node(key_val);
 		if (!curr->next)
 			return (free_env(envp), NULL);
 		curr = curr->next;
 	}
-	return (envp);
+	return (free_arr(key_val), envp);
 }

@@ -53,6 +53,8 @@ int	cd(t_minishell *p, int forked)
 	if (access(p->input1[1], X_OK) != 0)
 	{
 		tmp = ft_strjoin(ft_getenv("PWD", *p->envp), "/");
+		if (!tmp)
+			return (ft_return(p, 1, forked));
 		if (strncmp(p->input1[1], "./", 2) == 0)
 			path = ft_strjoin(tmp, p->input1[1] + 2);
 		else

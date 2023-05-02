@@ -73,6 +73,8 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 	while (counter >= 0)
 	{
 		make_input(p, p->split_input, i);
+		if (!p->input1)
+			return (malloc_error(p, 1, 0));
 		if (!*p->split_input || !*(p->input1))
 			return (free_everything(p, p->envp));
 		if (!(p->num_pipes == 0 && run_builtin(p, 0)))

@@ -14,8 +14,6 @@
 
 static int	is_unclosed(char *input)
 {
-	if (!input)
-		return (0);
 	while (*input)
 	{
 		if (is_apo(*input))
@@ -78,6 +76,8 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2)
 		if (ret)
 			free(ret);
 		ret = ft_strjoinf(tmp2, tmp);
+		if (!ret)
+			return (malloc_error(p, 1, 1), NULL);
 		status = is_unclosed(ret);
 	}
 	return (delimit_this(ret, p));

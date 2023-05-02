@@ -86,6 +86,8 @@ void	make_input(t_minishell *p, char **arr, int index)
 	j = 0;
 	count = make_count(p, arr, index);
 	p->input1 = malloc(sizeof(char *) * (count + 1));
+	if (!p->input1)
+		return ;
 	add_fds(p, arr, index, count);
 	while (++i < count)
 	{

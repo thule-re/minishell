@@ -28,6 +28,8 @@ static int	init_params(t_minishell *params, char **envp)
 	params->fd_in = 0;
 	params->fd_out = 0;
 	params->envp = init_env(envp);
+	if (!params->envp)
+		malloc_error(params, 1, 1);
 	return (1);
 }
 

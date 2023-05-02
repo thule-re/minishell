@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 16:36:46 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:06:52 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void	make_input(t_minishell *p, char **arr, int index)
 		return ;
 	while (++i < count)
 	{
-		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) \
-				|| !ft_strncmp("<<", arr[i], 3) || !ft_strncmp(">>", arr[i], 3))
+		if (!ft_strncmp("<", arr[index + i], 2) || !ft_strncmp(">", arr[index + i], 2) \
+				|| !ft_strncmp("<<", arr[index + i], 3) || !ft_strncmp(">>", arr[index + i], 3))
 			i++;
 		else
 			p->input1[j++] = ft_strdup(arr[index + i]);
-		if (is_special_char(arr[index + i]))
+		if (i < count && is_special_char(arr[index + i]))
 			string_shift(p->input1[j - 1]);
 	}
 	p->input1[j] = 0;
@@ -106,6 +106,5 @@ void	make_input(t_minishell *p, char **arr, int index)
 		write(p->hd_pipe[1], p->heredoc, ft_strlen(p->heredoc));
 		close(p->hd_pipe[1]);
 	}
-	p->input1[j] = 0;
 	p->cmd = get_command(p->paths, p->input1[0]);
 }

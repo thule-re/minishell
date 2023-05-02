@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 17:32:25 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:31:37 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <sys/param.h>
 # include <dirent.h>
+# include "malloc.h"
 
 // Global environment variable
 extern int	g_es;

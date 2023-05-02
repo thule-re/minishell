@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 16:09:47 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:34:49 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	is_unclosed(char *input)
 		input++;
 	}
 	input--;
-	while(!ft_strchr(input, '|'))
+	while (!ft_strchr(input, '|'))
 	{
 		if (*input != ' ')
 			break ;

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/02 12:01:05 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,16 @@ char	**reformat_inputs(t_minishell *p, char **arr)
 		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) \
 				|| !ft_strncmp("<<", arr[i], 3) || !ft_strncmp(">>", arr[i], 3))
 		{
-			tmp = ft_strjoin(arr[i], arr[i + 1]);
-			free(arr[i + 1]);
-			arr[i + 1] = tmp;
-			shift_array(arr, i);
-			i--;
+			if (!arr[i + 1])
+				return (parse_error("newline"), NULL);
+			else
+			{
+				tmp = ft_strjoin(arr[i], arr[i + 1]);
+				free(arr[i + 1]);
+				arr[i + 1] = tmp;
+				shift_array(arr, i);
+				i--;
+			}
 		}
 		i++;
 	}

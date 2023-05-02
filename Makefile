@@ -36,6 +36,7 @@ FILES 		=	builtins/builtin_utils \
 				input/make_input \
 				main_and_error/free_and_error \
 				main_and_error/main \
+				main_and_error/syntax_error \
 				misc_utils/array_utils \
 				misc_utils/string_utils \
 				parsing/ft_shell_split \

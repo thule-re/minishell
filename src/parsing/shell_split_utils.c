@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 12:01:05 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:29:46 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	next_one(char *s)
 	return (0);
 }
 
-static char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
+char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 {
 	char	*s_part;
 	char	*tmp;
@@ -89,10 +89,10 @@ char	**reformat_inputs(t_minishell *p, char **arr)
 	char	*tmp;
 	int		i;
 
+	p += 0;
 	i = 0;
 	while (arr[i])
 	{
-		arr[i] = remove_apos(p, arr[i], NULL, 0);
 		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) \
 				|| !ft_strncmp("<<", arr[i], 3) || !ft_strncmp(">>", arr[i], 3))
 		{

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 14:29:10 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:24:38 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		check_syntax(char **arr);
 void	make_input(t_minishell *p, char **parsed_input, int index);
 int		are_there_pipes(char **parsed_input);
 char	*remove_apos(t_minishell *p, char *s, char *ret, int len);
+int		is_special_char(char *s);
 
 int	init_variables(t_minishell *p, char **s);
 void	run_commands(t_minishell *p, int index, int pid, int counter);

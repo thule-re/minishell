@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:49:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 17:34:04 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:33:52 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	file_error(char *s, int fd, int error_type, t_minishell *params)
 		write(fd, "       0\n", 9);
 	write(STDERR_FILENO, "minishell: ", 11);
 	perror(s);
+	g_es = error_type;
 	if (params)
-		free_everything(params, params->envp);
-	exit(error_type);
+		free_everything(params, NULL);
 }
 
 void	cmd_error(char *str, t_minishell *params)

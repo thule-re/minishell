@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 13:36:11 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:53:59 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	word_count(char *str, char c, int i, int count)
 			count++;
 		if (ft_strchr("<>", str[i]))
 		{
-			count++;
+			count += 2;
 			while (ft_strchr("<>", str[i]))
 				i++;
 		}
@@ -57,8 +57,10 @@ static int	shell_split_helper(char *s, char **result, int i)
 			break ;
 		if (ft_strchr("<>", s[len]) && !len)
 		{
+			len++;
 			while (ft_strchr("<>", s[len]))
 				len++;
+			break ;
 		}
 		if (is_apo(s[len]))
 			len += ft_strlenc(&s[len + 1], s[len]) + 1;
@@ -67,7 +69,7 @@ static int	shell_split_helper(char *s, char **result, int i)
 	result[i] = malloc(len + 1);
 	if (result[i])
 		ft_strlcpy(result[i], s, len + 1);
-	return (len);
+	return (ft_strlen(result[i]));
 }
 
 char	**ft_shell_split(t_minishell *p, char *s, char c)

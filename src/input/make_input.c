@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 16:36:46 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:01:53 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ void	make_input(t_minishell *p, char **arr, int index)
 	i = -1;
 	j = 0;
 	count = make_count(p, arr, index);
-	p->input1 = malloc(sizeof(char *) * (count + 1));
 	add_fds(p, arr, index, count);
-	if (!p->input1)
+	if (!p->usr_input)
 		return ;
+	p->input1 = malloc(sizeof(char *) * (count + 1));
 	while (++i < count)
 	{
 		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) \

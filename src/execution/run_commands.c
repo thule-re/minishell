@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 16:39:45 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:00:30 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,14 @@ int	init_variables(t_minishell *p, char **s)
 
 void	end_running(t_minishell *p)
 {
-	if (p->fd_in)
+	if (p->fd_in > 0)
 		close(p->fd_in);
-	if (p->fd_out)
+	if (p->fd_out > 0)
 		close(p->fd_out);
 	if (p->pipefd)
 		close_pipes(p->pipefd, p->num_pipes * 2);
-	free (p->pipefd);
+	if (p->pipefd)
+		free (p->pipefd);
 	p->pipefd = NULL;
 }
 

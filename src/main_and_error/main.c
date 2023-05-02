@@ -33,7 +33,7 @@ static int	init_params(t_minishell *params, char **envp)
 
 static int	minishell(t_minishell *p, char *input)
 {
-	input = get_input(p, NULL, NULL, 0);
+	input = get_input(p, NULL, NULL);
 	if (!input)
 		return (1);
 	if (!*input)

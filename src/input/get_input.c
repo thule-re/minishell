@@ -28,7 +28,7 @@ static int	is_unclosed(char *input)
 		input++;
 	}
 	input--;
-	while(!ft_strchr(input, '|'))
+	while (!ft_strchr(input, '|'))
 	{
 		if (*input != ' ')
 			break ;
@@ -54,7 +54,7 @@ static char	*unexpected_eof(void)
 	return (ft_strdup(""));
 }
 
-char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count)
+char	*get_input(t_minishell *p, char *tmp, char *tmp2)
 {
 	char	*ret;
 	int		status;
@@ -63,13 +63,13 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count)
 	ret = NULL;
 	while (status)
 	{
-		if (!line_count)
+		if (status == 1)
 			tmp = readline("minishell % ");
 		else
 			tmp = readline("> ");
-		if (!tmp && !line_count)
+		if (!tmp && status == 1)
 			return (exit_signal());
-		else if (!tmp && line_count)
+		else if (!tmp)
 			return (unexpected_eof());
 		if (ret && status == 2)
 			tmp2 = ft_strjoin(ret, "\n");
@@ -77,11 +77,8 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count)
 			tmp2 = ft_strjoin(ret, " ");
 		if (ret)
 			free(ret);
-		ret = ft_strjoin(tmp2, tmp);
-		free(tmp);
-		free(tmp2);
+		ret = ft_strjoinf(tmp2, tmp);
 		status = is_unclosed(ret);
-		line_count++;
 	}
 	return (delimit_this(ret, p));
 }

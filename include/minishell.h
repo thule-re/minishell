@@ -60,16 +60,14 @@ char	next_one(char *s);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
-char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count);
+char	*get_input(t_minishell *p, char *tmp, char *tmp2);
 char	**reformat_inputs(t_minishell *p, char **arr);
 void	shift_array(char **arr, int i);
 
 char	*delimit_this(char *s, t_minishell *p);
 char	*expand_variables(t_minishell *p, char *s);
 void	string_shift(char *s);
-int		ft_strlenc(const char *str, int c);
 int		directory_handler(t_minishell *p, char *input, char c);
-int		builtin_exit(char **parsed_input, int ret);
 
 //Functions for pipes
 void	run_child_1(t_minishell *p, int in, int out);
@@ -89,10 +87,10 @@ void	cmd_error(char *str, t_minishell *params);
 void	free_everything(t_minishell *p, t_env **env);
 
 //make input
-void	make_input(t_minishell *p, char **parsed_input, int index);
+void	make_input(t_minishell *p, char **split_input, int index);
 int		are_there_pipes(char **parsed_input);
 
-int	init_variables(t_minishell *p, char **s);
+int		init_variables(t_minishell *p, char **s);
 void	run_commands(t_minishell *p, int index, int pid, int counter);
 
 //readline functions
@@ -114,12 +112,13 @@ char	**export_env(t_env *env);
 
 // builtins
 int		run_builtin(t_minishell *p, int forked);
-int		ft_return(t_minishell *p, int code, int forked);
 int		echo(t_minishell *p, int forked);
 int		cd(t_minishell *p, int forked);
 int		pwd(t_minishell *p, int forked);
 int		export(t_minishell *p, int forked);
 int		unset(t_minishell *p, int forked);
 int		env(t_minishell *p, int forked);
+int		ft_return(t_minishell *p, int code, int forked);
+int		builtin_exit(char **parsed_input, int ret);
 
 #endif

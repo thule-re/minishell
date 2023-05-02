@@ -52,7 +52,7 @@ typedef struct s_minishell {
 	int		dircheck;
 }	t_minishell;
 
-//functions for splitting and input parsing
+// functions for splitting and input parsing
 char	**ft_shell_split(t_minishell *p, char *s, char c);
 int		apo_count(char *str, char apo);
 int		is_apo(char c);
@@ -69,7 +69,7 @@ char	*expand_variables(t_minishell *p, char *s);
 void	string_shift(char *s);
 int		directory_handler(t_minishell *p, char *input, char c);
 
-//Functions for pipes
+// functions for pipes
 void	run_child_1(t_minishell *p, int in, int out);
 char	*append_slash(char *path, char *str, char *c);
 char	*get_command(char **paths, char *cmd_str);
@@ -78,25 +78,28 @@ int		check_access(char **input);
 int		ft_min(int x, int y);
 void	end_running(t_minishell *p);
 
-//error handlers from Pipex
+// error handlers
 void	error_handler(char *s, t_minishell *params);
+void	malloc_error(t_minishell *params, int free, int exit);
 void	file_error(char *s, int fd, int error_type, t_minishell *params);
+void	cmd_error(char *str, t_minishell *params);
+
+// free handlers
 void	free_arr(char **arr);
 void	free_arrs(t_minishell *params);
-void	cmd_error(char *str, t_minishell *params);
 void	free_everything(t_minishell *p, t_env **env);
 
-//make input
+// make input
 void	make_input(t_minishell *p, char **split_input, int index);
 int		are_there_pipes(char **parsed_input);
 
 int		init_variables(t_minishell *p, char **s);
 void	run_commands(t_minishell *p, int index, int pid, int counter);
 
-//readline functions
+// readline functions
 void	rl_replace_line(const char *text, int clear_undo);
 
-//signals
+// signals
 void	sigint_handler_a(int signum);
 void	init_signals(void);
 void	sigint_handler_b(int signum);

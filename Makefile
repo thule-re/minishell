@@ -35,7 +35,8 @@ FILES 		=	builtins/builtin_utils \
 				execution/run_commands \
 				input/get_input \
 				input/make_input \
-				main_and_error/free_and_error \
+				main_and_error/error \
+				main_and_error/free \
 				main_and_error/main \
 				misc_utils/array_utils \
 				misc_utils/string_utils \

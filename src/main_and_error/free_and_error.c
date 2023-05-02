@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:49:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 16:33:52 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:53:48 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,18 @@ void	cmd_error(char *str, t_minishell *params)
 
 void	free_everything(t_minishell *p, t_env **env)
 {
+	if (!p)
+		return ;
 	free_arrs(p);
 	if (p->heredoc)
 		free(p->heredoc);
 	p->heredoc = NULL;
 	if (env)
+	{
 		free_env(env);
-	env = NULL;
+		env = NULL;
+	}
 	end_running(p);
+	p->fd_in = 0;
+	p->fd_out = 0;
 }

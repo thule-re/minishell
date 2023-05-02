@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 12:34:49 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:27:24 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count)
 		status = is_unclosed(ret);
 		line_count++;
 	}
-	return (delimit_this(ret, p));
+	return (delimit_this(ret, p, NULL));
 }

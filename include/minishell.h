@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 15:24:38 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:27:14 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count);
 char	**reformat_inputs(t_minishell *p, char **arr);
 void	shift_array(char **arr, int i);
 
-char	*delimit_this(char *s, t_minishell *p);
+char	*delimit_this(char *s, t_minishell *p, char *delim);
 char	*expand_variables(t_minishell *p, char *s);
 void	string_shift(char *s);
 int		ft_strlenc(const char *str, int c);

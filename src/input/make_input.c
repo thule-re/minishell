@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/03 11:13:33 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:13:33 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	make_input(t_minishell *p, char **arr, int index)
 		return ;
 	while (++i < count)
 	{
-		if (special_no_quotes(arr[i]))
+		if (special_no_quotes(arr[index + i]))
 			i++;
 		else
 			p->input1[j++] = ft_strdup(arr[index + i]);

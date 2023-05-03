@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:06:34 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/03 19:06:35 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	cd(t_minishell *p, int forked)
 
 	getcwd(pwd_before, MAXPATHLEN);
 	if (!p->input1[1])
-		return (ft_return(p, 0, forked));
-	if (access(p->input1[1], X_OK) != 0)
+		path = ft_strdup(ft_getenv("HOME", *p->envp));
+	else if (access(p->input1[1], X_OK) != 0)
 	{
 		tmp = ft_strjoin(ft_getenv("PWD", *p->envp), "/");
 		if (!tmp)

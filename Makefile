@@ -20,6 +20,7 @@ OBJ_DIRS 	=	./obj \
 				./obj/misc_utils \
 				./obj/parsing \
 				./obj/signals \
+				./obj/malloc \
 
 FILES 		=	builtins/builtin_utils \
 				builtins/cd \
@@ -47,6 +48,7 @@ FILES 		=	builtins/builtin_utils \
 				parsing/shell_split_utils \
 				parsing/shell_split_utils_2 \
 				signals/signals \
+				malloc/malloc
 
 INCL		=	./include/minishell.h
 

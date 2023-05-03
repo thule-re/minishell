@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 11:13:24 by awilliam          #+#    #+#             */
+/*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
 /*   Updated: 2023/05/03 11:13:33 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -69,9 +69,9 @@ void	add_fds(t_minishell *p, char **arr, int index, int count)
 			p->fd_out = open(arr[index + i + 1], \
 				O_WRONLY | O_APPEND | O_CREAT, 0644);
 		if (p->fd_in == -1)
-			return(file_error(arr[index + i + 1], p->fd_in, 1, p));
+			return (file_error(arr[index + i + 1], p->fd_in, 1, p));
 		if (p->fd_out == -1)
-			return(file_error(arr[index + i + 1], p->fd_out, 1, p));
+			return (file_error(arr[index + i + 1], p->fd_out, 1, p));
 	}
 }
 
@@ -89,10 +89,14 @@ void	make_input(t_minishell *p, char **arr, int index)
 	if (!p->usr_input)
 		return ;
 	p->input1 = malloc(sizeof(char *) * (count + 1));
+	if (!p->input1)
+		return ;
 	while (++i < count)
 	{
-		if (!ft_strncmp("<", arr[index + i], 2) || !ft_strncmp(">", arr[index + i], 2) \
-				|| !ft_strncmp("<<", arr[index + i], 3) || !ft_strncmp(">>", arr[index + i], 3))
+		if (!ft_strncmp("<", arr[index + i], 2) \
+			|| !ft_strncmp(">", arr[index + i], 2) \
+			|| !ft_strncmp("<<", arr[index + i], 3) \
+			|| !ft_strncmp(">>", arr[index + i], 3))
 			i++;
 		else
 			p->input1[j++] = ft_strdup(arr[index + i]);

@@ -79,6 +79,8 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2)
 		if (ret)
 			free(ret);
 		ret = ft_strjoinf(tmp2, tmp);
+		if (!ret)
+			return (malloc_error(p, 1, 1), NULL);
 		status = is_unclosed(ret, 0);
 	}
 	return (delimit_this(ret, p, NULL));

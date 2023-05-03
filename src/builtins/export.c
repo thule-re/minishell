@@ -6,13 +6,13 @@
 /*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:50:04 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:02 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/02 15:31:37 by treeps           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	env_add_key(t_env *envp, char **key_val)
+static void	*env_add_key(t_env *envp, char **key_val)
 {
 	while (envp)
 	{
@@ -23,13 +23,14 @@ static void	env_add_key(t_env *envp, char **key_val)
 				envp->value = NULL;
 			else
 				envp->value = ft_strdup(key_val[1]);
-			return ;
+			return (envp->value);
 		}
 		if (!envp->next)
 			break ;
 		envp = envp->next;
 	}
 	envp->next = new_env_node(key_val);
+	return (envp->next->value);
 }
 
 static char	**get_key_val(char *input)
@@ -41,13 +42,12 @@ static char	**get_key_val(char *input)
 	if (!key_val)
 		return (NULL);
 	if (!ft_strchr(input, '='))
-	{
 		key_val[0] = ft_strdup(input);
-		return (key_val);
-	}
 	else
 	{
 		tmp = ft_split(input, '=');
+		if (!tmp)
+			return (NULL);
 		key_val[0] = ft_strdup(tmp[0]);
 		if (tmp[1])
 			key_val[1] = ft_strdup(tmp[1]);
@@ -55,6 +55,10 @@ static char	**get_key_val(char *input)
 			key_val[1] = ft_calloc(1, 1);
 		free_arr(tmp);
 	}
+	if (!key_val[0] && !key_val[1])
+		return (NULL);
+	if (!key_val[0])
+		return (free(key_val[1]), NULL);
 	return (key_val);
 }
 
@@ -102,6 +106,8 @@ int	export(t_minishell *p, int forked)
 		if (!key_val)
 			return (ft_return(p, 1, forked));
 		env_add_key(*p->envp, key_val);
+		if (!(*p->envp)->key)
+			return (ft_return(p, 1, forked));
 		i++;
 	}
 	return (free_arr(key_val), ft_return(p, 0, forked));

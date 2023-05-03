@@ -45,14 +45,15 @@ int	init_variables(t_minishell *p, char **s)
 
 void	end_running(t_minishell *p)
 {
-	if (p->fd_in > 0)
+	if (p->fd_in)
 		close(p->fd_in);
-	if (p->fd_out > 0)
+	if (p->fd_out)
 		close(p->fd_out);
 	if (p->pipefd)
+	{
 		close_pipes(p->pipefd, p->num_pipes * 2);
-	if (p->pipefd)
 		free (p->pipefd);
+	}
 	p->pipefd = NULL;
 }
 
@@ -71,7 +72,7 @@ void	close_outs(int *pipe, int size)
 
 void	run_commands(t_minishell *p, int i, int pid, int counter)
 {
-	while (counter >= 0)
+	while (p->i <= counter)
 	{
 		make_input(p, p->split_input, i);
 		if (!p->input1 || !*p->split_input || !*(p->input1))
@@ -88,8 +89,7 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 		if (p->split_input[i])
 			i++;
 		p->i++;
-		counter--;
-		if (counter >= 0 && p->num_pipes)
+		if (p->i - 1 <= counter && p->num_pipes)
 			close_outs(p->pipefd, p->i * 2);
 	}
 	waitpid(pid, &p->exit_status, 0);

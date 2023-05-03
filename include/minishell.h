@@ -79,6 +79,7 @@ void	close_pipes(int *pipe, int size);
 int		check_access(char **input);
 int		ft_min(int x, int y);
 void	end_running(t_minishell *p);
+void	open_heredoc_pipe(t_minishell *p);
 
 // error handlers
 void	error_handler(char *s, t_minishell *params);

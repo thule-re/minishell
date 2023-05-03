@@ -46,6 +46,8 @@ void	set_pipes(t_minishell *p, int in, int out)
 			dup2(p->pipefd[p->i * 2 - 2], STDIN_FILENO);
 		close_pipes(p->pipefd, p->i * 2);
 	}
+	if (p->pipe_status == 4 && p->heredoc)
+		dup2(p->hd_pipe[0], STDIN_FILENO);
 }
 
 void	run_helper(t_minishell *p, int in, int out)

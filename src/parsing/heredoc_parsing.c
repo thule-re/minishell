@@ -76,3 +76,10 @@ char	*delimit_this(char *s, t_minishell *p, char *delim)
 	}
 	return (s);
 }
+
+void	open_heredoc_pipe(t_minishell *p)
+{
+	pipe(&p->hd_pipe[0]);
+	write(p->hd_pipe[1], p->heredoc, ft_strlen(p->heredoc));
+	close(p->hd_pipe[1]);
+}

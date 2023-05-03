@@ -88,27 +88,19 @@ void	make_input(t_minishell *p, char **arr, int index)
 	add_fds(p, arr, index, count);
 	if (!p->usr_input)
 		return ;
-	p->input1 = malloc(sizeof(char *) * (count + 1));
+	p->input1 = ft_calloc(count + 1, sizeof(char *));
 	if (!p->input1)
 		return ;
 	while (++i < count)
 	{
-		if (!ft_strncmp("<", arr[index + i], 2) \
-			|| !ft_strncmp(">", arr[index + i], 2) \
-			|| !ft_strncmp("<<", arr[index + i], 3) \
-			|| !ft_strncmp(">>", arr[index + i], 3))
+		if (special_no_quotes(arr[i]))
 			i++;
 		else
 			p->input1[j++] = ft_strdup(arr[index + i]);
 		if (i < count && is_special_char(arr[index + i]))
 			string_shift(p->input1[j - 1]);
 	}
-	p->input1[j] = 0;
 	if (p->heredoc && !(check_access(p->input1)) && !p->fd_in)
-	{	
-		pipe(&p->hd_pipe[0]);
-		write(p->hd_pipe[1], p->heredoc, ft_strlen(p->heredoc));
-		close(p->hd_pipe[1]);
-	}
+		open_heredoc_pipe(p);
 	p->cmd = get_command(p->paths, p->input1[0]);
 }

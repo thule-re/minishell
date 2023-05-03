@@ -6,38 +6,35 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/03 11:19:53 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:26:07 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	word_count(char *str, char c, int i, int count)
+static int	word_count(char *str, char apo_type, int i, int count)
 {
-	char	apo_type;
-
 	if (!str || !*str)
 		return (0);
-	if (str[i + 1] != c)
+	if (str[i + 1] != ' ')
 		count++;
 	while (str[++i])
 	{
 		if (is_apo(str[i]) && apo_count(&str[i + 1], str[i]))
 		{
 			apo_type = str[i++];
-			while (str[i] != apo_type)
+			while (str[i++] != apo_type)
 				i++;
 			i++;
 		}
 		if (!str[i])
 			break ;
-		if (str[i] == c && str[i + 1] != c)
+		if (str[i] == ' ' && str[i + 1] != ' ')
 			count++;
 		if (ft_strchr("<>|", str[i]))
 		{
 			count += 2;
-			while (ft_strchr("<>|", str[i]))
-				i++;
+			i++;
 		}
 	}
 	return (count);

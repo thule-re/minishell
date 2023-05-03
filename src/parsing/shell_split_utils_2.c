@@ -91,3 +91,23 @@ char	*expand_variables(t_minishell *p, char *s)
 	free(to_free);
 	return (ret);
 }
+
+char	**reformat_inputs(t_minishell *p, char **arr)
+{
+	int		i;
+
+	i = 0;
+	while (arr[i])
+	{
+		if (!is_special_char(arr[i]))
+			arr[i] = remove_apos(p, arr[i], NULL, 0);
+		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) \
+				|| !ft_strncmp("<<", arr[i], 3) || !ft_strncmp(">>", arr[i], 3))
+		{
+			if (!arr[i + 1] || !*(arr[i + 1]))
+				return (parse_error("newline"), NULL);
+		}
+		i++;
+	}
+	return (arr);
+}

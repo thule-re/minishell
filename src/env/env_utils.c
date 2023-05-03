@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsburg.de>         +#+  +:+       +#+        */
+/*   By: treeps <treeps@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:03:34 by treeps            #+#    #+#             */
 /*   Updated: 2023/05/02 15:34:43 by treeps           ###   ########.fr       */

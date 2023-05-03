@@ -45,18 +45,14 @@ char	next_one(char *s)
 		return (0);
 	while (s[i])
 	{
-		if (s[i] == 34)
-			return (s[i]);
-		if (s[i] == 39)
-			return (s[i]);
-		if (s[i] == ' ')
+		if (s[i] == '\"' || s[i] == '\'' || s[i] == ' ')
 			return (s[i]);
 		i++;
 	}
 	return (0);
 }
 
-int		is_special_char(char *s)
+int	is_special_char(char *s)
 {
 	if (!(ft_strncmp("\"<\"", s, 4)))
 		return (1);
@@ -97,24 +93,4 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 		ret = ft_strjoinf(ret, s_part);
 	}
 	return (free(tmp), ret);
-}
-
-char	**reformat_inputs(t_minishell *p, char **arr)
-{
-	int		i;
-
-	i = 0;
-	while (arr[i])
-	{
-		if (!is_special_char(arr[i]))
-			arr[i] = remove_apos(p, arr[i], NULL, 0);
-		if (!ft_strncmp("<", arr[i], 2) || !ft_strncmp(">", arr[i], 2) \
-				|| !ft_strncmp("<<", arr[i], 3) || !ft_strncmp(">>", arr[i], 3))
-		{
-			if (!arr[i + 1] || !*(arr[i + 1]))
-				return (parse_error("newline"), NULL);
-		}
-		i++;
-	}
-	return (arr);
 }

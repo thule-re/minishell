@@ -72,6 +72,10 @@ void	close_outs(int *pipe, int size)
 
 void	run_commands(t_minishell *p, int i, int pid, int counter)
 {
+	int arr[5];
+	int j = 0;
+
+	pid++;
 	while (p->i <= counter)
 	{
 		make_input(p, p->split_input, i);
@@ -81,8 +85,8 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 			return (free_everything(p, 0));
 		if (!(p->num_pipes == 0 && run_builtin(p, 0)))
 		{
-			pid = fork();
-			if (pid == 0)
+			arr[j] = fork();
+			if (arr[j] == 0)
 				run_child_1(p, p->fd_in, p->fd_out);
 		}
 		reset_inputs(p);
@@ -94,7 +98,11 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 		if (p->i <= counter && p->num_pipes)
 			close_outs(p->pipefd, p->i * 2);
 	}
-	waitpid(pid, &p->exit_status, 0);
+	waitpid(-1, &p->exit_status, 0);
+	end_running((p));
+	j = -1;
+	while (++j < 5)
+		waitpid(arr[j], &p->exit_status, 0);
 	check_signals(p);
 	end_running(p);
 }

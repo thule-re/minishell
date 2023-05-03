@@ -12,11 +12,10 @@
 
 #include "../include/minishell.h"
 
-static int	is_unclosed(char *input, char c)
+static int	is_unclosed(char *input, char *start)
 {
-	if (!input)
+	if (!*input)
 		return (0);
-	c = *input;
 	while (*input)
 	{
 		if (is_apo(*input))
@@ -29,13 +28,13 @@ static int	is_unclosed(char *input, char c)
 		input++;
 	}
 	input--;
-	while (!ft_strchr(input, '|'))
+	while (input != start && !ft_strchr(input, '|'))
 	{
 		if (*input != ' ')
 			break ;
 		input--;
 	}
-	if (*input == '|' && c != '|')
+	if (*input == '|' && *start != '|')
 		return (3);
 	return (0);
 }
@@ -81,7 +80,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2)
 		ret = ft_strjoinf(tmp2, tmp);
 		if (!ret)
 			return (malloc_error(p, 1, 1), NULL);
-		status = is_unclosed(ret, 0);
+		status = is_unclosed(ret, ret);
 	}
 	return (delimit_this(ret, p, NULL));
 }

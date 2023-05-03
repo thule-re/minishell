@@ -78,7 +78,7 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 		if (!p->input1)
 			return (malloc_error(p, 1, 0));
 		if (!*p->split_input || !*(p->input1))
-			return (free_everything(p, p->envp));
+			return (free_everything(p, 0));
 		if (!(p->num_pipes == 0 && run_builtin(p, 0)))
 		{
 			pid = fork();

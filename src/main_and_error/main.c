@@ -63,10 +63,13 @@ int	main(int argc, char **argv, char **envp)
 	int			es;
 
 	es = -1;
-	if (argc)
-		argc = 0;
-	if (argv)
-		argv = NULL;
+	if (argc > 1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(argv[1], 2);
+		ft_putstr_fd(": No arguments accepted\n", 2);
+		return (1);
+	}
 	init_params(&p, envp);
 	while (es < 0)
 	{

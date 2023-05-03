@@ -39,7 +39,7 @@ static int	minishell(t_minishell *p, char *input)
 	if (!input)
 		return (1);
 	if (!*input)
-		return (-1);
+		return (free(input), -1);
 	if (!directory_handler(p, input, 0))
 		return (-1);
 	p->usr_input = input;

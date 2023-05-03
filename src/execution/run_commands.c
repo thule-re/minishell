@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 17:00:30 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:16:55 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	close_outs(int *pipe, int size)
 
 void	run_commands(t_minishell *p, int i, int pid, int counter)
 {
-	while (counter >= 0)
+	while (p->i <= counter)
 	{
 		make_input(p, p->split_input, i);
 		if (!p->input1)
@@ -91,8 +91,7 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 		if (p->split_input[i])
 			i++;
 		p->i++;
-		counter--;
-		if (counter >= 0 && p->num_pipes)
+		if (p->i <= counter && p->num_pipes)
 			close_outs(p->pipefd, p->i * 2);
 	}
 	waitpid(pid, &p->exit_status, 0);

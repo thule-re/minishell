@@ -60,6 +60,8 @@ void	add_fds(t_minishell *p, char **arr, int index, int count)
 	{
 		if (!(ft_strncmp("<", arr[index + i], 2)))
 			p->fd_in = open(arr[index + i + 1], O_RDONLY);
+		if (!(ft_strncmp("<>", arr[index + i], 2)))
+			p->fd_in = open(arr[index + i + 1], O_RDWR | O_CREAT, 0644);
 		if (!(ft_strncmp("<<", arr[index + i], 3)))
 			p->fd_in = 0;
 		if (!(ft_strncmp(">", arr[index + i], 2)))

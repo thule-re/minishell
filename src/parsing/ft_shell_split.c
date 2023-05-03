@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 15:53:59 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:19:53 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ static int	word_count(char *str, char c, int i, int count)
 			break ;
 		if (str[i] == c && str[i + 1] != c)
 			count++;
-		if (ft_strchr("<>", str[i]))
+		if (ft_strchr("<>|", str[i]))
 		{
 			count += 2;
-			while (ft_strchr("<>", str[i]))
+			while (ft_strchr("<>|", str[i]))
 				i++;
 		}
 	}
@@ -53,12 +53,12 @@ static int	shell_split_helper(char *s, char **result, int i)
 	len = 0;
 	while (s[len] && s[len] != ' ')
 	{
-		if (ft_strchr("<>", s[len]) && len)
+		if (ft_strchr("<>|", s[len]) && len)
 			break ;
-		if (ft_strchr("<>", s[len]) && !len)
+		if (ft_strchr("<>|", s[len]) && !len)
 		{
 			len++;
-			while (ft_strchr("<>", s[len]))
+			while (s[len] == s[len - 1])
 				len++;
 			break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:48:50 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 13:32:33 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:21:29 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	check_syntax(char **arr)
 	i = 0;
 	while (arr[i])
 	{
+		if (!ft_strncmp(arr[i], "||", 2))
+			return ((parse_error("||")), 1);
 		if (!ft_strncmp(arr[i], "<<>", 3) || !ft_strncmp(arr[i], "<>", 2))
 			return ((parse_error(">")), 1);
 		if (*arr[i] == '>' && arr[i][1] == '<')

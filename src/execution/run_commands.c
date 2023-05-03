@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 18:00:51 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:00:30 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,14 @@ int	init_variables(t_minishell *p, char **s)
 
 void	end_running(t_minishell *p)
 {
-	if (p->fd_in)
+	if (p->fd_in > 0)
 		close(p->fd_in);
-	if (p->fd_out)
+	if (p->fd_out > 0)
 		close(p->fd_out);
 	if (p->pipefd)
 		close_pipes(p->pipefd, p->num_pipes * 2);
-	free (p->pipefd);
+	if (p->pipefd)
+		free (p->pipefd);
 	p->pipefd = NULL;
 }
 
@@ -73,8 +74,8 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 	while (counter >= 0)
 	{
 		make_input(p, p->split_input, i);
-		if (!*p->split_input || !*(p->input1))
-			return (free_everything(p, p->envp));
+		if (!p->input1 || !*p->split_input || !*(p->input1))
+			return (free_everything(p, NULL));
 		if (!(p->num_pipes == 0 && run_builtin(p, 0)))
 		{
 			pid = fork();

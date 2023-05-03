@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 17:32:25 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:04:18 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2);
 char	**reformat_inputs(t_minishell *p, char **arr);
 void	shift_array(char **arr, int i);
 
-char	*delimit_this(char *s, t_minishell *p);
+char	*delimit_this(char *s, t_minishell *p, char *delim);
 char	*expand_variables(t_minishell *p, char *s);
 void	string_shift(char *s);
 int		directory_handler(t_minishell *p, char *input, char c);
@@ -88,10 +88,14 @@ void	cmd_error(char *str, t_minishell *params);
 void	free_arr(char **arr);
 void	free_arrs(t_minishell *params);
 void	free_everything(t_minishell *p, t_env **env);
+void	parse_error(char *s);
+int		check_syntax(char **arr);
 
 // make input
 void	make_input(t_minishell *p, char **split_input, int index);
 int		are_there_pipes(char **parsed_input);
+char	*remove_apos(t_minishell *p, char *s, char *ret, int len);
+int		is_special_char(char *s);
 
 int		init_variables(t_minishell *p, char **s);
 void	run_commands(t_minishell *p, int index, int pid, int counter);

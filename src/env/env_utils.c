@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:03:34 by treeps            #+#    #+#             */
-/*   Updated: 2023/04/18 13:03:41 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/02 16:06:25 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	free_env(t_env **envp)
 	t_env	*next;
 	t_env	*cur;
 
+	if (!envp)
+		return ;
 	cur = *envp;
 	while (cur)
 	{

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 09:17:09 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Created: 2023/05/03 11:13:24 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/03 11:13:33 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,20 @@ void	add_fds(t_minishell *p, char **arr, int index, int count)
 	i = -1;
 	while (++i < count)
 	{
-		if (arr[index + i][0] == '<' && arr[index + i][1] != '<')
-			p->fd_in = open(&arr[index + i][1], O_RDONLY);
-		if (arr[index + i][0] == '<' && arr[index + i][1] == '<')
+		if (!(ft_strncmp("<", arr[index + i], 2)))
+			p->fd_in = open(arr[index + i + 1], O_RDONLY);
+		if (!(ft_strncmp("<<", arr[index + i], 3)))
 			p->fd_in = 0;
-		if (arr[index + i][0] == '>' && arr[index + i][1] != '>')
-			p->fd_out = open(&arr[index + i][1], \
+		if (!(ft_strncmp(">", arr[index + i], 2)))
+			p->fd_out = open(arr[index + i + 1], \
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (arr[index + i][0] == '>' && arr[index + i][1] == '>')
-			p->fd_out = open(&arr[index + i][2], \
+		if (!(ft_strncmp(">>", arr[index + i], 3)))
+			p->fd_out = open(arr[index + i + 1], \
 				O_WRONLY | O_APPEND | O_CREAT, 0644);
 		if (p->fd_in == -1)
-			file_error(&arr[index + i][1], p->fd_in, 1, NULL);
+			return(file_error(arr[index + i + 1], p->fd_in, 1, p));
 		if (p->fd_out == -1)
-			file_error(&arr[index + i][1], p->fd_out, 1, NULL);
+			return(file_error(arr[index + i + 1], p->fd_out, 1, p));
 	}
 }
 
@@ -85,12 +85,19 @@ void	make_input(t_minishell *p, char **arr, int index)
 	i = -1;
 	j = 0;
 	count = make_count(p, arr, index);
-	p->input1 = malloc(sizeof(char *) * (count + 1));
 	add_fds(p, arr, index, count);
+	if (!p->usr_input)
+		return ;
+	p->input1 = malloc(sizeof(char *) * (count + 1));
 	while (++i < count)
 	{
-		if (arr[index + i][0] != '<' && arr[index + i][0] != '>')
+		if (!ft_strncmp("<", arr[index + i], 2) || !ft_strncmp(">", arr[index + i], 2) \
+				|| !ft_strncmp("<<", arr[index + i], 3) || !ft_strncmp(">>", arr[index + i], 3))
+			i++;
+		else
 			p->input1[j++] = ft_strdup(arr[index + i]);
+		if (i < count && is_special_char(arr[index + i]))
+			string_shift(p->input1[j - 1]);
 	}
 	p->input1[j] = 0;
 	if (p->heredoc && !(check_access(p->input1)) && !p->fd_in)
@@ -99,6 +106,5 @@ void	make_input(t_minishell *p, char **arr, int index)
 		write(p->hd_pipe[1], p->heredoc, ft_strlen(p->heredoc));
 		close(p->hd_pipe[1]);
 	}
-	p->input1[j] = 0;
 	p->cmd = get_command(p->paths, p->input1[0]);
 }

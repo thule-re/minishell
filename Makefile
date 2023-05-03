@@ -38,6 +38,7 @@ FILES 		=	builtins/builtin_utils \
 				main_and_error/error \
 				main_and_error/free \
 				main_and_error/main \
+				main_and_error/syntax_error \
 				misc_utils/array_utils \
 				misc_utils/string_utils \
 				parsing/ft_shell_split \

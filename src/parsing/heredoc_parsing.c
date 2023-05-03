@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:39:58 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/02 17:28:25 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,21 @@ static void	delim_helper(t_minishell *p, char *delim)
 		free(tmp);
 }
 
-char	*delimit_this(char *s, t_minishell *p)
+char	*delimit_this(char *s, t_minishell *p, char * delim)
 {
 	char	*loc;
-	char	*delim;
 	int		len;
 
 	loc = ft_strnstr(s, "<<", ft_strlen(s));
+	if (!loc || *(loc + 2) == '<' || *(loc + 2) == '>' || !*(loc + 2))
+		return (s);
+	if (p->heredoc)
+		free(p->heredoc);
+	p->heredoc = NULL;
 	while (loc)
 	{
-		if (p->heredoc)
-		{
-			free(p->heredoc);
-			p->heredoc = NULL;
-		}
+		while (*(loc + 2) == ' ')
+			loc++;
 		len = ft_min(ft_strlenc(loc + 2, ' '), ft_strlenc(loc + 2, '\n'));
 		delim = malloc(len + 2);
 		ft_strlcpy(delim, loc + 2, len + 1);

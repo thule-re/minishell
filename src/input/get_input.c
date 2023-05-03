@@ -12,6 +12,30 @@
 
 #include "../include/minishell.h"
 
+static char	*put_prompt(t_minishell *p)
+{
+	char	*pwd;
+	char	*tmp;
+	char	**split_pwd;
+	char	*line;
+	int		i;
+
+	i = 0;
+	pwd = ft_getenv("PWD", *p->envp);
+	split_pwd = ft_split(pwd, '/');
+	if (!split_pwd)
+		return (readline("minishell % "));
+	while (split_pwd[i + 1])
+		i++;
+	tmp = ft_strjoin("minishell: ", split_pwd[i]);
+	pwd = ft_strjoin(tmp, " % ");
+	free(tmp);
+	free_arr(split_pwd);
+	line = readline(pwd);
+	free(pwd);
+	return (line);
+}
+
 static int	is_unclosed(char *input, char *start)
 {
 	if (!*input)
@@ -62,7 +86,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 	while (status)
 	{
 		if (status == 1)
-			tmp = readline("minishell % ");
+			tmp = put_prompt(p);
 		else
 			tmp = readline("> ");
 		if (!tmp && status == 1)

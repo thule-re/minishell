@@ -61,7 +61,7 @@ char	next_one(char *s);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
-char	*get_input(t_minishell *p, char *tmp, char *tmp2);
+char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status);
 char	**reformat_inputs(t_minishell *p, char **arr);
 void	shift_array(char **arr, int i);
 

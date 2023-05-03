@@ -54,12 +54,10 @@ static char	*unexpected_eof(void)
 	return (ft_strdup(""));
 }
 
-char	*get_input(t_minishell *p, char *tmp, char *tmp2)
+char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 {
 	char	*ret;
-	int		status;
 
-	status = 1;
 	ret = NULL;
 	while (status)
 	{

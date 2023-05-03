@@ -23,7 +23,7 @@ static int	word_count(char *str, char apo_type, int i, int count)
 		if (is_apo(str[i]) && apo_count(&str[i + 1], str[i]))
 		{
 			apo_type = str[i++];
-			while (str[i++] != apo_type)
+			while (str[i] != apo_type)
 				i++;
 			i++;
 		}
@@ -52,7 +52,8 @@ static int	shell_split_helper(char *s, char **result, int i)
 		if (ft_strchr("<>|", s[len]) && !len)
 		{
 			len++;
-			while (s[len] == s[len - 1])
+			if (s[len] == s[len - 1] \
+			|| (s[len] == '>' && s[len - 1] == '<'))
 				len++;
 			break ;
 		}

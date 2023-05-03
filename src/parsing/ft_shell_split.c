@@ -52,7 +52,8 @@ static int	shell_split_helper(char *s, char **result, int i)
 		if (ft_strchr("<>|", s[len]) && !len)
 		{
 			len++;
-			while (s[len] == s[len - 1])
+			if (s[len] == s[len - 1] \
+            || (s[len] == '>' && s[len - 1] == '<'))
 				len++;
 			break ;
 		}

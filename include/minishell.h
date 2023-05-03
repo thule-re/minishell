@@ -64,6 +64,7 @@ void	print_array(char **arr);
 char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status);
 char	**reformat_inputs(t_minishell *p, char **arr);
 void	shift_array(char **arr, int i);
+int     special_no_quotes(char *s);
 
 char	*delimit_this(char *s, t_minishell *p, char *delim);
 char	*expand_variables(t_minishell *p, char *s);

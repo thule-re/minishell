@@ -49,7 +49,7 @@ static int	minishell(t_minishell *p, char *input)
 	if (!p->split_input || !*p->split_input || check_syntax(p->split_input))
 		return (-1);
 	if (!ft_strncmp(p->split_input[0], "exit", 5))
-		return (builtin_exit(p->split_input, -1));
+		return (builtin_exit(p->split_input));
 	signal(SIGINT, sigint_handler_b);
 	run_commands(p, 0, 0, init_variables(p, p->split_input));
 	g_es = p->exit_status;

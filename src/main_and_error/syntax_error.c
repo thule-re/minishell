@@ -17,11 +17,12 @@ void	parse_error(char *s)
 	ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 	ft_putstr_fd(s, 2);
 	ft_putstr_fd("'\n", 2);
+	g_es = 2;
 }
 
 int	special_no_quotes(char *s)
 {
-	if (!s)
+	if (!*s)
 		return (0);
 	if (ft_strchr("<>|", s[0]))
 		return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:03:34 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/02 15:34:43 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/03 19:00:14 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_getenv(char *str, t_env *envp)
 			envp = envp->next;
 			continue ;
 		}
-		if (ft_strncmp(str, envp->key, ft_strlen(str)) == 0)
+		if (ft_strncmp(str, envp->key, ft_strlen(str) + 1) == 0)
 			return (envp->value);
 		envp = envp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 15:31:37 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/03 18:55:34 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_minishell {
 char	**ft_shell_split(t_minishell *p, char *s, char c);
 int		apo_count(char *str, char apo);
 int		is_apo(char c);
-char	next_one(char *s);
+char	next_one(char *s, char *set);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);

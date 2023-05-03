@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 15:54:42 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:55:49 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	is_apo(char c)
 		return (0);
 }
 
-char	next_one(char *s)
+char	next_one(char *s, char *set)
 {
 	int	i;
 
@@ -45,7 +45,7 @@ char	next_one(char *s)
 		return (0);
 	while (s[i])
 	{
-		if (s[i] == '\"' || s[i] == '\'' || s[i] == ' ')
+		if (ft_strchr(set, s[i]))
 			return (s[i]);
 		i++;
 	}
@@ -78,7 +78,7 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 	while (*s)
 	{
 		if (!is_apo(*s))
-			len = ft_strlenc(s, next_one(s));
+			len = ft_strlenc(s, next_one(s, " \'\""));
 		else
 			len = ft_strlenc(s + 1, *s) + 2;
 		s_part = malloc(len + 1);

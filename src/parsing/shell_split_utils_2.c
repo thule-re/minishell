@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/03 18:59:59 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	char	*tmp;
 	char	*var;
 
-	len = ft_min(ft_strlenc(&s[i + 1], ' '), ft_strlenc(&s[i + 1], 39)) + 1;
+	len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /")) + 1;
 	var = malloc(len);
 	ft_strlcpy(var, &s[i + 1], len);
 	if (s[i + 1] == '?')
@@ -80,7 +80,7 @@ char	*expand_variables(t_minishell *p, char *s)
 		if (s[i] == '$')
 		{
 			ret = append_var(p, s, i, ret);
-			s += i + ft_min(ft_strlenc(&s[i], ' '), ft_strlenc(&s[i], 39));
+			s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /"));
 			i = -1;
 		}
 		i++;

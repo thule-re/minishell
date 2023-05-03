@@ -6,16 +6,17 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 17:27:24 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:45:02 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	is_unclosed(char *input)
+static int	is_unclosed(char *input, char c)
 {
 	if (!input)
 		return (0);
+	c = *input;
 	while (*input)
 	{
 		if (is_apo(*input))
@@ -34,7 +35,7 @@ static int	is_unclosed(char *input)
 			break ;
 		input--;
 	}
-	if (*input == '|')
+	if (*input == '|' && c != '|')
 		return (3);
 	return (0);
 }
@@ -80,7 +81,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int line_count)
 		ret = ft_strjoin(tmp2, tmp);
 		free(tmp);
 		free(tmp2);
-		status = is_unclosed(ret);
+		status = is_unclosed(ret, 0);
 		line_count++;
 	}
 	return (delimit_this(ret, p, NULL));

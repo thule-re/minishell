@@ -70,7 +70,7 @@ void	close_outs(int *pipe, int size)
 
 void	run_commands(t_minishell *p, int i, int pid, int counter)
 {
-	while (counter >= 0)
+	while (p->i <= counter)
 	{
 		make_input(p, p->split_input, i);
 		if (!p->input1)
@@ -89,8 +89,7 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 		if (p->split_input[i])
 			i++;
 		p->i++;
-		counter--;
-		if (counter >= 0 && p->num_pipes)
+		if (p->i - 1 <= counter && p->num_pipes)
 			close_outs(p->pipefd, p->i * 2);
 	}
 	waitpid(pid, &p->exit_status, 0);

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:46:31 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/03 11:04:58 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	set_pipes(t_minishell *p, int in, int out)
 	}
 	if (p->pipe_status == 2)
 	{
-		if (!in && !p->heredoc)
+		if (!in)
 			dup2(p->pipefd[(p->i - 1) * 2], STDIN_FILENO);
 		if (!out)
 			dup2(p->pipefd[(p->i * 2) + 1], STDOUT_FILENO);
@@ -42,7 +42,7 @@ void	set_pipes(t_minishell *p, int in, int out)
 	}
 	if (p->pipe_status == 3)
 	{
-		if (!in && !p->heredoc)
+		if (!in)
 			dup2(p->pipefd[p->i * 2 - 2], STDIN_FILENO);
 		close_pipes(p->pipefd, p->i * 2);
 	}
@@ -61,7 +61,7 @@ void	run_helper(t_minishell *p, int in, int out)
 
 void	run_child_1(t_minishell *p, int in, int out)
 {
-	if (p->heredoc && !(check_access(p->input1)) && !p->fd_in)
+	if (p->heredoc && !(check_access(p->input1)) && !p->fd_in && p->pipe_status == 1)
 	{
 		dup2(p->hd_pipe[0], STDIN_FILENO);
 		close_pipes(&p->hd_pipe[0], 2);

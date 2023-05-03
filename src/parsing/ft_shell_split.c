@@ -12,9 +12,6 @@
 
 #include "../include/minishell.h"
 
-
-// WAS ABOUT TO REPLACE CHAR C with apo_type
-
 static int	word_count(char *str, char c, int i, int count)
 {
 	char	apo_type;

@@ -72,11 +72,13 @@ void	close_outs(int *pipe, int size)
 
 void	run_commands(t_minishell *p, int i, int pid, int counter)
 {
-	while (p->i <= counter)
+	while (counter >= 0)
 	{
 		make_input(p, p->split_input, i);
-		if (!p->input1 || !*p->split_input || !*(p->input1))
-			return (free_everything(p, NULL));
+		if (!p->input1)
+			return (malloc_error(p, 1, 0));
+		if (!*p->split_input || !*(p->input1))
+			return (free_everything(p, p->envp));
 		if (!(p->num_pipes == 0 && run_builtin(p, 0)))
 		{
 			pid = fork();
@@ -89,7 +91,8 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 		if (p->split_input[i])
 			i++;
 		p->i++;
-		if (p->i - 1 <= counter && p->num_pipes)
+		counter--;
+		if (counter >= 0 && p->num_pipes)
 			close_outs(p->pipefd, p->i * 2);
 	}
 	waitpid(pid, &p->exit_status, 0);

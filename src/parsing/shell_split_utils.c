@@ -45,18 +45,14 @@ char	next_one(char *s)
 		return (0);
 	while (s[i])
 	{
-		if (s[i] == 34)
-			return (s[i]);
-		if (s[i] == 39)
-			return (s[i]);
-		if (s[i] == ' ')
+		if (s[i] == '\"' || s[i] == '\'' || s[i] == ' ')
 			return (s[i]);
 		i++;
 	}
 	return (0);
 }
 
-int		is_special_char(char *s)
+int	is_special_char(char *s)
 {
 	if (!(ft_strncmp("\"<\"", s, 4)))
 		return (1);

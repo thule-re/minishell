@@ -49,7 +49,7 @@ static void	delim_helper(t_minishell *p, char *delim)
 		free(tmp);
 }
 
-char	*delimit_this(char *s, t_minishell *p, char * delim)
+char	*delimit_this(char *s, t_minishell *p, char *delim)
 {
 	char	*loc;
 	int		len;

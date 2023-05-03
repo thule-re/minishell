@@ -61,7 +61,8 @@ void	run_helper(t_minishell *p, int in, int out)
 
 void	run_child_1(t_minishell *p, int in, int out)
 {
-	if (p->heredoc && !(check_access(p->input1)) && !p->fd_in && p->pipe_status == 1)
+	if (p->heredoc && !(check_access(p->input1)) \
+	&& !p->fd_in && p->pipe_status == 1)
 	{
 		dup2(p->hd_pipe[0], STDIN_FILENO);
 		close_pipes(&p->hd_pipe[0], 2);

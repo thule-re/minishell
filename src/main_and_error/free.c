@@ -66,3 +66,16 @@ void	free_arr(char **arr)
 	}
 	return ;
 }
+
+void	free_strings(char **result, int index)
+{
+	int	i;
+
+	i = 0;
+	while (i < index)
+	{
+		free(result[i]);
+		i++;
+	}
+	free(result);
+}

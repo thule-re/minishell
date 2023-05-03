@@ -12,43 +12,6 @@
 
 #include "../include/minishell.h"
 
-void	free_strings(char **result, int index)
-{
-	int	i;
-
-	i = 0;
-	while (i < index)
-	{
-		free(result[i]);
-		i++;
-	}
-	free(result);
-}
-
-void	free_arr(char **arr)
-{
-	int	i;
-
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-	{
-		if (arr[i])
-		{	
-			free(arr[i]);
-			arr[i] = NULL;
-		}
-		i++;
-	}
-	if (arr)
-	{
-		free(arr);
-		arr = NULL;
-	}
-	return ;
-}
-
 void	print_array(char **arr)
 {
 	int	i;

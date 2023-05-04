@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_shell_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/03 16:48:35 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/04 12:45:06 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_shell_split.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
@@ -93,5 +105,5 @@ char	**ft_shell_split(t_minishell *p, char *s, char c)
 		i++;
 	}
 	result[i] = 0;
-	return (reformat_inputs(p, result, i));
+	return (reformat_inputs(p, result, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 11:17:19 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:23:14 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	char	*tmp;
 	char	*var;
 
-	len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=")) + 1;
+	if (ft_isdigit(s[i + 1]))
+		len = 2;
+	else
+		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=")) + 1;
 	var = malloc(len);
 	ft_strlcpy(var, &s[i + 1], len);
 	if (s[i + 1] == '?')
@@ -83,7 +86,10 @@ char	*expand_variables(t_minishell *p, char *s)
 		if (s[i] == '$')
 		{
 			ret = append_var(p, s, i, ret);
-			s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /="));
+			if (ft_isdigit(s[i + 1]))
+				s += i + 2;
+			else
+				s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /="));
 			i = -1;
 		}
 		i++;

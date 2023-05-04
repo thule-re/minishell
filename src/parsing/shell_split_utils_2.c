@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/04 11:28:09 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static char	*append_var_helper(char *s, char *ret, char *tmp, int i)
 	free(to_free);
 	free(tmp2);
 	tmp2 = tmp;
-	tmp = ft_strjoin(tmp, ret);
+	if (!ret)
+		tmp = ft_strjoin(tmp, ret);
+	else
+		tmp = ft_strjoin(ret, tmp);
 	free(tmp2);
 	free(ret);
 	return (tmp);
@@ -46,7 +49,10 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	char	*tmp;
 	char	*var;
 
-	len = ft_min(ft_strlenc(&s[i + 1], ' '), ft_strlenc(&s[i + 1], 39)) + 1;
+	if (ft_isdigit(s[i + 1]))
+		len = 2;
+	else
+		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=")) + 1;
 	var = malloc(len);
 	ft_strlcpy(var, &s[i + 1], len);
 	if (s[i + 1] == '?')
@@ -80,7 +86,10 @@ char	*expand_variables(t_minishell *p, char *s)
 		if (s[i] == '$')
 		{
 			ret = append_var(p, s, i, ret);
-			s += i + ft_min(ft_strlenc(&s[i], ' '), ft_strlenc(&s[i], 39));
+			if (ft_isdigit(s[i + 1]))
+				s += i + 2;
+			else
+				s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /="));
 			i = -1;
 		}
 		i++;
@@ -101,10 +110,17 @@ char	**reformat_inputs(t_minishell *p, char **arr)
 	{
 		if (!is_special_char(arr[i]))
 			arr[i] = remove_apos(p, arr[i], NULL, 0);
-		if (special_no_quotes(arr[i]))
+		if (special_no_quotes(arr[i], "<>|"))
 		{
 			if (!arr[i + 1] || !*(arr[i + 1]))
-				return (parse_error("newline"), NULL);
+			{
+				if (arr[i][0] == '|')
+					return (parse_error("|"), NULL);
+				else
+					return (parse_error("newline"), NULL);
+			
+
+			}
 		}
 		i++;
 	}

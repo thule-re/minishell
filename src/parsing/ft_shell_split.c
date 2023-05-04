@@ -93,5 +93,5 @@ char	**ft_shell_split(t_minishell *p, char *s, char c)
 		i++;
 	}
 	result[i] = 0;
-	return (reformat_inputs(p, result));
+	return (reformat_inputs(p, result, i));
 }

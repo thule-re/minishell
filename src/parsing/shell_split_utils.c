@@ -87,7 +87,7 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 		if (*s == ' ')
 			s++;
 		if ((s_part[0] != 39 && ft_strchr(s_part, '$')))
-			s_part = expand_variables(p, s_part);
+			s_part = expand_variables(p, s_part, NULL, 0);
 		else if (is_apo(s_part[0]))
 			string_shift(s_part);
 		ret = ft_strjoinf(ret, s_part);

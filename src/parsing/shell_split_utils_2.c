@@ -52,7 +52,7 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	if (ft_isdigit(s[i + 1]))
 		len = 2;
 	else
-		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=")) + 1;
+		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=\n")) + 1;
 	var = malloc(len);
 	ft_strlcpy(var, &s[i + 1], len);
 	if (s[i + 1] == '?')
@@ -69,18 +69,14 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	return (append_var_helper(s, ret, tmp, i));
 }
 
-char	*expand_variables(t_minishell *p, char *s)
+char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 {
-	int		i;
-	char	*ret;
 	char	*to_free;
 	char	*tmp;
 
-	ret = NULL;
 	if (*s == 34)
 		string_shift(s);
 	to_free = s;
-	i = 0;
 	while (s[i])
 	{
 		if (s[i] == '$')
@@ -89,7 +85,7 @@ char	*expand_variables(t_minishell *p, char *s)
 			if (ft_isdigit(s[i + 1]))
 				s += i + 2;
 			else
-				s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /="));
+				s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /=\n"));
 			i = -1;
 		}
 		i++;
@@ -101,11 +97,8 @@ char	*expand_variables(t_minishell *p, char *s)
 	return (ret);
 }
 
-char	**reformat_inputs(t_minishell *p, char **arr)
+char	**reformat_inputs(t_minishell *p, char **arr, int i)
 {
-	int		i;
-
-	i = 0;
 	while (arr[i])
 	{
 		if (!is_special_char(arr[i]))
@@ -118,8 +111,6 @@ char	**reformat_inputs(t_minishell *p, char **arr)
 					return (parse_error("|"), NULL);
 				else
 					return (parse_error("newline"), NULL);
-			
-
 			}
 		}
 		i++;

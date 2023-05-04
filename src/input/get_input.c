@@ -63,9 +63,11 @@ static int	is_unclosed(char *input, char *start)
 	return (0);
 }
 
-static char	*exit_signal(void)
+static char	*exit_signal(t_minishell *p)
 {
-	ft_putstr_fd("\033[Fminishell % exit\n", 2);
+	ft_putstr_fd("\033[Fminishell: ", 2);
+	put_prompt(p);
+	ft_putstr_fd("% exit\n", 2);
 	return (NULL);
 }
 
@@ -90,7 +92,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 		else
 			tmp = readline("> ");
 		if (!tmp && status == 1)
-			return (exit_signal());
+			return (exit_signal(p));
 		else if (!tmp)
 			return (unexpected_eof());
 		if (ret && status == 2)

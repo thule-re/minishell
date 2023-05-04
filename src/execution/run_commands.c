@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/03 18:31:19 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/04 09:39:52 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,7 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 	while (p->i <= counter)
 	{
 		make_input(p, p->split_input, i);
-		if (!p->input1)
-			return (malloc_error(p, 1, 0));
-		if (!*p->split_input || !*(p->input1))
+		if (!p->input1 || !*p->split_input || !*(p->input1))
 			return (free_everything(p, 0));
 		if (!(p->num_pipes == 0 && run_builtin(p, 0)))
 		{

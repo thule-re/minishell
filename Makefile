@@ -34,6 +34,7 @@ FILES 		=	builtins/builtin_utils \
 				env/export_env \
 				execution/pipex_children \
 				execution/run_commands \
+				execution/pipe_utils \
 				input/get_input \
 				input/make_input \
 				main_and_error/error \

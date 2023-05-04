@@ -6,13 +6,13 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/03 10:45:02 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:41:41 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char	*put_prompt(t_minishell *p)
+char	*put_prompt(t_minishell *p)
 {
 	char	*pwd;
 	char	*tmp;
@@ -34,6 +34,21 @@ static char	*put_prompt(t_minishell *p)
 	line = readline(pwd);
 	free(pwd);
 	return (line);
+}
+
+static int	is_unclosed_helper(char *input, char *start)
+{
+	if (*input == '|' && *start != '|')
+	{
+		input--;
+		while (input != start && *input == ' ')
+			input--;
+		if (ft_strchr("<>|", *input))
+			return (0);
+		else
+			return (3);
+	}
+	return (0);
 }
 
 static int	is_unclosed(char *input, char *start)
@@ -58,15 +73,7 @@ static int	is_unclosed(char *input, char *start)
 			break ;
 		input--;
 	}
-	if (*input == '|' && *start != '|')
-		return (3);
-	return (0);
-}
-
-static char	*exit_signal(void)
-{
-	ft_putstr_fd("\033[Fminishell % exit\n", 2);
-	return (NULL);
+	return (is_unclosed_helper(input, start));
 }
 
 static char	*unexpected_eof(void)
@@ -90,7 +97,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 		else
 			tmp = readline("> ");
 		if (!tmp && status == 1)
-			return (exit_signal());
+			return (exit_signal(p));
 		else if (!tmp)
 			return (unexpected_eof());
 		if (ret && status == 2)

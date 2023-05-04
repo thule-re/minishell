@@ -36,6 +36,14 @@ void	init_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
+char	*exit_signal(t_minishell *p)
+{
+	ft_putstr_fd("\033[Fminishell: ", 2);
+	put_prompt(p);
+	ft_putstr_fd("% exit\n", 2);
+	return (NULL);
+}
+
 void	check_signals(t_minishell *p)
 {
 	if (WIFEXITED(p->exit_status) && !WIFSIGNALED(p->exit_status))

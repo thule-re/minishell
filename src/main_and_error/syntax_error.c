@@ -42,7 +42,6 @@ int	check_syntax(char **arr)
 		if (arr[i + 1] && special_no_quotes(arr[i], "<>") \
 		&& special_no_quotes(arr[i + 1], "<>|"))
 			return ((parse_error(arr[i + 1])), 1);
-		
 		i++;
 	}
 	return (0);

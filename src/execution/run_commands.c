@@ -53,17 +53,20 @@ void	end_running(t_minishell *p)
 		close_pipes(p->pipefd, p->num_pipes * 2);
 }
 
-void	close_outs(int *pipe, int size)
+void	wait_for_run(t_minishell *p, int last_pid)
 {
 	int	i;
 
 	i = 0;
-	while (i < size)
+	waitpid(last_pid, &p->exit_status, 0);
+	end_running(p);
+	i = 0;
+	while (i < p->num_pipes + 1)
 	{
-		if (i % 2)
-			close(pipe[i]);
+		waitpid(-1, NULL, 0);
 		i++;
 	}
+	check_signals(p);
 }
 
 void	run_commands(t_minishell *p, int i, int pid, int counter)
@@ -88,13 +91,5 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 		if (p->i <= counter && p->num_pipes)
 			close_outs(p->pipefd, p->i * 2);
 	}
-	waitpid(pid, &p->exit_status, 0);
-	end_running(p);
-	i = 0;
-	while (i < p->num_pipes + 1)
-	{
-		waitpid(-1, NULL, 0);
-		i++;
-	}
-	check_signals(p);
+	wait_for_run(p, pid);
 }

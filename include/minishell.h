@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/04 11:55:34 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/04 12:26:19 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
@@ -53,6 +65,10 @@ typedef struct s_minishell {
 	int		dircheck;
 }	t_minishell;
 
+// functions for receiving user input
+char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status);
+char	*put_prompt(t_minishell *p);
+
 // functions for splitting and input parsing
 char	**ft_shell_split(t_minishell *p, char *s, char c);
 int		apo_count(char *str, char apo);
@@ -61,13 +77,11 @@ char	next_one(char *s, char *set);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
-char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status);
-char	**reformat_inputs(t_minishell *p, char **arr);
+char	**reformat_inputs(t_minishell *p, char **arr, int i);
 void	shift_array(char **arr, int i);
 int		special_no_quotes(char *s, char *set);
-
 char	*delimit_this(char *s, t_minishell *p, char *delim);
-char	*expand_variables(t_minishell *p, char *s);
+char	*expand_variables(t_minishell *p, char *s, char *ret, int i);
 void	string_shift(char *s);
 int		directory_handler(t_minishell *p, char *input, char c);
 
@@ -76,10 +90,12 @@ void	run_child_1(t_minishell *p, int in, int out);
 char	*append_slash(char *path, char *str, char *c);
 char	*get_command(char **paths, char *cmd_str);
 void	close_pipes(int *pipe, int size);
+void	close_outs(int *pipe, int size);
 int		check_access(char **input);
 int		ft_min(int x, int y);
 void	end_running(t_minishell *p);
 void	open_heredoc_pipe(t_minishell *p);
+void	set_pipes(t_minishell *p, int in, int out);
 
 // error handlers
 void	error_handler(char *s, t_minishell *params);
@@ -110,6 +126,7 @@ void	sigint_handler_a(int signum);
 void	init_signals(void);
 void	sigint_handler_b(int signum);
 void	check_signals(t_minishell *p);
+char	*exit_signal(t_minishell *p);
 
 // environment functions
 char	*ft_getenv(char *str, t_env *envp);

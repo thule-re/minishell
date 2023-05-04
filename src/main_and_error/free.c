@@ -40,7 +40,9 @@ void	free_everything(t_minishell *p, t_env **env)
 	if (env)
 		free_env(env);
 	env = NULL;
-	end_running(p);
+	if (p->pipefd)
+		free(p->pipefd);
+	p->pipefd = NULL;
 }
 
 void	free_arr(char **arr)

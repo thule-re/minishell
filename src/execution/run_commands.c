@@ -50,11 +50,7 @@ void	end_running(t_minishell *p)
 	if (p->fd_out)
 		close(p->fd_out);
 	if (p->pipefd)
-	{
 		close_pipes(p->pipefd, p->num_pipes * 2);
-		free (p->pipefd);
-	}
-	p->pipefd = NULL;
 }
 
 void	close_outs(int *pipe, int size)

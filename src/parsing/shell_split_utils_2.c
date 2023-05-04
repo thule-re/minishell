@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split_utils_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/04 12:46:22 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/04 14:21:13 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_split_utils_2.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
@@ -74,7 +86,7 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 	char	*to_free;
 	char	*tmp;
 
-	if (*s == 34)
+	if (*s == 34 && s != p->heredoc)
 		string_shift(s);
 	to_free = s;
 	while (s[i])

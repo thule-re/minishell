@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_parsing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/03 16:48:35 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/04 14:29:28 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_parsing.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:39:58 by awilliam          #+#    #+#             */
@@ -57,9 +69,7 @@ char	*delimit_this(char *s, t_minishell *p, char *delim)
 	loc = ft_strnstr(s, "<<", ft_strlen(s));
 	if (!loc || *(loc + 2) == '<' || *(loc + 2) == '>' || !*(loc + 2))
 		return (s);
-	if (p->heredoc)
-		free(p->heredoc);
-	p->heredoc = NULL;
+	p->heredoc = ft_strdup("");
 	while (loc)
 	{
 		while (*(loc + 2) == ' ')
@@ -74,6 +84,8 @@ char	*delimit_this(char *s, t_minishell *p, char *delim)
 		free(delim);
 		delim = NULL;
 	}
+	if (p->heredoc)
+		p->heredoc = expand_variables(p, p->heredoc, NULL, 0);
 	return (s);
 }
 

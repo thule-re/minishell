@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/04 12:00:08 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/04 14:40:41 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_input.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
@@ -12,18 +24,16 @@
 
 #include "../include/minishell.h"
 
-char	*put_prompt(t_minishell *p)
+char	*put_prompt(t_minishell *p, int which, int i)
 {
 	char	*pwd;
 	char	*tmp;
 	char	**split_pwd;
 	char	*line;
-	int		i;
 
-	i = 0;
 	pwd = ft_getenv("PWD", *p->envp);
 	split_pwd = ft_split(pwd, '/');
-	if (!split_pwd)
+	if (!split_pwd && !which)
 		return (readline("minishell % "));
 	while (split_pwd[i + 1])
 		i++;
@@ -31,6 +41,11 @@ char	*put_prompt(t_minishell *p)
 	pwd = ft_strjoin(tmp, " % ");
 	free(tmp);
 	free_arr(split_pwd);
+	if (which)
+	{
+		ft_printf("%s", pwd);
+		return (free(pwd), NULL);
+	}
 	line = readline(pwd);
 	free(pwd);
 	return (line);
@@ -93,7 +108,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 	while (status)
 	{
 		if (status == 1)
-			tmp = put_prompt(p);
+			tmp = put_prompt(p, 0, 0);
 		else
 			tmp = readline("> ");
 		if (!tmp && status == 1)

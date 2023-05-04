@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/03 16:48:35 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/04 14:40:00 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:43:50 by awilliam          #+#    #+#             */
@@ -39,8 +51,8 @@ void	init_signals(void)
 char	*exit_signal(t_minishell *p)
 {
 	ft_putstr_fd("\033[Fminishell: ", 2);
-	put_prompt(p);
-	ft_putstr_fd("% exit\n", 2);
+	put_prompt(p, 1, 0);
+	ft_putstr_fd("exit\n", 2);
 	return (NULL);
 }
 

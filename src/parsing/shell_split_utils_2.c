@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 09:29:53 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:17:19 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static char	*append_var_helper(char *s, char *ret, char *tmp, int i)
 	free(to_free);
 	free(tmp2);
 	tmp2 = tmp;
-	tmp = ft_strjoin(tmp, ret);
+	if (!ret)
+		tmp = ft_strjoin(tmp, ret);
+	else
+		tmp = ft_strjoin(ret, tmp);
 	free(tmp2);
 	free(ret);
 	return (tmp);
@@ -46,7 +49,7 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	char	*tmp;
 	char	*var;
 
-	len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /")) + 1;
+	len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=")) + 1;
 	var = malloc(len);
 	ft_strlcpy(var, &s[i + 1], len);
 	if (s[i + 1] == '?')
@@ -80,7 +83,7 @@ char	*expand_variables(t_minishell *p, char *s)
 		if (s[i] == '$')
 		{
 			ret = append_var(p, s, i, ret);
-			s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /"));
+			s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /="));
 			i = -1;
 		}
 		i++;

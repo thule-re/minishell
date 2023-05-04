@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static char	*put_prompt(t_minishell *p)
+char	*put_prompt(t_minishell *p)
 {
 	char	*pwd;
 	char	*tmp;
@@ -36,39 +36,36 @@ static char	*put_prompt(t_minishell *p)
 	return (line);
 }
 
-// static int	is_unclosed(char *input, char *start)
-// {
-// 	if (!*input)
-// 		return (0);
-// 	while (*input)
-// 	{
-// 		if (is_apo(*input))
-// 		{
-// 			if (apo_count(input + 1, *input))
-// 				input += ft_strlenc(input + 1, *input) + 1;
-// 			else
-// 				return (2);
-// 		}
-// 		input++;
-// 	}
-// 	input--;
-// 	while (input != start && !ft_strchr(input, '|'))
-// 	{
-// 		if (*input != ' ')
-// 			break ;
-// 		input--;
-// 	}
-// 	if (*input == '|' && *start != '|')
-// 		return (3);
-// 	return (0);
-// }
+static int	is_unclosed_helper(char *input, char *start)
+{
+	if (*input == '|' && *start != '|')
+	{
+		input--;
+		while (input != start && *input == ' ')
+			input--;
+		if (ft_strchr("<>|", *input))
+			return (0);
+		else
+			return (3);
+	}
+	return (0);
+}
 
 static int	is_unclosed(char *input, char *start)
 {
 	if (!*input)
 		return (0);
 	while (*input)
+	{
+		if (is_apo(*input))
+		{
+			if (apo_count(input + 1, *input))
+				input += ft_strlenc(input + 1, *input) + 1;
+			else
+				return (2);
+		}
 		input++;
+	}
 	input--;
 	while (input != start && !ft_strchr(input, '|'))
 	{
@@ -76,27 +73,7 @@ static int	is_unclosed(char *input, char *start)
 			break ;
 		input--;
 	}
-	if (*input == '|' && *start != '|')
-	{
-		input--;
-		while (input != start && *input == ' ')
-			input--;
-		if (ft_strchr("<>|", *input))
-		{	ft_printf(input);
-			return (0);
-		}
-		else
-			return (3);
-	}
-	return (0);
-}
-
-static char	*exit_signal(t_minishell *p)
-{
-	ft_putstr_fd("\033[Fminishell: ", 2);
-	put_prompt(p);
-	ft_putstr_fd("% exit\n", 2);
-	return (NULL);
+	return (is_unclosed_helper(input, start));
 }
 
 static char	*unexpected_eof(void)

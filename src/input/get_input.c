@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/03 10:45:02 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:41:41 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,39 @@ static char	*put_prompt(t_minishell *p)
 	return (line);
 }
 
+// static int	is_unclosed(char *input, char *start)
+// {
+// 	if (!*input)
+// 		return (0);
+// 	while (*input)
+// 	{
+// 		if (is_apo(*input))
+// 		{
+// 			if (apo_count(input + 1, *input))
+// 				input += ft_strlenc(input + 1, *input) + 1;
+// 			else
+// 				return (2);
+// 		}
+// 		input++;
+// 	}
+// 	input--;
+// 	while (input != start && !ft_strchr(input, '|'))
+// 	{
+// 		if (*input != ' ')
+// 			break ;
+// 		input--;
+// 	}
+// 	if (*input == '|' && *start != '|')
+// 		return (3);
+// 	return (0);
+// }
+
 static int	is_unclosed(char *input, char *start)
 {
 	if (!*input)
 		return (0);
 	while (*input)
-	{
-		if (is_apo(*input))
-		{
-			if (apo_count(input + 1, *input))
-				input += ft_strlenc(input + 1, *input) + 1;
-			else
-				return (2);
-		}
 		input++;
-	}
 	input--;
 	while (input != start && !ft_strchr(input, '|'))
 	{
@@ -59,7 +77,17 @@ static int	is_unclosed(char *input, char *start)
 		input--;
 	}
 	if (*input == '|' && *start != '|')
-		return (3);
+	{
+		input--;
+		while (input != start && *input == ' ')
+			input--;
+		if (ft_strchr("<>|", *input))
+		{	ft_printf(input);
+			return (0);
+		}
+		else
+			return (3);
+	}
 	return (0);
 }
 

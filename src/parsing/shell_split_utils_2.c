@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 11:23:14 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:28:09 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,14 @@ char	**reformat_inputs(t_minishell *p, char **arr)
 		if (special_no_quotes(arr[i], "<>|"))
 		{
 			if (!arr[i + 1] || !*(arr[i + 1]))
-				return (parse_error("newline"), NULL);
+			{
+				if (arr[i][0] == '|')
+					return (parse_error("|"), NULL);
+				else
+					return (parse_error("newline"), NULL);
+			
+
+			}
 		}
 		i++;
 	}

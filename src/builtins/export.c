@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:50:04 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/04 14:15:02 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:22:49 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static int	is_valid(char *input, char *key)
 	}
 	if (!ret)
 	{
-		ft_putstr_fd("minishell: unset: '", 2);
+		ft_putstr_fd("minishell: export: '", 2);
 		ft_putstr_fd(input, 2);
 		ft_putstr_fd("' is not a valid identifier\n", 2);
 	}

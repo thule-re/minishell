@@ -12,12 +12,13 @@
 
 #include "minishell.h"
 
-void	parse_error(char *s)
+void	parse_error(t_minishell *p, char *s)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 	ft_putstr_fd(s, 2);
 	ft_putstr_fd("'\n", 2);
 	g_es = 258;
+	free_everything(p, NULL);
 }
 
 int	special_no_quotes(char *s, char *set)
@@ -30,18 +31,18 @@ int	special_no_quotes(char *s, char *set)
 		return (0);
 }
 
-int	check_syntax(char **arr)
+int	check_syntax(t_minishell *p, char **arr)
 {
 	int	i;
 
 	if (!ft_strncmp(arr[0], "|", 2))
-		return (parse_error(arr[0]), 1);
+		return (parse_error(p, arr[0]), 1);
 	i = 0;
 	while (arr[i])
 	{
 		if (arr[i + 1] && special_no_quotes(arr[i], "<>") \
 		&& special_no_quotes(arr[i + 1], "<>|"))
-			return ((parse_error(arr[i + 1])), 1);
+			return ((parse_error(p, arr[i + 1])), 1);
 		i++;
 	}
 	return (0);

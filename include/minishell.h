@@ -68,7 +68,7 @@ void	print_array(char **arr);
 char	**reformat_inputs(t_minishell *p, char **arr, int i);
 void	shift_array(char **arr, int i);
 int		special_no_quotes(char *s, char *set);
-char	*delimit_this(char *s, t_minishell *p, char *delim, int len);
+char	*delimit_this(char *s, t_minishell *p, int len);
 char	*expand_variables(t_minishell *p, char *s, char *ret, int i);
 void	string_shift(char *s);
 int		directory_handler(t_minishell *p, char *input, char c);
@@ -90,7 +90,7 @@ void	error_handler(char *s, t_minishell *params);
 void	malloc_error(t_minishell *params, int free, int exit);
 void	file_error(char *s, int fd, int error_type, t_minishell *params);
 void	cmd_error(char *str, t_minishell *params);
-void	parse_error(char *s);
+void	parse_error(t_minishell *p, char *s);
 
 // free handlers
 void	free_arr(char **arr);
@@ -102,7 +102,7 @@ void	make_input(t_minishell *p, char **split_input, int index);
 int		are_there_pipes(char **parsed_input);
 char	*remove_apos(t_minishell *p, char *s, char *ret, int len);
 int		is_special_char(char *s);
-int		check_syntax(char **arr);
+int		check_syntax(t_minishell *p, char **arr);
 int		init_variables(t_minishell *p, char **s);
 void	run_commands(t_minishell *p, int index, int pid, int counter);
 

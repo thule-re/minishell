@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 10:16:13 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 10:21:56 by awilliam         ###   ########.fr       */
+/*   Created: 2023/05/08 12:42:40 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/08 15:09:02 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,11 @@ int	ft_min(int x, int y)
 		return (y);
 }
 
-static void	delim_helper(t_minishell *p, char *delim, char *tmp, char *to_free)
+static void	delim_helper_2(t_minishell *p, char *tmp, char *delim)
 {
-	tmp = readline("> ");
-	to_free = tmp;
-	tmp = ft_strjoin(tmp, "\n");
-	if (!tmp)
-		malloc_error(p, 0, 0);
-	free(to_free);
-	while (ft_strncmp(tmp, "\n", 2) && ft_strncmp(tmp, delim, ft_strlen(delim)))
+	char	*to_free;
+
+	while (ft_strncmp(tmp, delim, ft_strlen(delim)))
 	{
 		p->heredoc = ft_strjoinf(p->heredoc, tmp);
 		if (!p->heredoc)
@@ -61,32 +57,50 @@ static void	delim_helper(t_minishell *p, char *delim, char *tmp, char *to_free)
 		free(tmp);
 }
 
-char	*delimit_this(char *s, t_minishell *p, char *delim, int len)
+static void	delim_helper(t_minishell *p, char *tmp, char *loc, int len)
+{
+	char	*delim;
+	char	*to_free;
+
+	delim = malloc(len + 2);
+	if (!delim)
+		malloc_error(p, 0, 0);
+	ft_strlcpy(delim, loc + 2, len + 1);
+	delim[len] = '\n';
+	delim[len + 1] = 0;
+	tmp = readline("> ");
+	if (!tmp)
+		return ;
+	to_free = tmp;
+	tmp = ft_strjoin(tmp, "\n");
+	if (!tmp)
+		malloc_error(p, 0, 0);
+	free(to_free);
+	delim_helper_2(p, tmp, delim);
+	free(delim);
+	delim = NULL;
+}
+
+char	*delimit_this(char *s, t_minishell *p, int len)
 {
 	char	*loc;
 
+	signal(SIGINT, SIG_IGN);
 	loc = ft_strnstr(s, "<<", ft_strlen(s));
 	if (!loc || *(loc + 2) == '<' || *(loc + 2) == '>' || !*(loc + 2))
 		return (s);
-	p->heredoc = ft_strdup("");
 	while (loc)
 	{
 		while (*(loc + 2) == ' ')
 			loc++;
 		len = ft_min(ft_strlenc(loc + 2, ' '), ft_strlenc(loc + 2, '\n'));
-		delim = malloc(len + 2);
-		if (!delim)
-			malloc_error(p, 0, 0);
-		ft_strlcpy(delim, loc + 2, len + 1);
-		delim[len + 1] = 0;
-		delim[len] = '\n';
-		delim_helper(p, delim, NULL, NULL);
+		delim_helper(p, NULL, loc, len);
 		loc = ft_strnstr(loc + 2, "<<", ft_strlen(loc + 2));
-		free(delim);
-		delim = NULL;
 	}
 	if (p->heredoc)
 		p->heredoc = expand_variables(p, p->heredoc, NULL, 0);
+	else
+		p->heredoc = ft_strdup("");
 	return (s);
 }
 

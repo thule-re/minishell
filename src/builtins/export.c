@@ -98,7 +98,7 @@ static int	is_valid(char *input, char *key)
 		ret = 0;
 	while (*key)
 	{
-		if (ft_strchr("~-@*!+\\{}[]^:", *key))
+		if (ft_strchr("~-@*!+\\{}[]^:=;+", *key))
 			ret = 0;
 		key++;
 	}

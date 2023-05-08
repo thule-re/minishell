@@ -6,7 +6,7 @@
 /*   By: treeps <treeps@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 11:21:34 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/08 11:21:38 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/08 12:53:06 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ static void	init_old_pwd(t_env *envp, t_env *last)
 
 static t_env	*add_special_node(char **key_val)
 {
+	char	*tmp;
+
 	if (!ft_strncmp(key_val[0], "SHLVL", 6))
 	{
 		if (!key_val[1])
 			return (new_env_node(key_val));
-		free(key_val[1]);
+		tmp = key_val[1];
 		key_val[1] = ft_itoa(ft_atoi(key_val[1]) + 1);
+		free(tmp);
 	}
 	return (new_env_node(key_val));
 }

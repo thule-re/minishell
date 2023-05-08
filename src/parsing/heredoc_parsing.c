@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_parsing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 10:16:13 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/08 10:21:56 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_parsing.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:39:58 by awilliam          #+#    #+#             */
@@ -20,11 +32,8 @@ int	ft_min(int x, int y)
 		return (y);
 }
 
-static void	delim_helper(t_minishell *p, char *delim)
+static void	delim_helper(t_minishell *p, char *delim, char *tmp, char *to_free)
 {
-	char	*tmp;
-	char	*to_free;
-
 	tmp = readline("> ");
 	to_free = tmp;
 	tmp = ft_strjoin(tmp, "\n");
@@ -52,10 +61,9 @@ static void	delim_helper(t_minishell *p, char *delim)
 		free(tmp);
 }
 
-char	*delimit_this(char *s, t_minishell *p, char *delim)
+char	*delimit_this(char *s, t_minishell *p, char *delim, int len)
 {
 	char	*loc;
-	int		len;
 
 	loc = ft_strnstr(s, "<<", ft_strlen(s));
 	if (!loc || *(loc + 2) == '<' || *(loc + 2) == '>' || !*(loc + 2))
@@ -72,7 +80,7 @@ char	*delimit_this(char *s, t_minishell *p, char *delim)
 		ft_strlcpy(delim, loc + 2, len + 1);
 		delim[len + 1] = 0;
 		delim[len] = '\n';
-		delim_helper(p, delim);
+		delim_helper(p, delim, NULL, NULL);
 		loc = ft_strnstr(loc + 2, "<<", ft_strlen(loc + 2));
 		free(delim);
 		delim = NULL;

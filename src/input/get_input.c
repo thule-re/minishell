@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:00:08 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 14:40:41 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 08:56:00 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static int	is_unclosed(char *input, char *start)
 
 static char	*unexpected_eof(void)
 {
-	ft_putstr_fd("unexpected EOF while looking for matching `'", 2);
+	ft_putstr_fd("minishell: unexpected end of file", 2);
 	ft_putchar_fd('"', 2);
 	ft_putstr_fd("\n", 2);
 	g_es = 258;

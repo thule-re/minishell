@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_parsing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 16:48:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 14:29:28 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc_parsing.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:39:58 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 17:28:25 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:16:55 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +28,14 @@ static void	delim_helper(t_minishell *p, char *delim)
 	tmp = readline("> ");
 	to_free = tmp;
 	tmp = ft_strjoin(tmp, "\n");
+	if (!tmp)
+		malloc_error(p, 0, 0);
 	free(to_free);
-	while (ft_strncmp(tmp, delim, ft_strlen(delim)))
+	while (ft_strncmp(tmp, "\n", 2) && ft_strncmp(tmp, delim, ft_strlen(delim)))
 	{
-		to_free = p->heredoc;
-		p->heredoc = ft_strjoin(p->heredoc, tmp);
-		free(to_free);
-		free(tmp);
+		p->heredoc = ft_strjoinf(p->heredoc, tmp);
+		if (!p->heredoc)
+			malloc_error(p, 0, 0);
 		tmp = readline("> ");
 		if (!tmp)
 		{
@@ -55,6 +44,8 @@ static void	delim_helper(t_minishell *p, char *delim)
 		}
 		to_free = tmp;
 		tmp = ft_strjoin(tmp, "\n");
+		if (!tmp)
+			malloc_error(p, 0, 0);
 		free(to_free);
 	}
 	if (tmp)
@@ -76,6 +67,8 @@ char	*delimit_this(char *s, t_minishell *p, char *delim)
 			loc++;
 		len = ft_min(ft_strlenc(loc + 2, ' '), ft_strlenc(loc + 2, '\n'));
 		delim = malloc(len + 2);
+		if (!delim)
+			malloc_error(p, 0, 0);
 		ft_strlcpy(delim, loc + 2, len + 1);
 		delim[len + 1] = 0;
 		delim[len] = '\n';

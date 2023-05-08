@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 09:37:14 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:31:57 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static char	*append_var_helper(char *s, char *ret, char *tmp, int i)
 	char	*tmp2;
 	char	*to_free;
 
-	if (!tmp)
-		return (NULL);
 	tmp2 = malloc(i + 1);
 	if (!tmp2)
 		return (NULL);

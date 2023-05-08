@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 09:33:51 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:27:49 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,22 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 	return (free(tmp), ret);
 }
 
+int		is_variable(char *s)
+{
+	if (ft_strchr(s, '$'))
+		return (1);
+	else
+		return (0);
+}
+
 char	**reformat_inputs(t_minishell *p, char **arr, int i)
 {
+	int	var;
+
 	p->split_input = arr;
 	while (arr[i])
 	{
+		var = is_variable(arr[i]);
 		if (!is_special_char(arr[i]))
 			arr[i] = remove_apos(p, arr[i], NULL, 0);
 		if (!arr[i])
@@ -91,6 +102,11 @@ char	**reformat_inputs(t_minishell *p, char **arr, int i)
 				else
 					return (parse_error(p, "newline"), NULL);
 			}
+		}
+		if (!*arr[i] && var)
+		{
+			shift_array(arr, i);
+			i--;
 		}
 		i++;
 	}

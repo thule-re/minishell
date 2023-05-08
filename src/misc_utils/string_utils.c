@@ -3,18 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 16:48:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 10:38:18 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   string_utils.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:16:03 by awilliam          #+#    #+#             */
@@ -87,7 +75,17 @@ int	is_special_char(char *s)
 		return (1);
 	if (!(ft_strncmp("\">>\"", s, 5)))
 		return (1);
-	if (!(ft_strncmp("\"|\"", s, 5)))
+	if (!(ft_strncmp("\'|\'", s, 5)))
+		return (1);
+	if (!(ft_strncmp("\'<\'", s, 4)))
+		return (1);
+	if (!(ft_strncmp("\'<<\'", s, 5)))
+		return (1);
+	if (!(ft_strncmp("\'>\'", s, 4)))
+		return (1);
+	if (!(ft_strncmp("\'>>\'", s, 5)))
+		return (1);
+	if (!(ft_strncmp("\'|\'", s, 5)))
 		return (1);
 	return (0);
 }

@@ -3,18 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split_utils_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 10:16:13 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 10:40:10 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   shell_split_utils_2.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
@@ -60,7 +48,7 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	if (ft_isdigit(s[i + 1]))
 		len = 2;
 	else
-		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=\n")) + 1;
+		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=\n:$")) + 1;
 	var = malloc(len);
 	if (!var)
 		return (NULL);
@@ -101,15 +89,16 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 	to_free = s;
 	while (s[i])
 	{
-		if (s[i] == '$')
+		if (s[i] == '$' && s[i + 1] && s[i + 1] != ' ')
 		{
 			ret = append_var(p, s, i, ret);
 			if (!ret)
 				return (malloc_error(p, 0, 0), NULL);
+			s++;
 			if (ft_isdigit(s[i + 1]))
-				s += i + 2;
+				s += i + 1;
 			else
-				s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /=\n:"));
+				s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /=\n:$"));
 			i = -1;
 		}
 		i++;

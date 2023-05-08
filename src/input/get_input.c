@@ -3,27 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 10:16:12 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/08 10:22:36 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_input.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 11:41:41 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:02:08 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*put_prompt(t_minishell *p)
+char	*put_prompt(t_minishell *p, int which, int i)
 {
 	char	*pwd;
 	char	*tmp;
 	char	**split_pwd;
 	char	*line;
-	int		i;
 
-	i = 0;
 	pwd = ft_getenv("PWD", *p->envp);
 	split_pwd = ft_split(pwd, '/');
-	if (!split_pwd)
+	if (!split_pwd && !which)
 		return (readline("minishell % "));
 	while (split_pwd[i + 1])
 		i++;
@@ -31,6 +41,11 @@ char	*put_prompt(t_minishell *p)
 	pwd = ft_strjoin(tmp, " % ");
 	free(tmp);
 	free_arr(split_pwd);
+	if (which)
+	{
+		ft_printf("%s", pwd);
+		return (free(pwd), NULL);
+	}
 	line = readline(pwd);
 	free(pwd);
 	return (line);
@@ -76,11 +91,14 @@ static int	is_unclosed(char *input, char *start)
 	return (is_unclosed_helper(input, start));
 }
 
-static char	*unexpected_eof(void)
+static char	*unexpected_eof(int status)
 {
-	ft_putstr_fd("unexpected EOF while looking for matching `'", 2);
-	ft_putchar_fd('"', 2);
-	ft_putstr_fd("\n", 2);
+	if (status == 2)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("unexpected EOF while looking for matching `'\"\n", 2);
+	}
+	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
 	g_es = 258;
 	return (ft_strdup(""));
 }
@@ -93,13 +111,13 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 	while (status)
 	{
 		if (status == 1)
-			tmp = put_prompt(p);
+			tmp = put_prompt(p, 0, 0);
 		else
 			tmp = readline("> ");
 		if (!tmp && status == 1)
 			return (exit_signal(p));
 		else if (!tmp)
-			return (unexpected_eof());
+			return (unexpected_eof(status));
 		if (ret && status == 2)
 			tmp2 = ft_strjoin(ret, "\n");
 		if (ret && status == 3)
@@ -111,5 +129,5 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 			return (malloc_error(p, 1, 1), NULL);
 		status = is_unclosed(ret, ret);
 	}
-	return (delimit_this(ret, p, NULL));
+	return (delimit_this(ret, p, NULL, 0));
 }

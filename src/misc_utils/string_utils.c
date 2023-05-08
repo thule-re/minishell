@@ -54,3 +54,38 @@ char	*get_command(char **paths, char *cmd_str)
 		return (cmd);
 	return (ft_strdup(cmd_str));
 }
+
+void	string_shift(char *s)
+{
+	while (*s)
+	{
+		*s = *(s + 1);
+		s++;
+	}
+	*(s - 2) = 0;
+}
+
+int	is_special_char(char *s)
+{
+	if (!(ft_strncmp("\"<\"", s, 4)))
+		return (1);
+	if (!(ft_strncmp("\"<<\"", s, 5)))
+		return (1);
+	if (!(ft_strncmp("\">\"", s, 4)))
+		return (1);
+	if (!(ft_strncmp("\">>\"", s, 5)))
+		return (1);
+	if (!(ft_strncmp("\'|\'", s, 5)))
+		return (1);
+	if (!(ft_strncmp("\'<\'", s, 4)))
+		return (1);
+	if (!(ft_strncmp("\'<<\'", s, 5)))
+		return (1);
+	if (!(ft_strncmp("\'>\'", s, 4)))
+		return (1);
+	if (!(ft_strncmp("\'>>\'", s, 5)))
+		return (1);
+	if (!(ft_strncmp("\'|\'", s, 5)))
+		return (1);
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:33:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 09:39:52 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 08:51:07 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	init_variables(t_minishell *p, char **s)
 	else
 		p->paths = NULL;
 	p->pipefd = malloc(2 * sizeof(int) * p->num_pipes);
+	if (!p->pipefd)
+		malloc_error(p, 0, 0);
 	counter = p->num_pipes;
 	while (counter--)
 		pipe(&(p->pipefd[counter * 2]));

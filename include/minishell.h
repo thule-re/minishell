@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:55:34 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 12:26:19 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 10:23:13 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_minishell {
 
 // functions for receiving user input
 char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status);
-char	*put_prompt(t_minishell *p);
+char	*put_prompt(t_minishell *p, int which, int i);
 
 // functions for splitting and input parsing
 char	**ft_shell_split(t_minishell *p, char *s, char c);
@@ -80,7 +80,7 @@ void	print_array(char **arr);
 char	**reformat_inputs(t_minishell *p, char **arr, int i);
 void	shift_array(char **arr, int i);
 int		special_no_quotes(char *s, char *set);
-char	*delimit_this(char *s, t_minishell *p, char *delim);
+char	*delimit_this(char *s, t_minishell *p, char *delim, int len);
 char	*expand_variables(t_minishell *p, char *s, char *ret, int i);
 void	string_shift(char *s);
 int		directory_handler(t_minishell *p, char *input, char c);

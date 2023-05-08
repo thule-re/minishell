@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_shell_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 16:48:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 12:45:06 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_shell_split.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:31:14 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/03 12:26:07 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:33:38 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +77,7 @@ char	**ft_shell_split(t_minishell *p, char *s, char c)
 	count = word_count(s, c, -1, 0);
 	result = malloc((count + 1) * sizeof(char *));
 	if (result == NULL)
-		return (0);
+		return (malloc_error(p, 0, 0), NULL);
 	while (*s == c && *s)
 		s++;
 	while (*s && i < count)
@@ -98,7 +86,7 @@ char	**ft_shell_split(t_minishell *p, char *s, char c)
 		if (!result[i] || !s)
 		{
 			free_strings(result, i);
-			return (0);
+			return (malloc_error(p, 0, 0), NULL);
 		}
 		while (*s == c && *s)
 			s++;

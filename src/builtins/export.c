@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:50:04 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/02 15:31:37 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/08 09:36:58 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	**get_key_val(char *input)
 	key_val = (char **)ft_calloc(3, sizeof(char *));
 	if (!key_val)
 		return (NULL);
-	if (!ft_strchr(input, '='))
+	if (!ft_strchr(input, '=') || input[0] == '=')
 		key_val[0] = ft_strdup(input);
 	else
 	{
@@ -89,6 +89,28 @@ static void	display_export(t_minishell *p, int forked)
 	}
 }
 
+static int	is_valid(char *input, char *key)
+{
+	int	ret;
+
+	ret = 1;
+	if (ft_isdigit(key[0]))
+		ret = 0;
+	while (*key)
+	{
+		if (ft_strchr("~-@*!+\\{}[]^:", *key))
+			ret = 0;
+		key++;
+	}
+	if (!ret)
+	{
+		ft_putstr_fd("minishell: export: '", 2);
+		ft_putstr_fd(input, 2);
+		ft_putstr_fd("' is not a valid identifier\n", 2);
+	}
+	return (ret);
+}
+
 int	export(t_minishell *p, int forked)
 {
 	char	**key_val;
@@ -105,7 +127,10 @@ int	export(t_minishell *p, int forked)
 		key_val = get_key_val(p->input1[i]);
 		if (!key_val)
 			return (ft_return(p, 1, forked));
-		env_add_key(*p->envp, key_val);
+		if (!is_valid(p->input1[i], key_val[0]))
+			return (ft_return(p, 1, forked));
+		else
+			env_add_key(*p->envp, key_val);
 		if (!(*p->envp)->key)
 			return (ft_return(p, 1, forked));
 		i++;

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:43:50 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/01 12:28:01 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/04 18:18:13 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	init_signals(void)
 
 char	*exit_signal(t_minishell *p)
 {
-	ft_putstr_fd("\033[Fminishell: ", 2);
-	put_prompt(p);
-	ft_putstr_fd("% exit\n", 2);
+	ft_putstr_fd("\033[F", 2);
+	put_prompt(p, 1, 0);
+	ft_putstr_fd("exit\n", 2);
 	return (NULL);
 }
 

@@ -6,11 +6,35 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:11:33 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/01 15:39:53 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:23:11 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	is_valid(char *key)
+{
+	int		ret;
+	char	*tmp;
+
+	tmp = key;
+	ret = 1;
+	if (ft_isdigit(key[0]))
+		ret = 0;
+	while (*key)
+	{
+		if (ft_strchr("=~-@*!+\\{}[]^", *key))
+			ret = 0;
+		key++;
+	}
+	if (!ret)
+	{
+		ft_putstr_fd("minishell: unset: '", 2);
+		ft_putstr_fd(tmp, 2);
+		ft_putstr_fd("' is not a valid identifier\n", 2);
+	}
+	return (ret);
+}
 
 static void	clean_env(t_env **envp)
 {
@@ -45,6 +69,8 @@ int	unset(t_minishell *p, int forked)
 	if (forked)
 		return (ft_return(p, 0, forked));
 	env_var = ft_getenvp(p->input1[1], *p->envp);
+	if (p->input1[1] && !is_valid(p->input1[1]))
+		return (ft_return(p, 1, forked));
 	if (!env_var)
 		return (ft_return(p, 0, forked));
 	if (env_var == (*p->envp))

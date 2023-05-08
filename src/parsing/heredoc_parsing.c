@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_parsing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 12:42:40 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/08 15:09:02 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_parsing.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:39:58 by awilliam          #+#    #+#             */
@@ -73,6 +85,7 @@ char	*delimit_this(char *s, t_minishell *p, int len)
 {
 	char	*loc;
 
+	signal(SIGINT, SIG_IGN);
 	loc = ft_strnstr(s, "<<", ft_strlen(s));
 	if (!loc || *(loc + 2) == '<' || *(loc + 2) == '>' || !*(loc + 2))
 		return (s);

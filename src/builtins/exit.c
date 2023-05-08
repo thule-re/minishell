@@ -45,7 +45,7 @@ int	builtin_exit(t_minishell *p)
 		return (to_many_arguments(), ft_exit(p, 1));
 	if (p->input1[3])
 		return (to_many_arguments(), ft_exit(p, 255));
-	if (ft_strchr("-+", p->input1[1][i]))
+	if (ft_strchr("+", p->input1[1][i]))
 		i++;
 	while (p->input1[1][i])
 	{

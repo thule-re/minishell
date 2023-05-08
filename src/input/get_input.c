@@ -24,30 +24,31 @@
 
 #include "../include/minishell.h"
 
-char	*put_prompt(t_minishell *p, int which, int i)
+char	*put_prompt(int which, int i)
 {
-	char	*pwd;
 	char	*tmp;
+	char	*tmp2;
 	char	**split_pwd;
 	char	*line;
+	char	pwd[MAXPATHLEN];
 
-	pwd = ft_getenv("PWD", *p->envp);
+	getcwd(pwd, MAXPATHLEN);
 	split_pwd = ft_split(pwd, '/');
 	if (!split_pwd && !which)
 		return (readline("minishell % "));
 	while (split_pwd[i + 1])
 		i++;
 	tmp = ft_strjoin("minishell: [", split_pwd[i]);
-	pwd = ft_strjoin(tmp, "] % ");
+	tmp2 = ft_strjoin(tmp, "] % ");
 	free(tmp);
 	free_arr(split_pwd);
 	if (which)
 	{
-		ft_printf("%s", pwd);
-		return (free(pwd), NULL);
+		ft_printf("%s", tmp2);
+		return (NULL);
 	}
-	line = readline(pwd);
-	free(pwd);
+	line = readline(tmp2);
+	free(tmp2);
 	return (line);
 }
 
@@ -111,11 +112,11 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 	while (status)
 	{
 		if (status == 1)
-			tmp = put_prompt(p, 0, 0);
+			tmp = put_prompt(0, 0);
 		else
 			tmp = readline("> ");
 		if (!tmp && status == 1)
-			return (exit_signal(p));
+			return (exit_signal());
 		else if (!tmp)
 			return (unexpected_eof(status));
 		if (ret && status == 2)

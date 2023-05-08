@@ -36,10 +36,10 @@ void	init_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-char	*exit_signal(t_minishell *p)
+char	*exit_signal(void)
 {
 	ft_putstr_fd("\033[F", 2);
-	put_prompt(p, 1, 0);
+	put_prompt(1, 0);
 	ft_putstr_fd("exit\n", 2);
 	return (NULL);
 }

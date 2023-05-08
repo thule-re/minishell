@@ -3,18 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 11:55:34 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 10:23:13 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
@@ -67,7 +55,7 @@ typedef struct s_minishell {
 
 // functions for receiving user input
 char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status);
-char	*put_prompt(t_minishell *p, int which, int i);
+char	*put_prompt(int which, int i);
 
 // functions for splitting and input parsing
 char	**ft_shell_split(t_minishell *p, char *s, char c);
@@ -126,7 +114,7 @@ void	sigint_handler_a(int signum);
 void	init_signals(void);
 void	sigint_handler_b(int signum);
 void	check_signals(t_minishell *p);
-char	*exit_signal(t_minishell *p);
+char	*exit_signal(void);
 
 // environment functions
 char	*ft_getenv(char *str, t_env *envp);

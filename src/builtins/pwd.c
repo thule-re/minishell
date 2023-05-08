@@ -14,15 +14,14 @@
 
 int	pwd(t_minishell *p, int forked)
 {
-	char	*pwd;
 	int		fd;
+	char	pwd[MAXPATHLEN];
 
+	getcwd(pwd, MAXPATHLEN);
 	fd = STDOUT_FILENO;
 	if (!forked && p->fd_out)
 		fd = p->fd_out;
-	pwd = ft_getenv("PWD", *p->envp);
-	if (pwd)
-		ft_putstr_fd(pwd, fd);
+	ft_putstr_fd(pwd, fd);
 	ft_putstr_fd("\n", fd);
 	return (ft_return(p, 0, forked));
 }

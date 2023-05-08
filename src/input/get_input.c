@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 09:02:08 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:33:25 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*put_prompt(int which, int i)
 	if (which)
 	{
 		ft_printf("%s", tmp2);
+		free(tmp2);
 		return (NULL);
 	}
 	line = readline(tmp2);

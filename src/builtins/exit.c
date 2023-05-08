@@ -12,43 +12,48 @@
 
 #include "../include/minishell.h"
 
-static int	to_many_arguments(int code)
+static int	ft_exit(t_minishell *p, int code)
 {
-	ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-	return (code);
+	p->exit_status = code;
+	free_everything(p, p->envp);
+	exit(code);
 }
 
-static int	numeric_argument(char *str, int code)
+static void	to_many_arguments(void)
+{
+	ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+}
+
+static void	numeric_argument(char *str)
 {
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
-	return (code);
 }
 
-int	builtin_exit(char **parsed_input)
+int	builtin_exit(t_minishell *p)
 {
 	int	i;
 
 	i = 0;
-	if (!parsed_input[1])
+	if (!p->input1[1])
 	{
 		ft_putstr_fd("exit\n", 2);
-		return (0);
+		return (ft_exit(p, 0));
 	}
-	if (parsed_input[2] && !ft_isalpha(parsed_input[1][0]))
-		return (to_many_arguments(1));
-	if (parsed_input[3])
-		return (to_many_arguments(255));
-	if (ft_strchr("-+", parsed_input[1][i]))
+	if (p->input1[2] && !ft_isalpha(p->input1[1][0]))
+		return (to_many_arguments(), ft_exit(p, 1));
+	if (p->input1[3])
+		return (to_many_arguments(), ft_exit(p, 255));
+	if (ft_strchr("-+", p->input1[1][i]))
 		i++;
-	while (parsed_input[1][i])
+	while (p->input1[1][i])
 	{
-		if (!ft_isdigit(parsed_input[1][i]))
-			return (numeric_argument(parsed_input[1], 255));
+		if (!ft_isdigit(p->input1[1][i]))
+			return (numeric_argument(p->input1[1]), ft_exit(p, 255));
 		i++;
 	}
-	if (ft_strlen(parsed_input[1]) > 9 || ft_atoi(parsed_input[1]) == -1)
-		return (255);
-	return (ft_atoi(parsed_input[1]));
+	if (ft_strlen(p->input1[1]) > 9 || ft_atoi(p->input1[1]) == -1)
+		return (ft_exit(p, 255));
+	return (ft_exit(p, ft_atoi(p->input1[1])));
 }

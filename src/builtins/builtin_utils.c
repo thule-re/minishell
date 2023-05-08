@@ -37,6 +37,8 @@ int	run_builtin(t_minishell *p, int forked)
 		unset(p, forked);
 	else if (ft_strncmp("env", p->input1[0], 4) == 0)
 		env(p, forked);
+	else if (ft_strncmp("exit", p->input1[0], 5) == 0)
+		builtin_exit(p);
 	else
 		return (0);
 	return (1);

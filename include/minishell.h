@@ -145,6 +145,6 @@ int		export(t_minishell *p, int forked);
 int		unset(t_minishell *p, int forked);
 int		env(t_minishell *p, int forked);
 int		ft_return(t_minishell *p, int code, int forked);
-int		builtin_exit(char **parsed_input);
+int		builtin_exit(t_minishell *p);
 
 #endif

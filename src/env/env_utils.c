@@ -86,31 +86,3 @@ t_env	*new_env_node(char **key_val)
 	new_node->next = NULL;
 	return (new_node);
 }
-
-t_env	**init_env(char **static_env)
-{
-	t_env	**envp;
-	t_env	*curr;
-	char	**key_val;
-
-	key_val = ft_split(*static_env, '=');
-	envp = (t_env **)ft_calloc(1, sizeof(t_env *));
-	if (!key_val || !envp)
-		return (NULL);
-	*envp = new_env_node(key_val);
-	if (!*envp)
-		return (NULL);
-	curr = *envp;
-	while (*++static_env)
-	{
-		free_arr(key_val);
-		key_val = ft_split(*static_env, '=');
-		if (!key_val)
-			return (free_env(envp), NULL);
-		curr->next = new_env_node(key_val);
-		if (!curr->next)
-			return (free_env(envp), NULL);
-		curr = curr->next;
-	}
-	return (free_arr(key_val), envp);
-}

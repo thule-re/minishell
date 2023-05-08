@@ -32,6 +32,7 @@ FILES 		=	builtins/builtin_utils \
 				builtins/unset \
 				env/env_utils \
 				env/export_env \
+				env/init_env \
 				execution/pipex_children \
 				execution/run_commands \
 				execution/pipe_utils \

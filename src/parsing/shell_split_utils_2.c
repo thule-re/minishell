@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split_utils_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 12:46:22 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 14:21:13 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   shell_split_utils_2.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 11:28:09 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:34:23 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +28,15 @@ static char	*append_var_helper(char *s, char *ret, char *tmp, int i)
 	char	*to_free;
 
 	tmp2 = malloc(i + 1);
+	if (!tmp2)
+		return (NULL);
 	ft_strlcpy(tmp2, s, i + 1);
 	to_free = tmp;
 	tmp = ft_strjoin(tmp2, tmp);
 	free(to_free);
 	free(tmp2);
+	if (!tmp)
+		return (NULL);
 	tmp2 = tmp;
 	if (!ret)
 		tmp = ft_strjoin(tmp, ret);
@@ -66,6 +58,8 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	else
 		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=\n")) + 1;
 	var = malloc(len);
+	if (!var)
+		return (NULL);
 	ft_strlcpy(var, &s[i + 1], len);
 	if (s[i + 1] == '?')
 		tmp = ft_itoa(p->exit_status);
@@ -78,6 +72,8 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 			tmp = ft_strdup(tmp);
 	}
 	free(var);
+	if (!tmp)
+		return (NULL);
 	return (append_var_helper(s, ret, tmp, i));
 }
 
@@ -94,6 +90,8 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 		if (s[i] == '$')
 		{
 			ret = append_var(p, s, i, ret);
+			if (!ret)
+				return (malloc_error(p, 0, 0), NULL);
 			if (ft_isdigit(s[i + 1]))
 				s += i + 2;
 			else
@@ -106,26 +104,23 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 	ret = ft_strjoin(ret, s);
 	free(tmp);
 	free(to_free);
+	if (!ret)
+		return (malloc_error(p, 0, 0), NULL);
 	return (ret);
 }
 
-char	**reformat_inputs(t_minishell *p, char **arr, int i)
+char	next_one(char *s, char *set)
 {
-	while (arr[i])
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
 	{
-		if (!is_special_char(arr[i]))
-			arr[i] = remove_apos(p, arr[i], NULL, 0);
-		if (special_no_quotes(arr[i], "<>|"))
-		{
-			if (!arr[i + 1] || !*(arr[i + 1]))
-			{
-				if (arr[i][0] == '|')
-					return (parse_error("|"), NULL);
-				else
-					return (parse_error("newline"), NULL);
-			}
-		}
+		if (ft_strchr(set, s[i]))
+			return (s[i]);
 		i++;
 	}
-	return (arr);
+	return (0);
 }

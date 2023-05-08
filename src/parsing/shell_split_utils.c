@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/03 18:55:49 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:33:51 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,6 @@ int	is_apo(char c)
 		return (1);
 	else
 		return (0);
-}
-
-char	next_one(char *s, char *set)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-	{
-		if (ft_strchr(set, s[i]))
-			return (s[i]);
-		i++;
-	}
-	return (0);
 }
 
 int	is_special_char(char *s)
@@ -82,6 +66,8 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 		else
 			len = ft_strlenc(s + 1, *s) + 2;
 		s_part = malloc(len + 1);
+		if (!s_part)
+			return (malloc_error(p, 0, 0), NULL);
 		ft_strlcpy(s_part, s, len + 1);
 		s += len;
 		if (*s == ' ')
@@ -91,6 +77,31 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 		else if (is_apo(s_part[0]))
 			string_shift(s_part);
 		ret = ft_strjoinf(ret, s_part);
+		if (!ret)
+			return (malloc_error(p, 0, 0), NULL);
 	}
 	return (free(tmp), ret);
+}
+
+char	**reformat_inputs(t_minishell *p, char **arr, int i)
+{
+	while (arr[i])
+	{
+		if (!is_special_char(arr[i]))
+			arr[i] = remove_apos(p, arr[i], NULL, 0);
+		if (!arr[i])
+			return (malloc_error(p, 0, 0), NULL);
+		if (special_no_quotes(arr[i], "<>|"))
+		{
+			if (!arr[i + 1] || !*(arr[i + 1]))
+			{
+				if (arr[i][0] == '|')
+					return (parse_error("|"), NULL);
+				else
+					return (parse_error("newline"), NULL);
+			}
+		}
+		i++;
+	}
+	return (arr);
 }

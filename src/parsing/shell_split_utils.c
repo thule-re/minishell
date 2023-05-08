@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 17:27:49 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 18:44:34 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 	char	*s_part;
 	char	*tmp;
 
-	if (!s)
-		return (NULL);
+	if (!s || !*s)
+		return (s);
 	tmp = s;
 	while (*s)
 	{
@@ -75,6 +75,8 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 
 int		is_variable(char *s)
 {
+	if (!s)
+		return (0);
 	if (ft_strchr(s, '$'))
 		return (1);
 	else
@@ -85,7 +87,6 @@ char	**reformat_inputs(t_minishell *p, char **arr, int i)
 {
 	int	var;
 
-	p->split_input = arr;
 	while (arr[i])
 	{
 		var = is_variable(arr[i]);

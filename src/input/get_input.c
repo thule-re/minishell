@@ -37,8 +37,8 @@ char	*put_prompt(t_minishell *p, int which, int i)
 		return (readline("minishell % "));
 	while (split_pwd[i + 1])
 		i++;
-	tmp = ft_strjoin("minishell: ", split_pwd[i]);
-	pwd = ft_strjoin(tmp, " % ");
+	tmp = ft_strjoin("minishell: [", split_pwd[i]);
+	pwd = ft_strjoin(tmp, "] % ");
 	free(tmp);
 	free_arr(split_pwd);
 	if (which)

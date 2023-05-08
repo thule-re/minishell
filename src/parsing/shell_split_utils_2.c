@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 09:34:23 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:37:14 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 			if (ft_isdigit(s[i + 1]))
 				s += i + 2;
 			else
-				s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /=\n"));
+				s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /=\n:"));
 			i = -1;
 		}
 		i++;

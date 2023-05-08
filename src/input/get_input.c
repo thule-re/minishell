@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 12:00:08 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 08:56:00 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_input.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/04 11:41:41 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:02:08 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +79,11 @@ static int	is_unclosed(char *input, char *start)
 	return (is_unclosed_helper(input, start));
 }
 
-static char	*unexpected_eof(void)
+static char	*unexpected_eof(int status)
 {
-	ft_putstr_fd("minishell: unexpected end of file", 2);
-	ft_putchar_fd('"', 2);
-	ft_putstr_fd("\n", 2);
+	if (status == 2)
+		ft_putstr_fd("minishell: unexpected EOF while looking for matching `'\"\n", 2);
+	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
 	g_es = 258;
 	return (ft_strdup(""));
 }
@@ -114,7 +102,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 		if (!tmp && status == 1)
 			return (exit_signal(p));
 		else if (!tmp)
-			return (unexpected_eof());
+			return (unexpected_eof(status));
 		if (ret && status == 2)
 			tmp2 = ft_strjoin(ret, "\n");
 		if (ret && status == 3)

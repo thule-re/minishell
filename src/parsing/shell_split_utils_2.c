@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split_utils_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 10:16:13 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/08 10:40:10 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_split_utils_2.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
@@ -12,21 +24,13 @@
 
 #include "../include/minishell.h"
 
-void	string_shift(char *s)
-{
-	while (*s)
-	{
-		*s = *(s + 1);
-		s++;
-	}
-	*(s - 2) = 0;
-}
-
 static char	*append_var_helper(char *s, char *ret, char *tmp, int i)
 {
 	char	*tmp2;
 	char	*to_free;
 
+	if (!tmp)
+		return (NULL);
 	tmp2 = malloc(i + 1);
 	if (!tmp2)
 		return (NULL);
@@ -72,15 +76,25 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 			tmp = ft_strdup(tmp);
 	}
 	free(var);
-	if (!tmp)
-		return (NULL);
 	return (append_var_helper(s, ret, tmp, i));
+}
+
+static char	*expand_helper(t_minishell *p, char *ret, char *to_free, char *s)
+{
+	char	*tmp;
+
+	tmp = ret;
+	ret = ft_strjoin(ret, s);
+	free(tmp);
+	free(to_free);
+	if (!ret)
+		return (malloc_error(p, 0, 0), NULL);
+	return (ret);
 }
 
 char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 {
 	char	*to_free;
-	char	*tmp;
 
 	if (*s == 34 && s != p->heredoc)
 		string_shift(s);
@@ -100,13 +114,7 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 		}
 		i++;
 	}
-	tmp = ret;
-	ret = ft_strjoin(ret, s);
-	free(tmp);
-	free(to_free);
-	if (!ret)
-		return (malloc_error(p, 0, 0), NULL);
-	return (ret);
+	return (expand_helper(p, ret, to_free, s));
 }
 
 char	next_one(char *s, char *set)

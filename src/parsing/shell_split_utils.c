@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 10:16:13 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/08 10:46:30 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_split_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
@@ -36,19 +48,12 @@ int	is_apo(char c)
 		return (0);
 }
 
-int	is_special_char(char *s)
+static int	get_len(char *s)
 {
-	if (!(ft_strncmp("\"<\"", s, 4)))
-		return (1);
-	if (!(ft_strncmp("\"<<\"", s, 5)))
-		return (1);
-	if (!(ft_strncmp("\">\"", s, 4)))
-		return (1);
-	if (!(ft_strncmp("\">>\"", s, 5)))
-		return (1);
-	if (!(ft_strncmp("\"|\"", s, 5)))
-		return (1);
-	return (0);
+	if (!is_apo(*s))
+		return (ft_strlenc(s, next_one(s, " \'\"")));
+	else
+		return (ft_strlenc(s + 1, *s) + 2);
 }
 
 char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
@@ -61,13 +66,10 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 	tmp = s;
 	while (*s)
 	{
-		if (!is_apo(*s))
-			len = ft_strlenc(s, next_one(s, " \'\""));
-		else
-			len = ft_strlenc(s + 1, *s) + 2;
+		len = get_len(s);
 		s_part = malloc(len + 1);
 		if (!s_part)
-			return (malloc_error(p, 0, 0), NULL);
+			return (NULL);
 		ft_strlcpy(s_part, s, len + 1);
 		s += len;
 		if (*s == ' ')

@@ -3,18 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 10:16:12 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 10:22:36 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_input.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
@@ -129,5 +117,5 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 			return (malloc_error(p, 1, 1), NULL);
 		status = is_unclosed(ret, ret);
 	}
-	return (delimit_this(ret, p, NULL, 0));
+	return (delimit_this(ret, p, 0));
 }

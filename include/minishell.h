@@ -3,18 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 11:55:34 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 10:23:13 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 13:41:17 by awilliam          #+#    #+#             */
@@ -80,7 +68,7 @@ void	print_array(char **arr);
 char	**reformat_inputs(t_minishell *p, char **arr, int i);
 void	shift_array(char **arr, int i);
 int		special_no_quotes(char *s, char *set);
-char	*delimit_this(char *s, t_minishell *p, char *delim, int len);
+char	*delimit_this(char *s, t_minishell *p, int len);
 char	*expand_variables(t_minishell *p, char *s, char *ret, int i);
 void	string_shift(char *s);
 int		directory_handler(t_minishell *p, char *input, char c);

@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+static void	init_old_pwd(t_env *envp, t_env *last)
+{
+	char	**key_val;
+
+	if (ft_getenvp("OLDPWD", envp))
+		return ;
+	key_val = (char **)ft_calloc(3, sizeof(char *));
+	key_val[0] = ft_strdup("OLDPWD");
+	last->next = new_env_node(key_val);
+	free_arr(key_val);
+}
+
 static t_env	*add_special_node(char **key_val)
 {
 	if (!ft_strncmp(key_val[0], "SHLVL", 6))
@@ -49,5 +61,6 @@ t_env	**init_env(char **static_env)
 			return (free_env(envp), NULL);
 		curr = curr->next;
 	}
+	init_old_pwd(*envp, curr);
 	return (free_arr(key_val), envp);
 }

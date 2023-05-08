@@ -32,10 +32,7 @@ static int	word_count(char *str, char apo_type, int i, int count)
 		if (str[i] == ' ' && str[i + 1] != ' ')
 			count++;
 		if (ft_strchr("<>|", str[i]))
-		{
 			count += 2;
-			i++;
-		}
 	}
 	return (count);
 }

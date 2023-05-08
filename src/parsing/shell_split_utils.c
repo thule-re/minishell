@@ -75,6 +75,7 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 
 char	**reformat_inputs(t_minishell *p, char **arr, int i)
 {
+	p->split_input = arr;
 	while (arr[i])
 	{
 		if (!is_special_char(arr[i]))
@@ -86,9 +87,9 @@ char	**reformat_inputs(t_minishell *p, char **arr, int i)
 			if (!arr[i + 1] || !*(arr[i + 1]))
 			{
 				if (arr[i][0] == '|')
-					return (parse_error("|"), NULL);
+					return (parse_error(p, "|"), NULL);
 				else
-					return (parse_error("newline"), NULL);
+					return (parse_error(p, "newline"), NULL);
 			}
 		}
 		i++;

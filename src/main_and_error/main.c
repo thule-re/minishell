@@ -46,7 +46,7 @@ static int	minishell(t_minishell *p, char *input)
 	p->exit_status = g_es;
 	add_history(input);
 	p->split_input = ft_shell_split(p, p->usr_input, 32);
-	if (!p->split_input || !*p->split_input || check_syntax(p->split_input))
+	if (!p->split_input || !*p->split_input || check_syntax(p, p->split_input))
 		return (-1);
 	signal(SIGINT, sigint_handler_b);
 	run_commands(p, 0, 0, init_variables(p, p->split_input));

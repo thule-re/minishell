@@ -19,14 +19,14 @@ static char	*append_var_helper(char *s, char *ret, char *tmp, int i)
 
 	tmp2 = malloc(i + 1);
 	if (!tmp2)
-		return (NULL);
+		return (free(s), free(tmp), NULL);
 	ft_strlcpy(tmp2, s, i + 1);
 	to_free = tmp;
 	tmp = ft_strjoin(tmp2, tmp);
 	free(to_free);
 	free(tmp2);
 	if (!tmp)
-		return (NULL);
+		return (free(s), NULL);
 	tmp2 = tmp;
 	if (!ret)
 		tmp = ft_strjoin(tmp, ret);
@@ -49,7 +49,7 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=\n:$")) + 1;
 	var = malloc(len);
 	if (!var)
-		return (malloc_error(p, 0, 0), NULL);
+		return (free(s), malloc_error(p, 1, 0), NULL);
 	ft_strlcpy(var, &s[i + 1], len);
 	if (s[i + 1] == '?')
 		tmp = ft_itoa(p->exit_status);
@@ -89,7 +89,7 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 		{
 			ret = append_var(p, s, i, ret);
 			if (!ret)
-				return (NULL);
+				return (malloc_error(p, 1, 0), NULL);
 			s++;
 			if (ft_isdigit(s[i + 1]))
 				s += i + 1;

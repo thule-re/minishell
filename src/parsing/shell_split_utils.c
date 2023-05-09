@@ -75,30 +75,31 @@ static int	is_variable(char *s)
 		return (0);
 }
 
-char	**reformat_inputs(t_minishell *p, char **arr, int i, int var)
+char	**reformat_inputs(t_minishell *p, int i, int var, char *tmp)
 {
-	p->split_input = arr;
-	while (arr[i])
+	while (p->split_input[i])
 	{
-		var = is_variable(arr[i]);
-		if (!is_special_char(arr[i]))
-			arr[i] = remove_apos(p, arr[i], NULL, 0);
-		if (!arr[i])
+		var = is_variable(p->split_input[i]);
+		if (!is_special_char(p->split_input[i]))
+			tmp = remove_apos(p, p->split_input[i], NULL, 0);
+		if (tmp)
+			p->split_input[i] = tmp;
+		else
 			return (NULL);
-		if (special_no_quotes(arr[i], "<>|"))
+		if (special_no_quotes(p->split_input[i], "<>|"))
 		{
-			if (!arr[i + 1] || !*(arr[i + 1]))
+			if (!p->split_input[i + 1] || !*(p->split_input[i + 1]))
 			{
-				if (arr[i][0] == '|')
+				if (p->split_input[i][0] == '|')
 					return (parse_error(p, "|"), NULL);
 				else
 					return (parse_error(p, "newline"), NULL);
 			}
 		}
-		if (!*arr[i] && var)
-			shift_array(arr, i);
+		if (!*p->split_input[i] && var)
+			shift_array(p->split_input, i);
 		else
 			i++;
 	}
-	return (arr);
+	return (p->split_input);
 }

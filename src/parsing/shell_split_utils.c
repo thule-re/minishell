@@ -47,7 +47,7 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 		len = get_len(s);
 		s_part = malloc(len + 1);
 		if (!s_part)
-			return (malloc_error(p, 0, 0), NULL);
+			return (malloc_error(p, 1, 0), NULL);
 		ft_strlcpy(s_part, s, len + 1);
 		s += len;
 		if (*s == ' ')
@@ -57,10 +57,10 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 		else if (is_apo(s_part[0]))
 			string_shift(s_part);
 		if (!s_part)
-			return (NULL);
+			return (malloc_error(p, 1, 0), NULL);
 		ret = ft_strjoinf(ret, s_part);
 		if (!ret)
-			return (NULL);
+			return (malloc_error(p, 1, 0), NULL);
 	}
 	return (free(tmp), ret);
 }
@@ -84,7 +84,7 @@ char	**reformat_inputs(t_minishell *p, char **arr, int i, int var)
 		if (!is_special_char(arr[i]))
 			arr[i] = remove_apos(p, arr[i], NULL, 0);
 		if (!arr[i])
-			return (malloc_error(p, 0, 0), NULL);
+			return (NULL);
 		if (special_no_quotes(arr[i], "<>|"))
 		{
 			if (!arr[i + 1] || !*(arr[i + 1]))

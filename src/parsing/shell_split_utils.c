@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 18:44:34 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:40:23 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 		len = get_len(s);
 		s_part = malloc(len + 1);
 		if (!s_part)
-			return (NULL);
+			return (malloc_error(p, 0, 0), NULL);
 		ft_strlcpy(s_part, s, len + 1);
 		s += len;
 		if (*s == ' ')
@@ -66,9 +66,11 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 			s_part = expand_variables(p, s_part, NULL, 0);
 		else if (is_apo(s_part[0]))
 			string_shift(s_part);
+		if (!s_part)
+			return (NULL);
 		ret = ft_strjoinf(ret, s_part);
 		if (!ret)
-			return (malloc_error(p, 0, 0), NULL);
+			return (NULL);
 	}
 	return (free(tmp), ret);
 }
@@ -87,6 +89,7 @@ char	**reformat_inputs(t_minishell *p, char **arr, int i)
 {
 	int	var;
 
+	p->split_input = arr;
 	while (arr[i])
 	{
 		var = is_variable(arr[i]);

@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 17:31:57 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:50:22 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 		{
 			ret = append_var(p, s, i, ret);
 			if (!ret)
-				return (malloc_error(p, 0, 0), NULL);
+				return (free(to_free), malloc_error(p, 0, 0), NULL);
 			s++;
 			if (ft_isdigit(s[i + 1]))
 				s += i + 1;

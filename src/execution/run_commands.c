@@ -77,8 +77,8 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 	{
 		make_input(p, p->split_input, i);
 		if (!p->input1 || !*p->split_input || !*(p->input1))
-			return (free_everything(p, 0));
-		if (!(p->num_pipes == 0 && run_builtin(p, 0)))
+			;
+		else if (!(p->num_pipes == 0 && run_builtin(p, 0)))
 		{
 			pid = fork();
 			if (pid == 0)

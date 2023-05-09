@@ -47,3 +47,21 @@ int	check_syntax(t_minishell *p, char **arr)
 	}
 	return (0);
 }
+
+int	prs_err(t_minishell *p, int i)
+{
+	if (!p->split_input[i + 1] || !*(p->split_input[i + 1]))
+	{
+		if (p->split_input[i][0] == '|')
+		{
+			parse_error(p, "|");
+			return (1);
+		}
+		else
+		{
+			parse_error(p, "newline");
+			return (1);
+		}
+	}
+	return (0);
+}

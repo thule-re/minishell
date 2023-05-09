@@ -81,21 +81,15 @@ char	**reformat_inputs(t_minishell *p, int i, int var, char *tmp)
 	{
 		var = is_variable(p->split_input[i]);
 		if (!is_special_char(p->split_input[i]))
-			tmp = remove_apos(p, p->split_input[i], NULL, 0);
-		if (tmp)
-			p->split_input[i] = tmp;
-		else
-			return (NULL);
-		if (special_no_quotes(p->split_input[i], "<>|"))
 		{
-			if (!p->split_input[i + 1] || !*(p->split_input[i + 1]))
-			{
-				if (p->split_input[i][0] == '|')
-					return (parse_error(p, "|"), NULL);
-				else
-					return (parse_error(p, "newline"), NULL);
-			}
+			tmp = remove_apos(p, p->split_input[i], NULL, 0);
+			if (tmp)
+				p->split_input[i] = tmp;
+			else
+				return (NULL);
 		}
+		if (special_no_quotes(p->split_input[i], "<>|") && prs_err(p, i))
+			return (NULL);
 		if (!*p->split_input[i] && var)
 			shift_array(p->split_input, i);
 		else

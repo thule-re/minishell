@@ -91,6 +91,7 @@ void	malloc_error(t_minishell *params, int free, int exit);
 void	file_error(char *s, int fd, int error_type, t_minishell *params);
 void	cmd_error(char *str, t_minishell *params);
 void	parse_error(t_minishell *p, char *s);
+int		prs_err(t_minishell *p, int i);
 
 // free handlers
 void	free_arr(char **arr);

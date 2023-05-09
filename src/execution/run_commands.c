@@ -94,4 +94,5 @@ void	run_commands(t_minishell *p, int i, int pid, int counter)
 			close_outs(p->pipefd, p->i * 2);
 	}
 	wait_for_run(p, pid);
+	g_es = p->exit_status;
 }

@@ -12,10 +12,8 @@
 
 #include "../include/minishell.h"
 
-char	*put_prompt(int which, int i)
+char	*put_prompt(int which, int i, char *tmp, char *tmp2)
 {
-	char	*tmp;
-	char	*tmp2;
 	char	**split_pwd;
 	char	*line;
 	char	pwd[MAXPATHLEN];
@@ -103,7 +101,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 	while (status)
 	{
 		if (status == 1)
-			tmp = put_prompt(0, 0);
+			tmp = put_prompt(0, 0, NULL, NULL);
 		else
 			tmp = readline("> ");
 		if (!tmp && status == 1)

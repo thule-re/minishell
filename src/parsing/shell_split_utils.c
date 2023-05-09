@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/09 09:53:01 by awilliam          #+#    #+#             */
+/*   Updated: 2023/05/09 10:04:35 by awilliam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_split_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
@@ -28,14 +40,6 @@ int	apo_count(char *str, char apo)
 	return (count);
 }
 
-int	is_apo(char c)
-{
-	if (c == 34 || c == 39)
-		return (1);
-	else
-		return (0);
-}
-
 static int	get_len(char *s)
 {
 	if (!is_apo(*s))
@@ -49,8 +53,6 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 	char	*s_part;
 	char	*tmp;
 
-	if (!s || !*s)
-		return (s);
 	tmp = s;
 	while (*s)
 	{
@@ -75,7 +77,7 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 	return (free(tmp), ret);
 }
 
-int		is_variable(char *s)
+static int	is_variable(char *s)
 {
 	if (!s)
 		return (0);

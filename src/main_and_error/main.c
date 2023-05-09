@@ -50,7 +50,6 @@ static int	minishell(t_minishell *p, char *input)
 		return (-1);
 	signal(SIGINT, sigint_handler_b);
 	run_commands(p, 0, 0, init_variables(p, p->split_input));
-	g_es = p->exit_status;
 	free_everything(p, NULL);
 	return (-1);
 }

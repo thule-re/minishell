@@ -1,18 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 16:48:35 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 14:32:11 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
 /*   free_and_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
@@ -39,8 +27,6 @@ void	file_error(char *s, int fd, int error_type, t_minishell *params)
 	write(STDERR_FILENO, "minishell: ", 11);
 	perror(s);
 	g_es = error_type;
-	if (params)
-		free_everything(params, NULL);
 	params->fd_in = 0;
 	params->fd_out = 0;
 }
@@ -59,7 +45,8 @@ void	cmd_error(char *str, t_minishell *params)
 
 void	malloc_error(t_minishell *params, int do_free, int do_exit)
 {
-	ft_putstr_fd("minishell: Memory allocation failed: out of memory\n", 2);
+	if (params->usr_input)
+		ft_putstr_fd("minishell: Memory allocation failed: out of memory\n", 2);
 	if (do_free)
 		free_everything(params, NULL);
 	if (do_exit)

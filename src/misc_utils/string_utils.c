@@ -89,3 +89,11 @@ int	is_special_char(char *s)
 		return (1);
 	return (0);
 }
+
+int	is_apo(char c)
+{
+	if (c == 34 || c == 39)
+		return (1);
+	else
+		return (0);
+}

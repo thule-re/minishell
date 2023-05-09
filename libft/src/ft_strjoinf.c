@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoinf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 14:13:34 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/01 14:15:41 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/08 18:46:05 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ char	*ft_strjoinf(char *s1, char *s2)
 	ft_memmove(str, s1, len1);
 	ft_memmove(str + len1, s2, len2);
 	str[len1 + len2] = '\0';
-	if (len1)
+	if (s1)
 		free(s1);
-	if (len2)
+	if (s2)
 		free(s2);
+	s1 = NULL;
+	s2 = NULL;
 	return (str);
 }

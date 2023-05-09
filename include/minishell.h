@@ -55,7 +55,7 @@ typedef struct s_minishell {
 
 // functions for receiving user input
 char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status);
-char	*put_prompt(int which, int i);
+char	*put_prompt(int which, int i, char *tmp, char *tmp2);
 
 // functions for splitting and input parsing
 char	**ft_shell_split(t_minishell *p, char *s, char c);
@@ -65,7 +65,7 @@ char	next_one(char *s, char *set);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
-char	**reformat_inputs(t_minishell *p, char **arr, int i);
+char	**reformat_inputs(t_minishell *p, int i, int var, char *tmp);
 void	shift_array(char **arr, int i);
 int		special_no_quotes(char *s, char *set);
 char	*delimit_this(char *s, t_minishell *p, int len);
@@ -91,6 +91,7 @@ void	malloc_error(t_minishell *params, int free, int exit);
 void	file_error(char *s, int fd, int error_type, t_minishell *params);
 void	cmd_error(char *str, t_minishell *params);
 void	parse_error(t_minishell *p, char *s);
+int		prs_err(t_minishell *p, int i);
 
 // free handlers
 void	free_arr(char **arr);

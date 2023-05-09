@@ -3,18 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awilliam <awilliam@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 09:53:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/09 10:04:35 by awilliam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   shell_split_utils.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 10:48:29 by awilliam          #+#    #+#             */
@@ -87,10 +75,8 @@ static int	is_variable(char *s)
 		return (0);
 }
 
-char	**reformat_inputs(t_minishell *p, char **arr, int i)
+char	**reformat_inputs(t_minishell *p, char **arr, int i, int var)
 {
-	int	var;
-
 	p->split_input = arr;
 	while (arr[i])
 	{
@@ -110,11 +96,9 @@ char	**reformat_inputs(t_minishell *p, char **arr, int i)
 			}
 		}
 		if (!*arr[i] && var)
-		{
 			shift_array(arr, i);
-			i--;
-		}
-		i++;
+		else
+			i++;
 	}
 	return (arr);
 }

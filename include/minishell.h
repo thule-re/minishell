@@ -65,7 +65,7 @@ char	next_one(char *s, char *set);
 void	free_strings(char **result, int index);
 void	free_arr(char **arr);
 void	print_array(char **arr);
-char	**reformat_inputs(t_minishell *p, char **arr, int i);
+char	**reformat_inputs(t_minishell *p, char **arr, int i, int var);
 void	shift_array(char **arr, int i);
 int		special_no_quotes(char *s, char *set);
 char	*delimit_this(char *s, t_minishell *p, int len);

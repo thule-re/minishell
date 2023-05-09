@@ -55,7 +55,7 @@ typedef struct s_minishell {
 
 // functions for receiving user input
 char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status);
-char	*put_prompt(int which, int i);
+char	*put_prompt(int which, int i, char *tmp, char *tmp2);
 
 // functions for splitting and input parsing
 char	**ft_shell_split(t_minishell *p, char *s, char c);

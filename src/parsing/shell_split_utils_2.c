@@ -46,7 +46,8 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	if (ft_isdigit(s[i + 1]))
 		len = 2;
 	else
-		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=\n:$[]{};()")) + 1;
+		len = ft_strlenc(&s[i + 1], \
+		next_one(&s[i + 1], "\'\" /=\n:$[]{};()%")) + 1;
 	var = malloc(len);
 	if (!var)
 		return (free(s), malloc_error(p, 1, 0), NULL);
@@ -56,7 +57,7 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	else
 	{
 		tmp = ft_getenv(var, *p->envp);
-		if (!tmp)
+		if (!tmp || len == 1)
 			tmp = ft_strdup("");
 		else
 			tmp = ft_strdup(tmp);
@@ -76,16 +77,20 @@ static char	*expand_helper(char *ret, char *to_free, char *s)
 	return (ret);
 }
 
-char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
+char	*expand_variables(t_minishell *p, char *s, char *orig_s, int i)
 {
 	char	*to_free;
+	char	*ret;
 
+	ret = NULL;
+	if (s[0] == '$' && is_apo(*orig_s))
+		s[0] = 0;
 	if (*s == 34 && s != p->heredoc)
 		string_shift(s);
 	to_free = s;
-	while (s[i])
+	while (s[++i])
 	{
-		if (s[i] == '$' && s[i + 1] && s[i + 1] != ' ')
+		if (s[i] == '$' && s[i + 1] && !ft_strchr("\'\" /=\n:$[]{};()%", s[i + 1]))
 		{
 			ret = append_var(p, s, i, ret);
 			if (!ret)
@@ -94,10 +99,9 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 			if (ft_isdigit(s[i + 1]))
 				s += i + 1;
 			else
-				s += i + ft_strlenc(&s[i], next_one(&s[i], "\'\" /=\n:$[]{};()"));
+				s += i + ft_strlenc(&s[i], next_one(&s[i], "\'\" /=\n:$[]{};()%"));
 			i = -1;
 		}
-		i++;
 	}
 	return (expand_helper(ret, to_free, s));
 }

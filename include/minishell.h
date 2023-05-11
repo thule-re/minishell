@@ -24,7 +24,7 @@
 # include <dirent.h>
 # include "malloc.h"
 
-// Global environment variable
+// Global exit status variable
 extern int	g_es;
 
 typedef struct s_env

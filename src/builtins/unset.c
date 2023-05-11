@@ -6,7 +6,7 @@
 /*   By: treeps <treeps@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:11:33 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/08 15:47:25 by treeps           ###   ########.fr       */
+/*   Updated: 2023/05/11 11:16:05 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	is_valid(char *key)
 			ret = 0;
 		key++;
 	}
-	if (!ret)
+	if (!ret || !*tmp)
 	{
 		ft_putstr_fd("minishell: unset: '", 2);
 		ft_putstr_fd(tmp, 2);
@@ -66,9 +66,11 @@ static void	clean_env(t_env **envp)
 int	unset(t_minishell *p, int forked)
 {
 	t_env	*env_var;
+	int		code;
 
+	code = 0;
 	if (forked)
-		return (ft_return(p, 0, forked));
+		return (ft_return(p, code, forked));
 	env_var = ft_getenvp(p->input1[1], *p->envp);
 	if (p->input1[1] && !is_valid(p->input1[1]))
 		return (ft_return(p, 1, forked));
@@ -88,5 +90,5 @@ int	unset(t_minishell *p, int forked)
 	free(env_var->key);
 	env_var->key = NULL;
 	clean_env(p->envp);
-	return (ft_return(p, 0, forked));
+	return (ft_return(p, code, forked));
 }

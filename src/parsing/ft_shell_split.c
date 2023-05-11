@@ -25,7 +25,6 @@ static int	word_count(char *str, char apo_type, int i, int count)
 			apo_type = str[i++];
 			while (str[i] != apo_type)
 				i++;
-			i++;
 		}
 		if (!str[i])
 			break ;

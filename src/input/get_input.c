@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/09 09:26:24 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:40:41 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ static int	is_unclosed(char *input, char *start)
 static char	*unexpected_eof(int status, char *ret)
 {
 	if (ret)
+	{
+		add_history(ret);
 		free(ret);
+	}
 	ret = NULL;
 	if (status == 2)
 	{

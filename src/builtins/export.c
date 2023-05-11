@@ -94,7 +94,7 @@ static int	is_valid(char *input, char *key)
 	int	ret;
 
 	ret = 1;
-	if (ft_isdigit(key[0]))
+	if (ft_isdigit(key[0]) || !*key)
 		ret = 0;
 	while (*key)
 	{
@@ -115,7 +115,9 @@ int	export(t_minishell *p, int forked)
 {
 	char	**key_val;
 	int		i;
+	int		code;
 
+	code = 0;
 	if (!p->input1[1])
 	{
 		display_export(p, forked);
@@ -128,12 +130,12 @@ int	export(t_minishell *p, int forked)
 		if (!key_val)
 			return (ft_return(p, 1, forked));
 		if (!is_valid(p->input1[i], key_val[0]))
-			return (ft_return(p, 1, forked));
+			code = 1;
 		else
 			env_add_key(*p->envp, key_val);
 		if (!(*p->envp)->key)
 			return (ft_return(p, 1, forked));
 		i++;
 	}
-	return (free_arr(key_val), ft_return(p, 0, forked));
+	return (free_arr(key_val), ft_return(p, code, forked));
 }

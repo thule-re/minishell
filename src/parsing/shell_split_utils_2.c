@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:14:01 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 09:37:14 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:50:22 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,16 @@ static char	*append_var_helper(char *s, char *ret, char *tmp, int i)
 	char	*tmp2;
 	char	*to_free;
 
-	if (!tmp)
-		return (NULL);
 	tmp2 = malloc(i + 1);
 	if (!tmp2)
-		return (NULL);
+		return (free(s), free(tmp), NULL);
 	ft_strlcpy(tmp2, s, i + 1);
 	to_free = tmp;
 	tmp = ft_strjoin(tmp2, tmp);
 	free(to_free);
 	free(tmp2);
 	if (!tmp)
-		return (NULL);
+		return (free(s), NULL);
 	tmp2 = tmp;
 	if (!ret)
 		tmp = ft_strjoin(tmp, ret);
@@ -51,7 +49,7 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=\n:$[]{};()")) + 1;
 	var = malloc(len);
 	if (!var)
-		return (NULL);
+		return (free(s), malloc_error(p, 1, 0), NULL);
 	ft_strlcpy(var, &s[i + 1], len);
 	if (s[i + 1] == '?')
 		tmp = ft_itoa(p->exit_status);
@@ -67,7 +65,7 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	return (append_var_helper(s, ret, tmp, i));
 }
 
-static char	*expand_helper(t_minishell *p, char *ret, char *to_free, char *s)
+static char	*expand_helper(char *ret, char *to_free, char *s)
 {
 	char	*tmp;
 
@@ -75,8 +73,6 @@ static char	*expand_helper(t_minishell *p, char *ret, char *to_free, char *s)
 	ret = ft_strjoin(ret, s);
 	free(tmp);
 	free(to_free);
-	if (!ret)
-		return (malloc_error(p, 0, 0), NULL);
 	return (ret);
 }
 
@@ -93,7 +89,7 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 		{
 			ret = append_var(p, s, i, ret);
 			if (!ret)
-				return (malloc_error(p, 0, 0), NULL);
+				return (malloc_error(p, 1, 0), NULL);
 			s++;
 			if (ft_isdigit(s[i + 1]))
 				s += i + 1;
@@ -103,7 +99,7 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 		}
 		i++;
 	}
-	return (expand_helper(p, ret, to_free, s));
+	return (expand_helper(ret, to_free, s));
 }
 
 char	next_one(char *s, char *set)

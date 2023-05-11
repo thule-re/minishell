@@ -39,7 +39,7 @@ void	init_signals(void)
 char	*exit_signal(void)
 {
 	ft_putstr_fd("\033[F", 2);
-	put_prompt(1, 0);
+	put_prompt(1, 0, NULL, NULL);
 	ft_putstr_fd("exit\n", 2);
 	return (NULL);
 }

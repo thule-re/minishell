@@ -65,29 +65,28 @@ static int	shell_split_helper(char *s, char **result, int i)
 
 char	**ft_shell_split(t_minishell *p, char *s, char c)
 {
-	char	**result;
 	int		i;
 	int		count;
 
 	i = 0;
 	count = word_count(s, c, -1, 0);
-	result = malloc((count + 1) * sizeof(char *));
-	if (result == NULL)
+	p->split_input = malloc((count + 1) * sizeof(char *));
+	if (p->split_input == NULL)
 		return (malloc_error(p, 0, 0), NULL);
 	while (*s == c && *s)
 		s++;
 	while (*s && i < count)
 	{
-		s += shell_split_helper(s, result, i);
-		if (!result[i] || !s)
+		s += shell_split_helper(s, p->split_input, i);
+		if (!p->split_input[i] || !s)
 		{
-			free_strings(result, i);
-			return (malloc_error(p, 0, 0), NULL);
+			free_strings(p->split_input, i);
+			return (malloc_error(p, 1, 0), NULL);
 		}
 		while (*s == c && *s)
 			s++;
 		i++;
 	}
-	result[i] = 0;
-	return (reformat_inputs(p, result, 0));
+	p->split_input[i] = 0;
+	return (reformat_inputs(p, 0, 0, NULL));
 }

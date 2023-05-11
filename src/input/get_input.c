@@ -6,16 +6,14 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/08 09:02:08 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:26:24 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*put_prompt(int which, int i)
+char	*put_prompt(int which, int i, char *tmp, char *tmp2)
 {
-	char	*tmp;
-	char	*tmp2;
 	char	**split_pwd;
 	char	*line;
 	char	pwd[MAXPATHLEN];
@@ -30,9 +28,12 @@ char	*put_prompt(int which, int i)
 	tmp2 = ft_strjoin(tmp, "] % ");
 	free(tmp);
 	free_arr(split_pwd);
+	if (!tmp2)
+		return (malloc_error(NULL, 0, 0), NULL);
 	if (which)
 	{
 		ft_printf("%s", tmp2);
+		free(tmp2);
 		return (NULL);
 	}
 	line = readline(tmp2);
@@ -100,7 +101,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 	while (status)
 	{
 		if (status == 1)
-			tmp = put_prompt(0, 0);
+			tmp = put_prompt(0, 0, NULL, NULL);
 		else
 			tmp = readline("> ");
 		if (!tmp && status == 1)

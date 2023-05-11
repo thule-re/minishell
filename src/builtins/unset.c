@@ -19,7 +19,7 @@ static int	is_valid(char *key)
 
 	tmp = key;
 	ret = 1;
-	if (ft_isdigit(key[0]))
+	if (ft_isdigit(key[0]) || !*key)
 		ret = 0;
 	while (*key)
 	{
@@ -73,7 +73,7 @@ static void	unset_helper(t_env *env_var, t_minishell *p)
 		free(*p->envp);
 		*p->envp = env_var;
 	}
-	else
+	else if (env_var)
 	{
 		free(env_var->value);
 		env_var->value = NULL;
@@ -95,11 +95,13 @@ int	unset(t_minishell *p, int forked)
 		return (ft_return(p, code, forked));
 	while (p->input1[i])
 	{
-		env_var = ft_getenvp(p->input1[i], *p->envp);
 		if (!is_valid(p->input1[i]))
 			code = 1;
 		else
+		{
+			env_var = ft_getenvp(p->input1[i], *p->envp);
 			unset_helper(env_var, p);
+		}
 		i++;
 	}
 	return (ft_return(p, code, forked));

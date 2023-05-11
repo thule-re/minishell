@@ -69,6 +69,7 @@ static char	*expand_helper(char *ret, char *to_free, char *s)
 	ret = ft_strjoin(ret, s);
 	free(tmp);
 	free(to_free);
+	to_free = NULL;
 	return (ret);
 }
 

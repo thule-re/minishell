@@ -45,7 +45,7 @@ void	cmd_error(char *str, t_minishell *params)
 
 void	malloc_error(t_minishell *params, int do_free, int do_exit)
 {
-	if (params->usr_input)
+	if (params->usr_input || do_exit)
 		ft_putstr_fd("minishell: Memory allocation failed: out of memory\n", 2);
 	if (do_free)
 		free_everything(params, NULL);

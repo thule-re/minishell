@@ -119,10 +119,7 @@ int	export(t_minishell *p, int forked)
 
 	code = 0;
 	if (!p->input1[1])
-	{
-		display_export(p, forked);
-		return (ft_return(p, 0, forked));
-	}
+		return (display_export(p, forked), ft_return(p, 0, forked));
 	i = 1;
 	while (p->input1[i])
 	{
@@ -136,6 +133,7 @@ int	export(t_minishell *p, int forked)
 		if (!(*p->envp)->key)
 			return (ft_return(p, 1, forked));
 		i++;
+		free_arr(key_val);
 	}
-	return (free_arr(key_val), ft_return(p, code, forked));
+	return (ft_return(p, code, forked));
 }

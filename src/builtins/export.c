@@ -62,33 +62,6 @@ static char	**get_key_val(char *input)
 	return (key_val);
 }
 
-static void	display_export(t_minishell *p, int forked)
-{
-	t_env	*cur;
-	int		fd;
-
-	fd = STDOUT_FILENO;
-	if (!forked && p->fd_out)
-		fd = p->fd_out;
-	cur = *p->envp;
-	while (cur)
-	{
-		ft_putstr_fd("declare -x ", fd);
-		ft_putstr_fd(cur->key, fd);
-		if (!cur->value)
-			ft_putstr_fd("\n", fd);
-		else if (!*cur->value)
-			ft_putstr_fd("=''\n", fd);
-		else
-		{
-			ft_putstr_fd("=\"", fd);
-			ft_putstr_fd(cur->value, fd);
-			ft_putstr_fd("\"\n", fd);
-		}
-		cur = cur->next;
-	}
-}
-
 static int	is_valid(char *input, char *key)
 {
 	int	ret;

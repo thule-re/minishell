@@ -12,19 +12,6 @@
 
 #include "minishell.h"
 
-static int	ft_getenvlen(t_env *env)
-{
-	int	i;
-
-	i = 0;
-	while (env)
-	{
-		i++;
-		env = env->next;
-	}
-	return (i);
-}
-
 static char	*ft_join_key_val(t_env *env)
 {
 	char	*str;
@@ -47,6 +34,19 @@ static char	*ft_join_key_val(t_env *env)
 		ft_memmove(str + key_len + 1, env->value, val_len);
 	}
 	return (str);
+}
+
+int	ft_getenvlen(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
 }
 
 char	**export_env(t_env *env)

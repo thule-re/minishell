@@ -28,6 +28,7 @@ FILES 		=	builtins/builtin_utils \
 				builtins/env \
 				builtins/exit \
 				builtins/export \
+				builtins/export_utils \
 				builtins/pwd \
 				builtins/unset \
 				env/env_utils \

@@ -122,6 +122,7 @@ char	*ft_getenv(char *str, t_env *envp);
 t_env	*ft_getenvp(char *str, t_env *envp);
 t_env	**init_env(char **static_env);
 void	free_env(t_env **envp);
+int		ft_getenvlen(t_env *env);
 t_env	*new_env_node(char **key_val);
 char	**export_env(t_env *env);
 
@@ -131,6 +132,7 @@ int		echo(t_minishell *p, int forked);
 int		cd(t_minishell *p, int forked);
 int		pwd(t_minishell *p, int forked);
 int		export(t_minishell *p, int forked);
+void	display_export(t_minishell *p, int forked);
 int		unset(t_minishell *p, int forked);
 int		env(t_minishell *p, int forked);
 int		builtin_exit(t_minishell *p, int forked);

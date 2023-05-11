@@ -53,7 +53,7 @@ char	*remove_apos(t_minishell *p, char *s, char *ret, int len)
 		if (*s == ' ')
 			s++;
 		if ((s_part[0] != 39 && ft_strchr(s_part, '$')))
-			s_part = expand_variables(p, s_part, NULL, 0);
+			s_part = expand_variables(p, s_part, s, -1);
 		else if (is_apo(s_part[0]))
 			string_shift(s_part);
 		if (!s_part)
@@ -70,7 +70,11 @@ static int	is_variable(char *s)
 	if (!s)
 		return (0);
 	if (ft_strchr(s, '$'))
-		return (1);
+	{
+		if (!ft_strchr(s, '\'') && !ft_strchr(s, '\"'))
+			return (1);
+		return (0);
+	}
 	else
 		return (0);
 }

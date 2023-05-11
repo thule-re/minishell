@@ -58,7 +58,7 @@ static void	delim_helper(t_minishell *p, char *tmp, char *loc, int len)
 	delim[len + 1] = 0;
 	tmp = readline("> ");
 	if (!tmp)
-		return ;
+		return (free(delim));
 	to_free = tmp;
 	tmp = ft_strjoin(tmp, "\n");
 	if (!tmp)

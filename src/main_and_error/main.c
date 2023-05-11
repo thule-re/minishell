@@ -47,7 +47,7 @@ static int	minishell(t_minishell *p, char *input)
 	add_history(input);
 	p->split_input = ft_shell_split(p, p->usr_input, 32);
 	if (!p->split_input || !*p->split_input || check_syntax(p, p->split_input))
-		return (-1);
+		return (free_everything(p, NULL), -1);
 	signal(SIGINT, sigint_handler_b);
 	run_commands(p, 0, 0, init_variables(p, p->split_input));
 	free_everything(p, NULL);

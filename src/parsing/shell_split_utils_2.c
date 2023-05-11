@@ -48,7 +48,7 @@ static char	*append_var(t_minishell *p, char *s, int i, char *ret)
 	if (ft_isdigit(s[i + 1]))
 		len = 2;
 	else
-		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=\n:$")) + 1;
+		len = ft_strlenc(&s[i + 1], next_one(&s[i + 1], "\'\" /=\n:$[]{};()")) + 1;
 	var = malloc(len);
 	if (!var)
 		return (NULL);
@@ -98,7 +98,7 @@ char	*expand_variables(t_minishell *p, char *s, char *ret, int i)
 			if (ft_isdigit(s[i + 1]))
 				s += i + 1;
 			else
-				s += i + ft_strlenc(&s[i], next_one(&s[i], "\"\' /=\n:$"));
+				s += i + ft_strlenc(&s[i], next_one(&s[i], "\'\" /=\n:$[]{};()"));
 			i = -1;
 		}
 		i++;

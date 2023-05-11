@@ -41,7 +41,7 @@ t_env	*ft_getenvp(char *str, t_env *envp)
 			envp = envp->next;
 			continue ;
 		}
-		if (ft_strncmp(str, envp->key, ft_strlen(str)) == 0)
+		if (ft_strncmp(str, envp->key, ft_strlen(str) + 1) == 0)
 			return (envp);
 		envp = envp->next;
 	}

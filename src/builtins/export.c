@@ -16,7 +16,7 @@ static void	*env_add_key(t_env *envp, char **key_val)
 {
 	while (envp)
 	{
-		if (!ft_strncmp(envp->key, key_val[0], ft_strlen(key_val[0])))
+		if (!ft_strncmp(envp->key, key_val[0], ft_strlen(key_val[0]) + 1))
 		{
 			free(envp->value);
 			if (!key_val[1])

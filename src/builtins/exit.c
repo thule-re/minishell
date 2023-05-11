@@ -16,6 +16,7 @@ static int	ft_exit(t_minishell *p, int code)
 {
 	p->exit_status = code;
 	free_everything(p, p->envp);
+	ft_putstr_fd("exit\n", 2);
 	exit(code);
 }
 

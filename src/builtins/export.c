@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:50:04 by treeps            #+#    #+#             */
-/*   Updated: 2023/05/11 18:54:37 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:58:38 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static char	**get_key_val(char *input)
 		key_val[0] = ft_strdup(input);
 		if (!key_val[0])
 			return (NULL);
-		*loc = '=';
 		if (*(loc + 1))
 			key_val[1] = ft_strdup(loc + 1);
 		else

@@ -24,7 +24,7 @@
 # include <dirent.h>
 # include "malloc.h"
 
-// Global environment variable
+// Global exit status variable
 extern int	g_es;
 
 typedef struct s_env
@@ -69,7 +69,7 @@ char	**reformat_inputs(t_minishell *p, int i, int var, char *tmp);
 void	shift_array(char **arr, int i);
 int		special_no_quotes(char *s, char *set);
 char	*delimit_this(char *s, t_minishell *p, int len);
-char	*expand_variables(t_minishell *p, char *s, char *ret, int i);
+char	*expand_variables(t_minishell *p, char *s, char *orig_s, int i);
 void	string_shift(char *s);
 int		directory_handler(t_minishell *p, char *input, char c);
 

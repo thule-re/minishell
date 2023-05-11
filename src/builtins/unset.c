@@ -63,32 +63,44 @@ static void	clean_env(t_env **envp)
 	}
 }
 
-int	unset(t_minishell *p, int forked)
+static void	unset_helper(t_env *env_var, t_minishell *p)
 {
-	t_env	*env_var;
-	int		code;
-
-	code = 0;
-	if (forked)
-		return (ft_return(p, code, forked));
-	env_var = ft_getenvp(p->input1[1], *p->envp);
-	if (p->input1[1] && !is_valid(p->input1[1]))
-		return (ft_return(p, 1, forked));
-	if (!env_var)
-		return (ft_return(p, 0, forked));
-	if (env_var == (*p->envp))
+	if (env_var && env_var == (*p->envp))
 	{
 		free((*p->envp)->key);
 		free((*p->envp)->value);
 		env_var = (*p->envp)->next;
 		free(*p->envp);
 		*p->envp = env_var;
-		return (ft_return(p, 0, forked));
 	}
-	free(env_var->value);
-	env_var->value = NULL;
-	free(env_var->key);
-	env_var->key = NULL;
-	clean_env(p->envp);
+	else
+	{
+		free(env_var->value);
+		env_var->value = NULL;
+		free(env_var->key);
+		env_var->key = NULL;
+		clean_env(p->envp);
+	}
+}
+
+int	unset(t_minishell *p, int forked)
+{
+	t_env	*env_var;
+	int		code;
+	int		i;
+
+	i = 1;
+	code = 0;
+	if (forked)
+		return (ft_return(p, code, forked));
+	while (p->input1[i])
+	{
+		env_var = ft_getenvp(p->input1[i], *p->envp);
+		if (!is_valid(p->input1[i]))
+			code = 1;
+		else
+			unset_helper(env_var, p);
+		i++;
+	}
 	return (ft_return(p, code, forked));
 }

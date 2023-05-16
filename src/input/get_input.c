@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:29:25 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/09 09:26:24 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:40:41 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,14 @@ static int	is_unclosed(char *input, char *start)
 	return (is_unclosed_helper(input, start));
 }
 
-static char	*unexpected_eof(int status)
+static char	*unexpected_eof(int status, char *ret)
 {
+	if (ret)
+	{
+		add_history(ret);
+		free(ret);
+	}
+	ret = NULL;
 	if (status == 2)
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -107,7 +113,7 @@ char	*get_input(t_minishell *p, char *tmp, char *tmp2, int status)
 		if (!tmp && status == 1)
 			return (exit_signal());
 		else if (!tmp)
-			return (unexpected_eof(status));
+			return (unexpected_eof(status, ret));
 		if (ret && status == 2)
 			tmp2 = ft_strjoin(ret, "\n");
 		if (ret && status == 3)

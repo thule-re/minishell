@@ -6,7 +6,7 @@
 /*   By: awilliam <awilliam@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:23:21 by awilliam          #+#    #+#             */
-/*   Updated: 2023/05/02 12:48:32 by awilliam         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:39:36 by awilliam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ static int	minishell(t_minishell *p, char *input)
 		return (1);
 	if (!*input)
 		return (free(input), -1);
+	add_history(input);
 	if (!directory_handler(p, input, 0))
 		return (-1);
 	p->usr_input = input;
 	p->exit_status = g_es;
-	add_history(input);
 	p->split_input = ft_shell_split(p, p->usr_input, 32);
 	if (!p->split_input || !*p->split_input || check_syntax(p, p->split_input))
-		return (-1);
+		return (free_everything(p, NULL), -1);
 	signal(SIGINT, sigint_handler_b);
 	run_commands(p, 0, 0, init_variables(p, p->split_input));
 	free_everything(p, NULL);

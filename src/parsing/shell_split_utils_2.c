@@ -27,13 +27,8 @@ static char	*append_var_helper(char *s, char *ret, char *tmp, int i)
 	free(tmp2);
 	if (!tmp)
 		return (free(s), NULL);
-	tmp2 = tmp;
-	if (!ret)
-		tmp = ft_strjoin(tmp, ret);
-	else
-		tmp = ft_strjoin(ret, tmp);
-	free(tmp2);
-	free(ret);
+	if (ret)
+		tmp = ft_strjoinf(ret, tmp);
 	return (tmp);
 }
 
@@ -74,6 +69,7 @@ static char	*expand_helper(char *ret, char *to_free, char *s)
 	ret = ft_strjoin(ret, s);
 	free(tmp);
 	free(to_free);
+	to_free = NULL;
 	return (ret);
 }
 

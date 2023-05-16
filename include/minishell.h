@@ -25,7 +25,7 @@
 # include "malloc.h"
 
 // Global exit status variable
-extern int	g_es;
+int	g_es;
 
 typedef struct s_env
 {
@@ -108,6 +108,7 @@ int		init_variables(t_minishell *p, char **s);
 void	run_commands(t_minishell *p, int index, int pid, int counter);
 
 // readline functions
+void	rl_clear_history(void);
 void	rl_replace_line(const char *text, int clear_undo);
 
 // signals

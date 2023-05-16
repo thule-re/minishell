@@ -12,8 +12,6 @@
 
 #include "../include/minishell.h"
 
-int	g_es;
-
 static int	init_params(t_minishell *params, char **envp)
 {
 	params->split_input = NULL;
@@ -74,5 +72,6 @@ int	main(int argc, char **argv, char **envp)
 		es = minishell(&p, NULL);
 	}
 	free_everything(&p, p.envp);
+	rl_clear_history();
 	exit(es);
 }

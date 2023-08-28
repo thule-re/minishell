@@ -1,4 +1,4 @@
-# minishell_42
+# minishell
 Reproducing the behavior of the Bourne Again Shell (BASH) in C.
 
 ## Aim of the Project
